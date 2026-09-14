@@ -228,8 +228,17 @@ function altysier_hide_unused_editor_for_acf_templates() {
 		return;
 	}
 
+	// The static front page always renders through front-page.php regardless
+	// of its _wp_page_template meta (which normally reads 'default', since
+	// front-page.php has no `Template Name:` header and so can never be
+	// selected — or stored — as a Page Attributes template). Detect it by
+	// front-page-ness instead of by template slug, or it never matches below.
+	if ( (int) get_option( 'page_on_front' ) === $post_id ) {
+		remove_post_type_support( 'page', 'editor' );
+		return;
+	}
+
 	$acf_only_templates = array(
-		'front-page.php',
 		'page-about.php',
 		'page-contact.php',
 		'page-csr.php',
