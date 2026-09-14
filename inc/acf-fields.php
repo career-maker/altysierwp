@@ -164,9 +164,11 @@ acf_add_local_field_group( array(
 				'operator' => '!=',
 				'value'    => 'default',
 			),
+			array( 'param' => 'page_type', 'operator' => '!=', 'value' => 'front_page' ),
 		),
 		array(
 			array( 'param' => 'post_type', 'operator' => '==', 'value' => 'page' ),
+			array( 'param' => 'page_type', 'operator' => '!=', 'value' => 'front_page' ),
 		),
 	),
 	'menu_order' => 10,
@@ -187,7 +189,16 @@ acf_add_local_field_group( array(
 			'name'         => 'hero_bg_image',
 			'type'         => 'image',
 			'return_format'=> 'url',
-			'instructions' => 'Full-bleed hero photo displayed at 94% opacity. Min 1920px wide.',
+			'instructions' => 'Full-bleed hero photo displayed at 94% opacity. Min 1920px wide. Also used as the video poster/fallback below.',
+		),
+		array(
+			'key'           => 'field_hero_bg_video',
+			'label'         => 'Hero Background Video',
+			'name'          => 'hero_bg_video',
+			'type'          => 'file',
+			'return_format' => 'url',
+			'mime_types'    => 'mp4,webm,mov',
+			'instructions'  => 'Optional — autoplay, muted, looping background video. Overrides the photo above when set (the photo still shows as the poster frame while it loads, and as a fallback). Keep it short and under ~10MB; no audio track needed since it plays muted.',
 		),
 		array(
 			'key'           => 'field_hero_eyebrow',
@@ -1197,7 +1208,10 @@ acf_add_local_field_group( array(
 		),
 	),
 	'location' => array(
-		array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-flexible.php' ) ),
+		array(
+			array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-flexible.php' ),
+			array( 'param' => 'page_type', 'operator' => '!=', 'value' => 'front_page' ),
+		),
 	),
 	'menu_order' => 5,
 ) );

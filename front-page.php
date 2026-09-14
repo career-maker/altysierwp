@@ -16,6 +16,7 @@ $gf      = function( $key, $default = '' ) use ( $has_acf ) {
 
 // Hero ACF fields
 $hero_bg       = $gf( 'hero_bg_image', 'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1400&q=80&auto=format&fit=crop' );
+$hero_bg_video = $gf( 'hero_bg_video', '' );
 $hero_eyebrow  = $gf( 'hero_eyebrow', 'Altysier Group' );
 $hero_h1_l1    = $gf( 'hero_heading_line1', 'Building Businesses.' );
 $hero_h1_l2    = $gf( 'hero_heading_line2', 'Connecting Markets.' );
@@ -182,6 +183,13 @@ $has_companies = $companies_query->have_posts();
      ============================================================ -->
 <section class="hero" id="hero">
   <div class="hero__bg" aria-hidden="true">
+    <?php if ( $hero_bg_video ) : ?>
+    <video class="section-photo hero__bg-video"
+           poster="<?php echo esc_url( $hero_bg ); ?>"
+           autoplay muted loop playsinline preload="auto">
+      <source src="<?php echo esc_url( $hero_bg_video ); ?>" type="video/mp4">
+    </video>
+    <?php else : ?>
     <img class="section-photo"
          src="<?php echo esc_url( $hero_bg ); ?>"
          srcset="<?php echo esc_url( $hero_bg ); ?>"
@@ -190,6 +198,7 @@ $has_companies = $companies_query->have_posts();
          loading="eager"
          decoding="async"
          fetchpriority="high">
+    <?php endif; ?>
     <div class="hero__scrim"></div>
   </div>
   <span class="section-watermark" aria-hidden="true">ALTYSIER GROUP</span>
