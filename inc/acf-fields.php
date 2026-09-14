@@ -988,3 +988,216 @@ acf_add_local_field_group( array(
 	),
 	'menu_order' => 51,
 ) );
+
+// ══════════════════════════════════════════════════════════════
+// 12. GLOBAL SETTINGS — Header, Footer, Social, Locations
+// ══════════════════════════════════════════════════════════════
+acf_add_local_field_group( array(
+	'key'    => 'group_global_settings',
+	'title'  => 'Header, Footer & Contact Details',
+	'fields' => array(
+		array( 'key' => 'field_gs_tab_header', 'label' => 'Header', 'type' => 'tab', 'placement' => 'top' ),
+		array( 'key' => 'field_gs_enable_preloader', 'label' => 'Enable Loading Preloader', 'name' => 'enable_preloader', 'type' => 'true_false', 'default_value' => 1, 'ui' => 1 ),
+		array( 'key' => 'field_gs_header_logo', 'label' => 'Header Logo', 'name' => 'header_logo', 'type' => 'image', 'return_format' => 'url', 'instructions' => 'Leave blank to use the theme default logo.' ),
+
+		array( 'key' => 'field_gs_tab_footer', 'label' => 'Footer', 'type' => 'tab', 'placement' => 'top' ),
+		array( 'key' => 'field_gs_footer_logo', 'label' => 'Footer Logo', 'name' => 'footer_logo', 'type' => 'image', 'return_format' => 'url', 'instructions' => 'Leave blank to use the theme default logo.' ),
+		array( 'key' => 'field_gs_footer_blurb', 'label' => 'Footer Blurb', 'name' => 'footer_blurb', 'type' => 'textarea', 'rows' => 2, 'default_value' => 'A diversified business group building long-term value across international trade, industry and mobility.' ),
+		array( 'key' => 'field_gs_footer_copyright', 'label' => 'Footer Copyright Text', 'name' => 'footer_copyright', 'type' => 'text', 'default_value' => 'Altysier Group. All rights reserved.', 'instructions' => 'Shown after "© 2026" in the footer.' ),
+
+		array( 'key' => 'field_gs_tab_social', 'label' => 'Social Links', 'type' => 'tab', 'placement' => 'top' ),
+		array( 'key' => 'field_gs_social_linkedin', 'label' => 'LinkedIn URL', 'name' => 'social_linkedin', 'type' => 'text', 'default_value' => '#' ),
+		array( 'key' => 'field_gs_social_instagram', 'label' => 'Instagram URL', 'name' => 'social_instagram', 'type' => 'text', 'default_value' => '#' ),
+		array( 'key' => 'field_gs_social_twitter', 'label' => 'X / Twitter URL', 'name' => 'social_twitter', 'type' => 'text', 'default_value' => '#' ),
+		array( 'key' => 'field_gs_social_facebook', 'label' => 'Facebook URL', 'name' => 'social_facebook', 'type' => 'text', 'default_value' => '#' ),
+
+		array( 'key' => 'field_gs_tab_locations', 'label' => 'Locations & Contact', 'type' => 'tab', 'placement' => 'top' ),
+		array( 'key' => 'field_gs_dubai_address', 'label' => 'Dubai Office — Address', 'name' => 'dubai_address', 'type' => 'text', 'default_value' => 'Dubai, United Arab Emirates' ),
+		array( 'key' => 'field_gs_dubai_map_url', 'label' => 'Dubai Office — Google Maps Link', 'name' => 'dubai_map_url', 'type' => 'text', 'default_value' => 'https://maps.google.com/?q=Dubai,+United+Arab+Emirates' ),
+		array( 'key' => 'field_gs_dubai_phone', 'label' => 'Phone', 'name' => 'dubai_phone', 'type' => 'text', 'default_value' => '+971 4 268 0666' ),
+		array( 'key' => 'field_gs_dubai_whatsapp', 'label' => 'WhatsApp Number', 'name' => 'dubai_whatsapp', 'type' => 'text', 'default_value' => '+971 56 144 2525' ),
+		array( 'key' => 'field_gs_dubai_email', 'label' => 'Contact Email', 'name' => 'dubai_email', 'type' => 'text', 'default_value' => 'info@altysier.com' ),
+		array( 'key' => 'field_gs_saudi_address', 'label' => 'Saudi Office — Address', 'name' => 'saudi_address', 'type' => 'text', 'default_value' => 'Riyadh, Saudi Arabia' ),
+		array( 'key' => 'field_gs_saudi_map_url', 'label' => 'Saudi Office — Google Maps Link', 'name' => 'saudi_map_url', 'type' => 'text', 'default_value' => 'https://maps.google.com/?q=Riyadh,+Saudi+Arabia' ),
+		array( 'key' => 'field_gs_khartoum_address', 'label' => 'Khartoum Office — Address', 'name' => 'khartoum_address', 'type' => 'text', 'default_value' => 'Khartoum, Sudan' ),
+		array( 'key' => 'field_gs_khartoum_map_url', 'label' => 'Khartoum Office — Google Maps Link', 'name' => 'khartoum_map_url', 'type' => 'text', 'default_value' => 'https://maps.google.com/?q=Khartoum,+Sudan' ),
+	),
+	'location' => array(
+		array( array( 'param' => 'options_page', 'operator' => '==', 'value' => 'altysier-global-settings' ) ),
+	),
+) );
+
+// ══════════════════════════════════════════════════════════════
+// 13. GLOBAL SETTINGS — Email & SMTP
+// ══════════════════════════════════════════════════════════════
+acf_add_local_field_group( array(
+	'key'    => 'group_smtp_settings',
+	'title'  => 'Gmail SMTP Settings',
+	'fields' => array(
+		array( 'key' => 'field_smtp_enabled', 'label' => 'Enable Custom SMTP', 'name' => 'smtp_enabled', 'type' => 'true_false', 'default_value' => 1, 'ui' => 1, 'instructions' => 'When off, WordPress falls back to the server\'s default mail sending (usually unreliable — keep this on).' ),
+		array( 'key' => 'field_smtp_host', 'label' => 'SMTP Host', 'name' => 'smtp_host', 'type' => 'text', 'default_value' => 'smtp.gmail.com' ),
+		array( 'key' => 'field_smtp_port', 'label' => 'SMTP Port', 'name' => 'smtp_port', 'type' => 'number', 'default_value' => 587 ),
+		array( 'key' => 'field_smtp_encryption', 'label' => 'Encryption', 'name' => 'smtp_encryption', 'type' => 'select', 'choices' => array( 'tls' => 'TLS', 'ssl' => 'SSL', 'none' => 'None' ), 'default_value' => 'tls' ),
+		array( 'key' => 'field_smtp_username', 'label' => 'Gmail Address', 'name' => 'smtp_username', 'type' => 'text', 'instructions' => 'The full Gmail address used to send mail.' ),
+		array( 'key' => 'field_smtp_password', 'label' => 'Gmail App Password', 'name' => 'smtp_password', 'type' => 'password', 'instructions' => 'A 16-character Google App Password — NOT your normal Gmail password. Generate one at myaccount.google.com/apppasswords (requires 2-Step Verification enabled).' ),
+		array( 'key' => 'field_mail_from_name', 'label' => 'Sender Name', 'name' => 'mail_from_name', 'type' => 'text', 'default_value' => 'Altysier Group Website' ),
+		array( 'key' => 'field_mail_from_email', 'label' => 'Sender / Reply-To Email', 'name' => 'mail_from_email', 'type' => 'text', 'instructions' => 'Leave blank to use the Gmail Address above.' ),
+		array( 'key' => 'field_enquiry_recipient', 'label' => 'Enquiry Recipient Email', 'name' => 'enquiry_recipient', 'type' => 'text', 'instructions' => 'Where contact-form submissions are delivered.', 'default_value' => 'manu.abhiram@gmail.com' ),
+	),
+	'location' => array(
+		array( array( 'param' => 'options_page', 'operator' => '==', 'value' => 'altysier-smtp-settings' ) ),
+	),
+) );
+
+// ══════════════════════════════════════════════════════════════
+// 14. GLOBAL SETTINGS — reCAPTCHA
+// ══════════════════════════════════════════════════════════════
+acf_add_local_field_group( array(
+	'key'    => 'group_recaptcha_settings',
+	'title'  => 'Google reCAPTCHA v3 Settings',
+	'fields' => array(
+		array( 'key' => 'field_recaptcha_enabled', 'label' => 'Enable reCAPTCHA v3', 'name' => 'recaptcha_enabled', 'type' => 'true_false', 'default_value' => 0, 'ui' => 1, 'instructions' => 'Keep off until both keys below are filled in — forms work fine (nonce + honeypot + rate limiting still apply) with this off.' ),
+		array( 'key' => 'field_recaptcha_site_key', 'label' => 'Site Key', 'name' => 'recaptcha_site_key', 'type' => 'text', 'instructions' => 'From google.com/recaptcha/admin — create a v3 key for this domain.' ),
+		array( 'key' => 'field_recaptcha_secret_key', 'label' => 'Secret Key', 'name' => 'recaptcha_secret_key', 'type' => 'password', 'instructions' => 'Never exposed to the frontend — used only in the server-side verification request.' ),
+		array( 'key' => 'field_recaptcha_threshold', 'label' => 'Score Threshold', 'name' => 'recaptcha_threshold', 'type' => 'number', 'default_value' => 0.5, 'step' => 0.1, 'min' => 0, 'max' => 1, 'instructions' => '0.0 (likely bot) – 1.0 (likely human). Google recommends starting at 0.5.' ),
+	),
+	'location' => array(
+		array( array( 'param' => 'options_page', 'operator' => '==', 'value' => 'altysier-recaptcha-settings' ) ),
+	),
+) );
+
+// ══════════════════════════════════════════════════════════════
+// 15. FLEXIBLE PAGE BUILDER — for any new page (page-flexible.php)
+// ══════════════════════════════════════════════════════════════
+// One generic template + this flexible-content field lets an admin assemble a
+// brand-new page from the same section types used across the rest of the site
+// (same CSS, no new page-*.php file or field group needed per page) by adding,
+// removing, and reordering layouts freely.
+acf_add_local_field_group( array(
+	'key'    => 'group_flexible_builder',
+	'title'  => '🧩 Page Builder — Sections',
+	'fields' => array(
+		array(
+			'key'          => 'field_flex_sections',
+			'label'        => 'Page Sections',
+			'name'         => 'page_sections',
+			'type'         => 'flexible_content',
+			'button_label' => 'Add Section',
+			'layouts'      => array(
+
+				'layout_hero_banner' => array(
+					'key' => 'layout_hero_banner', 'name' => 'hero_banner', 'label' => 'Hero Banner', 'display' => 'block',
+					'sub_fields' => array(
+						array( 'key' => 'field_flex_hero_bg', 'label' => 'Background Photo', 'name' => 'bg_image', 'type' => 'image', 'return_format' => 'url' ),
+						array( 'key' => 'field_flex_hero_watermark', 'label' => 'Watermark Text', 'name' => 'watermark', 'type' => 'text' ),
+						array( 'key' => 'field_flex_hero_title', 'label' => 'Title (H1)', 'name' => 'title', 'type' => 'text' ),
+						array( 'key' => 'field_flex_hero_subtitle', 'label' => 'Subtitle', 'name' => 'subtitle', 'type' => 'textarea', 'rows' => 2 ),
+					),
+				),
+
+				'layout_text_intro' => array(
+					'key' => 'layout_text_intro', 'name' => 'text_intro', 'label' => 'Text Intro (heading + statement + photo)', 'display' => 'block',
+					'sub_fields' => array(
+						array( 'key' => 'field_flex_intro_watermark', 'label' => 'Watermark Text', 'name' => 'watermark', 'type' => 'text' ),
+						array( 'key' => 'field_flex_intro_eyebrow', 'label' => 'Eyebrow', 'name' => 'eyebrow', 'type' => 'text' ),
+						array( 'key' => 'field_flex_intro_heading', 'label' => 'Heading', 'name' => 'heading', 'type' => 'text' ),
+						array( 'key' => 'field_flex_intro_statement', 'label' => 'Statement (large, bold intro line)', 'name' => 'statement', 'type' => 'textarea', 'rows' => 2 ),
+						array( 'key' => 'field_flex_intro_narrative', 'label' => 'Narrative', 'name' => 'narrative', 'type' => 'wysiwyg', 'tabs' => 'visual', 'media_upload' => 0, 'toolbar' => 'basic' ),
+						array( 'key' => 'field_flex_intro_photo', 'label' => 'Photo', 'name' => 'photo', 'type' => 'image', 'return_format' => 'url' ),
+					),
+				),
+
+				'layout_feature' => array(
+					'key' => 'layout_feature', 'name' => 'feature_section', 'label' => 'Feature Section (photo + text + point list)', 'display' => 'block',
+					'sub_fields' => array(
+						array( 'key' => 'field_flex_feat_watermark', 'label' => 'Watermark Text', 'name' => 'watermark', 'type' => 'text' ),
+						array( 'key' => 'field_flex_feat_eyebrow', 'label' => 'Eyebrow', 'name' => 'eyebrow', 'type' => 'text' ),
+						array( 'key' => 'field_flex_feat_heading', 'label' => 'Heading', 'name' => 'heading', 'type' => 'text' ),
+						array( 'key' => 'field_flex_feat_photo', 'label' => 'Photo', 'name' => 'photo', 'type' => 'image', 'return_format' => 'url' ),
+						array( 'key' => 'field_flex_feat_badge', 'label' => 'Photo Badge Text', 'name' => 'badge', 'type' => 'text' ),
+						array( 'key' => 'field_flex_feat_statement', 'label' => 'Statement', 'name' => 'statement', 'type' => 'text' ),
+						array( 'key' => 'field_flex_feat_lead', 'label' => 'Lead Text', 'name' => 'lead', 'type' => 'textarea', 'rows' => 2 ),
+						array( 'key' => 'field_flex_feat_reverse', 'label' => 'Photo on Right', 'name' => 'reverse_layout', 'type' => 'true_false', 'ui' => 1 ),
+						array(
+							'key' => 'field_flex_feat_points', 'label' => 'Points', 'name' => 'points', 'type' => 'repeater', 'button_label' => 'Add Point',
+							'sub_fields' => array(
+								array( 'key' => 'field_flex_point_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
+								array( 'key' => 'field_flex_point_desc', 'label' => 'Description', 'name' => 'desc', 'type' => 'textarea', 'rows' => 2 ),
+							),
+						),
+					),
+				),
+
+				'layout_card_grid' => array(
+					'key' => 'layout_card_grid', 'name' => 'card_grid', 'label' => 'Card Grid', 'display' => 'block',
+					'sub_fields' => array(
+						array( 'key' => 'field_flex_cards_eyebrow', 'label' => 'Eyebrow', 'name' => 'eyebrow', 'type' => 'text' ),
+						array( 'key' => 'field_flex_cards_heading', 'label' => 'Heading', 'name' => 'heading', 'type' => 'text' ),
+						array(
+							'key' => 'field_flex_cards', 'label' => 'Cards', 'name' => 'cards', 'type' => 'repeater', 'button_label' => 'Add Card',
+							'instructions' => 'Icon Key options: trade_ship, industry, default, transport_truck, feed, medical, bajaj, petroleum, agri, logistics, fleet (or the shared set: pie-chart, globe-alt, badge-star, people, shield-check, economic-growth, filing-cabinet, handshake, package, globe-thin, briefcase, clipboard).',
+							'sub_fields' => array(
+								array( 'key' => 'field_flex_card_number', 'label' => 'Number / Tag (optional)', 'name' => 'number', 'type' => 'text' ),
+								array( 'key' => 'field_flex_card_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
+								array( 'key' => 'field_flex_card_text', 'label' => 'Text', 'name' => 'text', 'type' => 'textarea', 'rows' => 2 ),
+							),
+						),
+					),
+				),
+
+				'layout_stats' => array(
+					'key' => 'layout_stats', 'name' => 'stats_row', 'label' => 'Stats Row', 'display' => 'block',
+					'sub_fields' => array(
+						array(
+							'key' => 'field_flex_stats', 'label' => 'Stats', 'name' => 'stats', 'type' => 'repeater', 'button_label' => 'Add Stat',
+							'sub_fields' => array(
+								array( 'key' => 'field_flex_stat_number', 'label' => 'Number', 'name' => 'number', 'type' => 'text' ),
+								array( 'key' => 'field_flex_stat_label', 'label' => 'Label', 'name' => 'label', 'type' => 'text' ),
+							),
+						),
+					),
+				),
+
+				'layout_faq' => array(
+					'key' => 'layout_faq', 'name' => 'faq_accordion', 'label' => 'FAQ Accordion', 'display' => 'block',
+					'sub_fields' => array(
+						array( 'key' => 'field_flex_faq_eyebrow', 'label' => 'Eyebrow', 'name' => 'eyebrow', 'type' => 'text' ),
+						array( 'key' => 'field_flex_faq_heading', 'label' => 'Heading', 'name' => 'heading', 'type' => 'text' ),
+						array(
+							'key' => 'field_flex_faq_items', 'label' => 'Questions', 'name' => 'faq_items', 'type' => 'repeater', 'button_label' => 'Add Question',
+							'sub_fields' => array(
+								array( 'key' => 'field_flex_faq_q', 'label' => 'Question', 'name' => 'question', 'type' => 'text' ),
+								array( 'key' => 'field_flex_faq_a', 'label' => 'Answer', 'name' => 'answer', 'type' => 'textarea', 'rows' => 3 ),
+							),
+						),
+					),
+				),
+
+				'layout_cta' => array(
+					'key' => 'layout_cta', 'name' => 'cta_band', 'label' => 'CTA Band', 'display' => 'block',
+					'sub_fields' => array(
+						array( 'key' => 'field_flex_cta_watermark', 'label' => 'Watermark Text', 'name' => 'watermark', 'type' => 'text' ),
+						array( 'key' => 'field_flex_cta_bg', 'label' => 'Background Photo', 'name' => 'bg_image', 'type' => 'image', 'return_format' => 'url' ),
+						array( 'key' => 'field_flex_cta_eyebrow', 'label' => 'Eyebrow', 'name' => 'eyebrow', 'type' => 'text' ),
+						array( 'key' => 'field_flex_cta_heading', 'label' => 'Heading', 'name' => 'heading', 'type' => 'text' ),
+						array( 'key' => 'field_flex_cta_text', 'label' => 'Text', 'name' => 'text', 'type' => 'textarea', 'rows' => 2 ),
+						array( 'key' => 'field_flex_cta_btn_label', 'label' => 'Button Label', 'name' => 'btn_label', 'type' => 'text', 'default_value' => 'Contact Us' ),
+						array( 'key' => 'field_flex_cta_btn_link', 'label' => 'Button Link', 'name' => 'btn_link', 'type' => 'text', 'default_value' => '/contact/' ),
+					),
+				),
+
+				'layout_content' => array(
+					'key' => 'layout_content', 'name' => 'rich_content', 'label' => 'Rich Text Content', 'display' => 'block',
+					'sub_fields' => array(
+						array( 'key' => 'field_flex_content_body', 'label' => 'Content', 'name' => 'body', 'type' => 'wysiwyg', 'tabs' => 'all', 'toolbar' => 'full' ),
+					),
+				),
+
+			),
+		),
+	),
+	'location' => array(
+		array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-flexible.php' ) ),
+	),
+	'menu_order' => 5,
+) );

@@ -236,6 +236,7 @@ function altysier_hide_unused_editor_for_acf_templates() {
 		'page-group-of-companies.php',
 		'page-privacy.php',
 		'page-terms.php',
+		'page-flexible.php',
 	);
 
 	$template = get_page_template_slug( $post_id );
@@ -244,3 +245,18 @@ function altysier_hide_unused_editor_for_acf_templates() {
 	}
 }
 add_action( 'admin_init', 'altysier_hide_unused_editor_for_acf_templates' );
+
+// ── Force the Classic Meta-Box Screen for the Company Post Type ───────────────
+// Every Company field is an ACF meta box (group_company_fields) — there is no
+// block content at all. In the block editor those meta boxes render inside a
+// collapsible panel that a viewer can toggle off via the (⋮) menu → Preferences
+// → Panels — a per-browser setting invisible from the database, so if it's ever
+// switched off the screen looks like "the ACF fields vanished" with no trace of
+// why. Disabling the block editor for this post type removes that whole failure
+// mode: the classic screen always shows every registered meta box, unconditionally.
+add_filter( 'use_block_editor_for_post_type', function ( $use_block_editor, $post_type ) {
+	if ( 'company' === $post_type ) {
+		return false;
+	}
+	return $use_block_editor;
+}, 10, 2 );

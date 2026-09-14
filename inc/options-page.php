@@ -26,12 +26,14 @@ if ( function_exists( 'acf_add_options_page' ) ) {
 	acf_add_options_sub_page( array(
 		'page_title'  => __( 'Email & SMTP Settings', 'altysier' ),
 		'menu_title'  => __( 'Email & SMTP', 'altysier' ),
+		'menu_slug'   => 'altysier-smtp-settings',
 		'parent_slug' => 'altysier-global-settings',
 	) );
 
 	acf_add_options_sub_page( array(
 		'page_title'  => __( 'Security & reCAPTCHA', 'altysier' ),
 		'menu_title'  => __( 'Security & reCAPTCHA', 'altysier' ),
+		'menu_slug'   => 'altysier-recaptcha-settings',
 		'parent_slug' => 'altysier-global-settings',
 	) );
 }

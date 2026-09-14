@@ -59,7 +59,7 @@ if ( $preloader_enabled ) :
 
 <?php
 // ── Sticky Header ─────────────────────────────────────────────────────────────
-$logo_url  = get_template_directory_uri() . '/assets/img/logo-icon.png';
+$logo_url  = altysier_get_option( 'header_logo', get_template_directory_uri() . '/assets/img/logo-icon.png' );
 $home_url  = esc_url( home_url( '/' ) );
 
 // Build company links from CPT

@@ -6,7 +6,7 @@
  * @package Altysier
  */
 
-$logo_url        = get_template_directory_uri() . '/assets/img/logo-icon.png';
+$logo_url        = altysier_get_option( 'footer_logo', get_template_directory_uri() . '/assets/img/logo-icon.png' );
 $home_url        = esc_url( home_url( '/' ) );
 $footer_blurb    = altysier_get_option( 'footer_blurb', 'A diversified business group building long-term value across international trade, industry and mobility.' );
 $footer_copy     = altysier_get_option( 'footer_copyright', 'Altysier Group. All rights reserved.' );
