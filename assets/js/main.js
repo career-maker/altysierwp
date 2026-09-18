@@ -393,13 +393,14 @@
       var prevBtn = document.querySelector('[data-strip-prev="' + key + '"]');
       var nextBtn = document.querySelector('[data-strip-next="' + key + '"]');
       var currentEl = document.querySelector('[data-strip-current="' + key + '"]');
+      var counterWrap = currentEl ? currentEl.closest('.strip-counter, .journey__counter') : null;
       var currentIndex = 0;
 
-      // Scroll to a specific card by index (never a blind relative offset) —
-      // a fixed-size step can overshoot the remaining scroll room on the
-      // last card or two (they can't align flush left against the
-      // container edge), which used to clamp to maxScroll and made the
-      // counter jump straight to the last card instead of counting up.
+      // Ensure counter numbers (01/07 etc) are always visible
+      if (counterWrap) {
+        counterWrap.style.display = '';
+      }
+
       function goTo(index) {
         index = Math.max(0, Math.min(total - 1, index));
         currentIndex = index;
@@ -411,48 +412,38 @@
       if (prevBtn) prevBtn.addEventListener('click', function () { goTo(currentIndex - 1); });
       if (nextBtn) nextBtn.addEventListener('click', function () { goTo(currentIndex + 1); });
 
-      var counterWrap = currentEl ? currentEl.closest('.strip-counter, .journey__counter') : null;
-
-      // Whether this strip needs nav/counter UI at all — a layout property
-      // (total content width vs. container width), not a scroll-position
-      // one. Checked only on init/resize, never on 'scroll': recomputing it
-      // on every scroll frame let a single transient mid-drag layout
-      // reading (subpixel rounding, momentum-scroll overscroll, etc.) flip
-      // it false for a frame and hide the counter/arrows while sliding.
       function updateVisibility() {
         var isScrollable = ( track.scrollWidth - track.clientWidth ) > 4;
         if (prevBtn) prevBtn.style.display = isScrollable ? '' : 'none';
         if (nextBtn) nextBtn.style.display = isScrollable ? '' : 'none';
-        if (counterWrap) counterWrap.style.display = isScrollable ? '' : 'none';
+        // Never hide the counter numbers (01/07 etc) - they are a permanent part of the heading UI
+        if (counterWrap) counterWrap.style.display = '';
         return isScrollable;
       }
 
-      // Which card is currently active — a scroll-position property,
-      // recomputed on every scroll frame.
       function updateCounter() {
         var maxScroll = track.scrollWidth - track.clientWidth;
-        var atStart = track.scrollLeft <= 1;
-        var atEnd = track.scrollLeft >= maxScroll - 1;
+        var atStart = track.scrollLeft <= 2;
+        var atEnd = track.scrollLeft >= maxScroll - 2;
+
         if (currentEl) {
-          // At either end, the nearest-card-to-left heuristic below can miss
-          // by a card or two when the last card can't reach the snap-left
-          // position (its width leaves it short of the container edge) —
-          // the counter should still read 01 / total there.
-          var shown;
-          if (atStart) shown = 0;
-          else if (atEnd) shown = total - 1;
-          else {
-            var trackLeft = track.getBoundingClientRect().left;
-            shown = 0;
-            var closestDist = Infinity;
-            for (var i = 0; i < total; i++) {
-              var dist = Math.abs(cards[i].getBoundingClientRect().left - trackLeft);
-              if (dist < closestDist) { closestDist = dist; shown = i; }
+          var trackRect = track.getBoundingClientRect();
+          var trackLeft = trackRect.left;
+          var shown = 0;
+          var closestDist = Infinity;
+
+          for (var i = 0; i < total; i++) {
+            var dist = Math.abs(cards[i].getBoundingClientRect().left - trackLeft);
+            if (dist < closestDist) {
+              closestDist = dist;
+              shown = i;
             }
           }
+
           currentEl.textContent = String(shown + 1).padStart(2, '0');
           currentIndex = shown;
         }
+
         if (prevBtn) { prevBtn.disabled = atStart; prevBtn.setAttribute('aria-disabled', String(atStart)); }
         if (nextBtn) { nextBtn.disabled = atEnd; nextBtn.setAttribute('aria-disabled', String(atEnd)); }
       }
@@ -464,10 +455,14 @@
           ticking = true;
         }
       }, { passive: true });
+
       window.addEventListener('resize', function () {
-        if (updateVisibility()) updateCounter();
+        updateVisibility();
+        updateCounter();
       });
-      if (updateVisibility()) updateCounter();
+
+      updateVisibility();
+      updateCounter();
     });
   });
 
