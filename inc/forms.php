@@ -277,6 +277,11 @@ function altysier_handle_contact_form() {
 	$sent = wp_mail( $recipient, $subject, $email_body, $headers );
 	remove_action( 'wp_mail_failed', 'altysier_capture_mail_error' );
 
+	global $altysier_last_mail_error;
+	if ( ! $sent && $altysier_last_mail_error ) {
+		error_log( '[Altysier Contact Form] wp_mail() failed: ' . $altysier_last_mail_error );
+	}
+
 	// Log the enquiry regardless of email outcome, so a mail failure never
 	// means the submission itself is lost — it's still visible in wp-admin.
 	$enquiry_id = altysier_save_enquiry( array(
@@ -288,6 +293,7 @@ function altysier_handle_contact_form() {
 		'message'     => $message,
 		'form_source' => $source,
 		'mail_sent'   => $sent,
+		'mail_error'  => $sent ? '' : $altysier_last_mail_error,
 	) );
 
 	// As long as the message is either successfully sent or stored in the database,
@@ -297,10 +303,6 @@ function altysier_handle_contact_form() {
 			'message' => __( 'Thank you for reaching out. A member of our team will respond within one business day.', 'altysier' ),
 		) );
 	} else {
-		global $altysier_last_mail_error;
-		if ( $altysier_last_mail_error ) {
-			error_log( '[Altysier Contact Form] wp_mail() failed: ' . $altysier_last_mail_error );
-		}
 		wp_send_json_error( array(
 			'message' => __( 'Your message could not be sent at this moment. Please contact us directly at info@altysier.com or call +971 4 268 0666.', 'altysier' ),
 		) );

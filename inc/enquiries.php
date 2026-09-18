@@ -87,6 +87,7 @@ function altysier_save_enquiry( $fields ) {
 	}
 	update_post_meta( $post_id, 'enquiry_ip', isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '' );
 	update_post_meta( $post_id, 'enquiry_mail_sent', ! empty( $fields['mail_sent'] ) ? '1' : '0' );
+	update_post_meta( $post_id, 'enquiry_mail_error', isset( $fields['mail_error'] ) ? sanitize_text_field( $fields['mail_error'] ) : '' );
 
 	return $post_id;
 }
@@ -160,8 +161,9 @@ function altysier_enquiry_render_meta_box( $post ) {
 		__( 'Source', 'altysier' )  => get_post_meta( $post->ID, 'enquiry_source', true ),
 		__( 'IP Address', 'altysier' ) => get_post_meta( $post->ID, 'enquiry_ip', true ),
 	);
-	$message = get_post_meta( $post->ID, 'enquiry_message', true );
-	$sent    = '1' === get_post_meta( $post->ID, 'enquiry_mail_sent', true );
+	$message    = get_post_meta( $post->ID, 'enquiry_message', true );
+	$sent       = '1' === get_post_meta( $post->ID, 'enquiry_mail_sent', true );
+	$mail_error = get_post_meta( $post->ID, 'enquiry_mail_error', true );
 	?>
 	<table class="form-table" style="margin-top:0;">
 		<?php foreach ( $fields as $label => $value ) : ?>
@@ -172,7 +174,18 @@ function altysier_enquiry_render_meta_box( $post ) {
 		<?php endforeach; ?>
 		<tr>
 			<th scope="row"><?php esc_html_e( 'Notification Email', 'altysier' ); ?></th>
-			<td><?php echo $sent ? esc_html__( 'Sent successfully', 'altysier' ) : esc_html__( 'Failed to send — see PHP error log for details.', 'altysier' ); ?></td>
+			<td>
+				<?php if ( $sent ) : ?>
+					<span style="color:#15803d;"><?php esc_html_e( 'Sent successfully', 'altysier' ); ?></span>
+				<?php else : ?>
+					<span style="color:#b91c1c;"><?php esc_html_e( 'Failed to send', 'altysier' ); ?></span>
+					<?php if ( $mail_error ) : ?>
+						<br><code style="white-space:pre-wrap;display:inline-block;margin-top:6px;"><?php echo esc_html( $mail_error ); ?></code>
+					<?php else : ?>
+						<br><em><?php esc_html_e( 'No error detail captured — check the server PHP error log for the wp_mail() failure at this timestamp.', 'altysier' ); ?></em>
+					<?php endif; ?>
+				<?php endif; ?>
+			</td>
 		</tr>
 	</table>
 	<h3><?php esc_html_e( 'Message', 'altysier' ); ?></h3>
