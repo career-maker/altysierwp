@@ -714,6 +714,9 @@ acf_add_local_field_group( array(
 		array( 'key' => 'field_co_ecosystem_eyebrow', 'label' => 'Ecosystem Eyebrow', 'name' => 'ecosystem_eyebrow', 'type' => 'text' ),
 		array( 'key' => 'field_co_ecosystem_heading', 'label' => 'Ecosystem Heading', 'name' => 'ecosystem_heading', 'type' => 'text' ),
 		array( 'key' => 'field_co_ecosystem_intro', 'label' => 'Ecosystem Intro', 'name' => 'ecosystem_intro', 'type' => 'text' ),
+		array( 'key' => 'field_co_ecosystem_final_label', 'label' => 'Ecosystem Path — Final Node Label', 'name' => 'ecosystem_final_label', 'type' => 'text', 'default_value' => 'Altysier Group', 'instructions' => 'The path shown is: this company → its sector tag → this label.' ),
+		array( 'key' => 'field_co_explore_heading', 'label' => '"Explore Other Companies" Eyebrow', 'name' => 'explore_heading', 'type' => 'text', 'default_value' => 'Explore Other Companies' ),
+		array( 'key' => 'field_co_explore_title', 'label' => '"Explore Other Companies" Title', 'name' => 'explore_title', 'type' => 'text', 'default_value' => 'More Companies in the Altysier Portfolio' ),
 	),
 	'location' => array(
 		array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'company' ) ),

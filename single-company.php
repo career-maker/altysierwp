@@ -279,13 +279,13 @@ get_template_part( 'template-parts/banner', 'inner' );
       <span class="ecosystem-arrow">&rarr;</span>
       <div class="ecosystem-node"><?php echo esc_html( $gf( 'sector_tag', 'Operating Sector' ) ); ?></div>
       <span class="ecosystem-arrow">&rarr;</span>
-      <div class="ecosystem-node" style="color:var(--accent);">Altysier Group</div>
+      <div class="ecosystem-node" style="color:var(--accent);"><?php echo esc_html( $gf( 'ecosystem_final_label', 'Altysier Group' ) ); ?></div>
     </div>
 
     <?php if ( $other_companies->have_posts() ) : ?>
       <div class="other-companies__head reveal">
-        <p class="eyebrow" style="justify-content:center;">Explore Other Companies</p>
-        <h3 class="other-companies__title">More Companies in the Altysier Portfolio</h3>
+        <p class="eyebrow" style="justify-content:center;"><?php echo esc_html( $gf( 'explore_heading', 'Explore Other Companies' ) ); ?></p>
+        <h3 class="other-companies__title"><?php echo esc_html( $gf( 'explore_title', 'More Companies in the Altysier Portfolio' ) ); ?></h3>
         <span class="group__accent-line" style="margin-left:auto;margin-right:auto;" aria-hidden="true"></span>
       </div>
       <div class="other-companies-grid other-companies-strip reveal">
