@@ -151,7 +151,7 @@ $banner_sub  = $gf( 'banner_subtitle', 'Whether you are exploring a business opp
           <div class="contact-form-grid">
             <div class="form-group">
               <label for="user_name" class="form-label"><?php esc_html_e( 'Full Name *', 'altysier' ); ?></label>
-              <input type="text" id="user_name" name="user_name" class="form-input" placeholder="e.g. Tariq Al-Mansoor" required>
+              <input type="text" id="user_name" name="user_name" class="form-input" placeholder="e.g. Tariq Al-Mansoor" minlength="2" maxlength="100" required>
             </div>
 
             <div class="form-group">
@@ -209,8 +209,8 @@ $banner_sub  = $gf( 'banner_subtitle', 'Whether you are exploring a business opp
             </div>
 
             <div class="form-group _full">
-              <label for="user_message" class="form-label"><?php esc_html_e( 'Message / Requirement Details', 'altysier' ); ?></label>
-              <textarea id="user_message" name="user_message" class="form-textarea" placeholder="Please outline your requirement, commodity volumes, destination port, or partnership proposal..."></textarea>
+              <label for="user_message" class="form-label"><?php esc_html_e( 'Message / Requirement Details *', 'altysier' ); ?></label>
+              <textarea id="user_message" name="user_message" class="form-textarea" placeholder="Please outline your requirement, commodity volumes, destination port, or partnership proposal..." minlength="2" maxlength="3000" required></textarea>
             </div>
           </div>
 

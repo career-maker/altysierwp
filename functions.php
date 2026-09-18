@@ -106,6 +106,19 @@ function altysier_output_favicon() {
 }
 add_action( 'wp_head', 'altysier_output_favicon', 1 );
 
+// ── Remove Unused "Posts" (Blog) Feature from Admin ─────────────────────────────
+// The site has no News/Blog page — hide Posts from the admin menu and admin bar
+// so editors can't add content that has nowhere to display.
+function altysier_remove_posts_admin_menu() {
+	remove_menu_page( 'edit.php' );
+}
+add_action( 'admin_menu', 'altysier_remove_posts_admin_menu', 999 );
+
+function altysier_remove_posts_admin_bar( $wp_admin_bar ) {
+	$wp_admin_bar->remove_node( 'new-post' );
+}
+add_action( 'admin_bar_menu', 'altysier_remove_posts_admin_bar', 999 );
+
 // ── Disable Block Editor Bloat on Frontend ─────────────────────────────────────
 function altysier_remove_block_styles() {
 	// Conditionally remove global styles injected by WordPress blocks

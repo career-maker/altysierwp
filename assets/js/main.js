@@ -549,6 +549,39 @@
   });
 
   run(function () {
+    document.querySelectorAll('[data-scroll-top]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+      });
+    });
+  });
+
+  /* ---------------------------------------------------------------------
+     Hero scroll-down cue — hide once the hero has scrolled out of view
+     (clicking it, or scrolling manually, should make it disappear instead
+     of lingering over the next section).
+     --------------------------------------------------------------------- */
+  run(function () {
+    var cue = document.querySelector('.hero__scroll-cue');
+    var hero = document.getElementById('hero') || document.querySelector('.hero');
+    if (!cue || !hero) return;
+
+    var ticking = false;
+    function updateCue() {
+      ticking = false;
+      var heroBottom = hero.getBoundingClientRect().bottom;
+      cue.classList.toggle('is-hidden', heroBottom <= 80);
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(updateCue);
+      }
+    }, { passive: true });
+    updateCue();
+  });
+
+  run(function () {
     var yearEl = document.getElementById('current-year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
   });

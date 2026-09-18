@@ -710,7 +710,7 @@ $has_companies = $companies_query->have_posts();
           <div class="contact-form__row">
             <label class="contact-form__field">
               <span>Full Name</span>
-              <input type="text" name="name" id="hp_name" placeholder="Your name" required autocomplete="name">
+              <input type="text" name="name" id="hp_name" placeholder="Your name" minlength="2" maxlength="100" required autocomplete="name">
             </label>
             <label class="contact-form__field">
               <span>Email</span>
@@ -719,7 +719,7 @@ $has_companies = $companies_query->have_posts();
           </div>
           <label class="contact-form__field">
             <span>Message</span>
-            <textarea name="message" id="hp_message" rows="2" placeholder="Tell us about your enquiry" required></textarea>
+            <textarea name="message" id="hp_message" rows="2" placeholder="Tell us about your enquiry" minlength="2" maxlength="3000" required></textarea>
           </label>
 
           <button type="submit" class="btn _accent contact-form__submit" id="hp_submit_btn">Send Message</button>

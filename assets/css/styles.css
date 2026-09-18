@@ -1062,9 +1062,10 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   backdrop-filter: blur(10rem);
   -webkit-backdrop-filter: blur(10rem);
   box-shadow: 0 4rem 16rem rgba(0, 0, 0, 0.05);
-  transition: all var(--t-fast);
+  transition: all var(--t-fast), opacity 0.3s ease, visibility 0.3s ease;
   z-index: 3;
 }
+.hero__scroll-cue.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 .hero__scroll-cue svg { width: 14rem; height: 14rem; animation: floatDown 2s ease-in-out infinite; }
 .hero__scroll-cue:hover {
   background-color: var(--ink);

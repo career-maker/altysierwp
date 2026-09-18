@@ -73,7 +73,6 @@ $companies_query = new WP_Query( array(
             <a href="<?php echo esc_url( home_url( '/about/' ) ); ?>"><?php esc_html_e( 'About Us', 'altysier' ); ?></a>
             <a href="<?php echo esc_url( home_url( '/csr/' ) ); ?>"><?php esc_html_e( 'CSR &amp; Sustainability', 'altysier' ); ?></a>
             <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Contact Us', 'altysier' ); ?></a>
-            <a href="<?php echo esc_url( home_url( '/news/' ) ); ?>"><?php esc_html_e( 'News &amp; Insights', 'altysier' ); ?></a>
           </div>
         </div>
       </div>
@@ -161,7 +160,7 @@ $companies_query = new WP_Query( array(
         <a href="https://www.intersmart.ae/" target="_blank" rel="noopener noreferrer">InterSmart</a>
       </span>
 
-      <button type="button" class="footer__up-btn" data-scroll-to="hero" aria-label="<?php esc_attr_e( 'Back to top', 'altysier' ); ?>">
+      <button type="button" class="footer__up-btn" data-scroll-top="true" aria-label="<?php esc_attr_e( 'Back to top', 'altysier' ); ?>">
         <span><?php esc_html_e( 'Up', 'altysier' ); ?></span>
         <span class="footer__up-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>

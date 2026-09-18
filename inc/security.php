@@ -11,12 +11,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // ── Security Headers ───────────────────────────────────────────────────────────
 function altysier_security_headers() {
+	header_remove( 'X-Powered-By' );
 	if ( ! is_admin() ) {
 		header( 'X-Content-Type-Options: nosniff' );
 		header( 'X-Frame-Options: SAMEORIGIN' );
 		header( 'X-XSS-Protection: 1; mode=block' );
 		header( 'Referrer-Policy: strict-origin-when-cross-origin' );
 		header( 'Permissions-Policy: camera=(), microphone=(), geolocation=()' );
+		if ( is_ssl() ) {
+			header( 'Strict-Transport-Security: max-age=31536000; includeSubDomains' );
+		}
 	}
 }
 add_action( 'send_headers', 'altysier_security_headers' );
