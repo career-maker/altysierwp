@@ -259,8 +259,12 @@ function altysier_handle_contact_form() {
 
 	$email_body = altysier_build_email_html( $email_data );
 
+	$from_name  = altysier_get_option( 'mail_from_name', 'Altysier Group' );
+	$from_email = function_exists( 'altysier_wp_mail_from' ) ? altysier_wp_mail_from( get_option( 'admin_email' ) ) : get_option( 'admin_email' );
+
 	$headers = array(
 		'Content-Type: text/html; charset=UTF-8',
+		'From: ' . sanitize_text_field( $from_name ) . ' <' . sanitize_email( $from_email ) . '>',
 		'Reply-To: ' . sanitize_text_field( $name ) . ' <' . sanitize_email( $email ) . '>',
 	);
 
@@ -270,7 +274,7 @@ function altysier_handle_contact_form() {
 
 	// Log the enquiry regardless of email outcome, so a mail failure never
 	// means the submission itself is lost — it's still visible in wp-admin.
-	altysier_save_enquiry( array(
+	$enquiry_id = altysier_save_enquiry( array(
 		'name'        => $name,
 		'email'       => $email,
 		'phone'       => $phone,
@@ -281,7 +285,9 @@ function altysier_handle_contact_form() {
 		'mail_sent'   => $sent,
 	) );
 
-	if ( $sent ) {
+	// As long as the message is either successfully sent or stored in the database,
+	// inform the user that their submission was received.
+	if ( $sent || $enquiry_id ) {
 		wp_send_json_success( array(
 			'message' => __( 'Thank you for reaching out. A member of our team will respond within one business day.', 'altysier' ),
 		) );

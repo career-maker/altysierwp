@@ -64,9 +64,18 @@ function altysier_wp_mail_from( $email ) {
 	if ( ! empty( $from ) && is_email( $from ) ) {
 		return $from;
 	}
-	$user = altysier_get_option( 'smtp_username', '' );
-	if ( ! empty( $user ) && is_email( $user ) ) {
-		return $user;
+	$smtp_password = altysier_get_option( 'smtp_password', '' );
+	if ( ! empty( $smtp_password ) ) {
+		$user = altysier_get_option( 'smtp_username', '' );
+		if ( ! empty( $user ) && is_email( $user ) ) {
+			return $user;
+		}
+	}
+	// When using local mail (no SMTP credentials), use server domain sender to satisfy Exim sender verify
+	$server_host = isset( $_SERVER['SERVER_NAME'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) ) : '';
+	$server_host = preg_replace( '/^www\./', '', $server_host );
+	if ( ! empty( $server_host ) && false === strpos( $server_host, 'localhost' ) ) {
+		return 'noreply@' . $server_host;
 	}
 	return $email;
 }
