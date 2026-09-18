@@ -754,6 +754,16 @@ acf_add_local_field_group( array(
 		array( 'key' => 'field_contact_form_heading', 'label' => 'Form Heading', 'name' => 'form_heading', 'type' => 'text', 'default_value' => 'How Can We Help?' ),
 		array( 'key' => 'field_contact_statement', 'label' => 'Form Intro Statement', 'name' => 'statement', 'type' => 'text', 'default_value' => 'Direct communication with our corporate trade and enterprise relations desk.' ),
 		array( 'key' => 'field_contact_description', 'label' => 'Form Intro Description', 'name' => 'description', 'type' => 'textarea', 'rows' => 2, 'default_value' => 'Please submit your inquiry with relevant project or supply details. Our specialized industry representatives review every message and respond within 24 business hours.' ),
+		array(
+			'key'          => 'field_contact_guarantees',
+			'label'        => 'Guarantee Bullet Points',
+			'name'         => 'form_guarantees',
+			'type'         => 'repeater',
+			'button_label' => 'Add Bullet Point',
+			'sub_fields'   => array(
+				array( 'key' => 'field_contact_guarantee_text', 'label' => 'Text', 'name' => 'text', 'type' => 'text' ),
+			),
+		),
 
 		// B2B Routes
 		array( 'key' => 'field_contact_b2b_watermark', 'label' => 'B2B Watermark', 'name' => 'b2b_watermark', 'type' => 'text', 'default_value' => 'ROUTES' ),
@@ -883,6 +893,16 @@ acf_add_local_field_group( array(
 		array( 'key' => 'field_about_leadership_intro', 'label' => 'Leadership Intro', 'name' => 'leadership_intro', 'type' => 'textarea', 'rows' => 2, 'default_value' => 'Guiding our diversified business portfolio with strategic focus, integrity, and long-term vision.' ),
 		array( 'key' => 'field_about_leader_name', 'label' => 'Leader Name', 'name' => 'leader_name', 'type' => 'text', 'default_value' => 'Omer Mahmoud Yousif Ali' ),
 		array( 'key' => 'field_about_leader_role', 'label' => 'Leader Role', 'name' => 'leader_role', 'type' => 'text', 'default_value' => 'Chief Executive Officer, Altysier Group' ),
+		array(
+			'key'          => 'field_about_leader_values',
+			'label'        => 'Leader Values (bullet list)',
+			'name'         => 'leader_values',
+			'type'         => 'repeater',
+			'button_label' => 'Add Value',
+			'sub_fields'   => array(
+				array( 'key' => 'field_about_leader_value_text', 'label' => 'Value', 'name' => 'value', 'type' => 'text' ),
+			),
+		),
 		array(
 			'key' => 'field_about_leader_quote', 'label' => 'Leader Quote', 'name' => 'leader_quote', 'type' => 'wysiwyg', 'tabs' => 'visual', 'media_upload' => 0, 'toolbar' => 'basic',
 			'default_value' => '<p>&#8220;At Altysier Group, we believe that strong businesses are built on trust, consistency, and responsibility. From our earliest operations, our focus has been on creating reliable trade channels that support essential industries and contribute to economic stability.</p><p>Global markets are constantly evolving, and our role is to adapt with integrity while maintaining the highest standards of quality and professionalism. Whether we are trading strategic commodities, investing in industrial growth, supporting transportation solutions, or manufacturing agricultural products, our objective remains the same: to deliver value that lasts.</p><p>We place great importance on long-term partnerships, transparent business practices, and operational excellence. Through our group companies, we continue to expand responsibly while supporting communities, industries, and supply chains across international markets.</p><p>We look forward to building meaningful collaborations and growing together.&#8221;</p>',

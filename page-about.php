@@ -183,10 +183,21 @@ $banner_sub  = $gf( 'banner_subtitle', 'Altysier Group brings together specializ
           <span class="leadership-spread__role" data-wp-field="leader_role"><?php echo esc_html( $gf( 'leader_role', 'Chief Executive Officer, Altysier Group' ) ); ?></span>
         </div>
         <div class="leadership-spread__divider" aria-hidden="true"></div>
+        <?php
+        $leader_values = ( $has_acf && have_rows( 'leader_values' ) ) ? array() : array( 'Trust', 'Integrity', 'Long-Term Growth' );
+        if ( $has_acf && have_rows( 'leader_values' ) ) {
+          while ( have_rows( 'leader_values' ) ) {
+            the_row();
+            $val = get_sub_field( 'value' );
+            if ( $val ) { $leader_values[] = $val; }
+          }
+          if ( empty( $leader_values ) ) { $leader_values = array( 'Trust', 'Integrity', 'Long-Term Growth' ); }
+        }
+        ?>
         <ul class="leadership-spread__values">
-          <li><?php esc_html_e( 'Trust', 'altysier' ); ?></li>
-          <li><?php esc_html_e( 'Integrity', 'altysier' ); ?></li>
-          <li><?php esc_html_e( 'Long-Term Growth', 'altysier' ); ?></li>
+          <?php foreach ( $leader_values as $value ) : ?>
+            <li><?php echo esc_html( $value ); ?></li>
+          <?php endforeach; ?>
         </ul>
         <img class="leadership-spread__watermark" src="<?php echo esc_url( get_theme_file_uri( 'assets/img/logo-icon.png' ) ); ?>" alt="" aria-hidden="true">
       </div>

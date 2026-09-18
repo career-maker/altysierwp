@@ -127,19 +127,25 @@ $banner_sub  = $gf( 'banner_subtitle', 'Whether you are exploring a business opp
         <h3 class="contact-form-intro__statement" data-wp-field="statement"><?php echo esc_html( $gf( 'statement', 'Direct communication with our corporate trade and enterprise relations desk.' ) ); ?></h3>
         <p class="contact-form-intro__text" data-wp-field="description"><?php echo esc_html( $gf( 'description', 'Please submit your inquiry with relevant project or supply details. Our specialized industry representatives review every message and respond within 24 business hours.' ) ); ?></p>
 
+        <?php
+        $form_guarantees = array( '24-Hour Business Response Commitment', 'Direct Routing to Relevant Group Subsidiary', 'Strict Commercial Privacy & NDA Compliance' );
+        if ( $has_acf && have_rows( 'form_guarantees' ) ) {
+          $rows = array();
+          while ( have_rows( 'form_guarantees' ) ) {
+            the_row();
+            $text = get_sub_field( 'text' );
+            if ( $text ) { $rows[] = $text; }
+          }
+          if ( ! empty( $rows ) ) { $form_guarantees = $rows; }
+        }
+        ?>
         <div class="contact-form-guarantees">
-          <div class="contact-guarantee-item">
-            <span class="contact-guarantee-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>
-            <span><?php esc_html_e( '24-Hour Business Response Commitment', 'altysier' ); ?></span>
-          </div>
-          <div class="contact-guarantee-item">
-            <span class="contact-guarantee-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>
-            <span><?php esc_html_e( 'Direct Routing to Relevant Group Subsidiary', 'altysier' ); ?></span>
-          </div>
-          <div class="contact-guarantee-item">
-            <span class="contact-guarantee-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>
-            <span><?php esc_html_e( 'Strict Commercial Privacy & NDA Compliance', 'altysier' ); ?></span>
-          </div>
+          <?php foreach ( $form_guarantees as $guarantee ) : ?>
+            <div class="contact-guarantee-item">
+              <span class="contact-guarantee-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <span><?php echo esc_html( $guarantee ); ?></span>
+            </div>
+          <?php endforeach; ?>
         </div>
       </div>
 
