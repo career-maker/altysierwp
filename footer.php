@@ -35,7 +35,7 @@ $companies_query = new WP_Query( array(
 ?>
 </div><!-- #page -->
 
-<footer class="footer" role="contentinfo">
+<footer class="footer">
   <div class="container">
     <div class="footer__top">
 
@@ -152,7 +152,7 @@ $companies_query = new WP_Query( array(
 
       <div class="footer__legal-links">
         <a href="<?php echo esc_url( home_url( '/privacy-policy/' ) ); ?>"><?php esc_html_e( 'Privacy Policy', 'altysier' ); ?></a>
-        <a href="<?php echo esc_url( home_url( '/terms-and-conditions/' ) ); ?>"><?php esc_html_e( 'Terms &amp; Conditions', 'altysier' ); ?></a>
+        <a href="<?php echo esc_url( home_url( '/terms-of-use/' ) ); ?>"><?php esc_html_e( 'Terms &amp; Conditions', 'altysier' ); ?></a>
       </div>
 
       <span class="footer__credit">

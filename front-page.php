@@ -223,8 +223,6 @@ $has_companies = $companies_query->have_posts();
     <?php else : ?>
     <img class="section-photo"
          src="<?php echo esc_url( $hero_bg ); ?>"
-         srcset="<?php echo esc_url( $hero_bg ); ?>"
-         sizes="100vw"
          alt=""
          loading="eager"
          decoding="async"
@@ -316,7 +314,7 @@ $has_companies = $companies_query->have_posts();
         <span class="sectors__accent-line" aria-hidden="true"></span>
         <p class="sectors__intro"><?php echo esc_html( $group_sec_intro ); ?></p>
       </div>
-      <div class="sectors__nav" aria-label="Sectors carousel navigation">
+      <div class="sectors__nav" role="group" aria-label="Sectors carousel navigation">
         <button type="button" class="strip-nav-btn" data-strip-prev="sectors" aria-label="Previous sector">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
@@ -663,7 +661,7 @@ $has_companies = $companies_query->have_posts();
         <div class="editorial-nav-left">
           <div class="editorial-lines" role="tablist" aria-label="Testimonial slides">
             <?php foreach ( $testimonials as $t_idx => $t ) : ?>
-            <button type="button" class="editorial-line-btn<?php echo ( 0 === $t_idx ) ? ' active' : ''; ?>" data-index="<?php echo esc_attr( $t_idx ); ?>" aria-label="Testimonial <?php echo esc_attr( $t_idx + 1 ); ?>" aria-selected="<?php echo ( 0 === $t_idx ) ? 'true' : 'false'; ?>"><span class="editorial-line"></span></button>
+            <button type="button" role="tab" class="editorial-line-btn<?php echo ( 0 === $t_idx ) ? ' active' : ''; ?>" data-index="<?php echo esc_attr( $t_idx ); ?>" aria-label="Testimonial <?php echo esc_attr( $t_idx + 1 ); ?>" aria-selected="<?php echo ( 0 === $t_idx ) ? 'true' : 'false'; ?>"><span class="editorial-line"></span></button>
             <?php endforeach; ?>
           </div>
           <span class="editorial-counter" id="editorial-counter">01 / <?php echo esc_html( sprintf( '%02d', count( $testimonials ) ) ); ?></span>

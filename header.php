@@ -103,7 +103,7 @@ $companies_query = new WP_Query( array(
 ) );
 ?>
 
-<header class="header" role="banner">
+<header class="header">
   <div class="container header__container">
     <a href="<?php echo $home_url; ?>" class="header__logo">
       <img src="<?php echo esc_url( $logo_url ); ?>" alt="" class="header__logo-icon" width="48" height="42" loading="eager">
