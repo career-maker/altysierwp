@@ -783,19 +783,216 @@
   });
 
   /* ---------------------------------------------------------------------
-     Generic AJAX contact form handler — wires up any form marked
-     data-form-ajax="true" (currently the homepage FAQ/contact form) to
-     submit via wp_ajax instead of a native page submission, so it never
-     falls through to a plain GET request on the current URL.
+     Form Real-time Validation and Generic AJAX Contact Form Handler
+     Immediate inline error display when invalid data is entered,
+     and immediate error vanishing as soon as valid data is entered.
      --------------------------------------------------------------------- */
+  var FormValidators = {
+    name: function (val) {
+      var trimmed = (val || '').trim();
+      if (!trimmed) return { valid: false, message: 'Full name is required.' };
+      if (trimmed.length < 2) return { valid: false, message: 'Name must be at least 2 characters.' };
+      if (trimmed.length > 100) return { valid: false, message: 'Name must not exceed 100 characters.' };
+      var nameRegex;
+      try {
+        nameRegex = /^[\p{L}][\p{L}\p{M}\s'\-]*$/u;
+      } catch (e) {
+        nameRegex = /^[a-zA-Z\u00C0-\u024F\u0600-\u06FF\s'\-]+$/;
+      }
+      if (!nameRegex.test(trimmed)) {
+        return { valid: false, message: 'Please enter letters only (no numbers or special characters).' };
+      }
+      return { valid: true, message: '' };
+    },
+
+    email: function (val) {
+      var trimmed = (val || '').trim();
+      if (!trimmed) return { valid: false, message: 'Email address is required.' };
+      if (trimmed.length > 254) return { valid: false, message: 'Email address is too long.' };
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      if (!emailRegex.test(trimmed)) {
+        return { valid: false, message: 'Please enter a valid email address (e.g. name@company.com).' };
+      }
+      return { valid: true, message: '' };
+    },
+
+    phone: function (nationalNum, dialCode) {
+      var trimmed = (nationalNum || '').trim();
+      if (!trimmed) return { valid: false, message: 'Phone number is required.' };
+      if (!/^[0-9()\-\s]+$/.test(trimmed)) return { valid: false, message: 'Please enter digits only.' };
+      var nationalDigits = trimmed.replace(/\D/g, '');
+      if (/^0+$/.test(nationalDigits)) return { valid: false, message: 'Please enter a valid phone number.' };
+      var full = (dialCode || '') + ' ' + trimmed;
+      var digits = full.replace(/\D/g, '');
+      if (digits.length < 10) return { valid: false, message: 'Phone number must have at least 10 digits (including country code).' };
+      if (digits.length > 15) return { valid: false, message: 'Phone number cannot exceed 15 digits.' };
+      return { valid: true, message: '' };
+    },
+
+    company: function (val) {
+      var trimmed = (val || '').trim();
+      if (!trimmed) return { valid: false, message: 'Company or organization name is required.' };
+      if (trimmed.length < 2) return { valid: false, message: 'Company name must be at least 2 characters.' };
+      if (trimmed.length > 150) return { valid: false, message: 'Company name must not exceed 150 characters.' };
+      return { valid: true, message: '' };
+    },
+
+    subject: function (val) {
+      var trimmed = (val || '').trim();
+      if (!trimmed) return { valid: false, message: 'Please select an inquiry category.' };
+      return { valid: true, message: '' };
+    },
+
+    message: function (val) {
+      var trimmed = (val || '').trim();
+      if (!trimmed) return { valid: false, message: 'Message is required.' };
+      if (trimmed.length < 2) return { valid: false, message: 'Message must be at least 2 characters.' };
+      if (trimmed.length > 3000) return { valid: false, message: 'Message cannot exceed 3000 characters.' };
+      var hasWordChar = false;
+      try {
+        hasWordChar = /[\p{L}\p{N}]/u.test(trimmed);
+      } catch (e) {
+        hasWordChar = /[a-zA-Z0-9]/.test(trimmed);
+      }
+      if (!hasWordChar) return { valid: false, message: 'Message must contain letters or numbers.' };
+      if (/<\s*[a-z!\/]|javascript\s*:|\{\{.*\}\}|--|;\s*--|\bdrop\s+table\b|\bunion\s+select\b/i.test(trimmed)) {
+        return { valid: false, message: 'HTML tags and code markers are not allowed.' };
+      }
+      return { valid: true, message: '' };
+    }
+  };
+
+  window.AltysierFormValidators = FormValidators;
+
+  function showFieldError(inputEl, errorEl, msg, containerEl) {
+    if (errorEl) {
+      errorEl.textContent = msg;
+      errorEl.classList.add('is-visible');
+    }
+    if (inputEl) {
+      inputEl.classList.add('is-invalid');
+      inputEl.setAttribute('aria-invalid', 'true');
+    }
+    if (containerEl) {
+      containerEl.classList.add('is-invalid');
+    }
+  }
+
+  function hideFieldError(inputEl, errorEl, containerEl) {
+    if (errorEl) {
+      errorEl.textContent = '';
+      errorEl.classList.remove('is-visible');
+    }
+    if (inputEl) {
+      inputEl.classList.remove('is-invalid');
+      inputEl.setAttribute('aria-invalid', 'false');
+    }
+    if (containerEl) {
+      containerEl.classList.remove('is-invalid');
+    }
+  }
+
   run(function () {
     document.querySelectorAll('form[data-form-ajax="true"]').forEach(function (form) {
       var status = form.querySelector('.contact-form__status');
       var submitBtn = form.querySelector('button[type="submit"]');
       var submitLabel = submitBtn ? submitBtn.textContent : '';
 
+      var nameInput = form.querySelector('input[name="name"]') || form.querySelector('input[name="user_name"]');
+      var nameError = form.querySelector('#hp_name_error') || (nameInput && form.querySelector('.field-error[data-for="' + nameInput.name + '"]'));
+      var nameTouched = false;
+
+      var emailInput = form.querySelector('input[name="email"]') || form.querySelector('input[name="user_email"]');
+      var emailError = form.querySelector('#hp_email_error') || (emailInput && form.querySelector('.field-error[data-for="' + emailInput.name + '"]'));
+      var emailTouched = false;
+
+      var msgInput = form.querySelector('textarea[name="message"]') || form.querySelector('textarea[name="user_message"]');
+      var msgError = form.querySelector('#hp_message_error') || (msgInput && form.querySelector('.field-error[data-for="' + msgInput.name + '"]'));
+      var msgTouched = false;
+
+      function validateNameField(forceShow) {
+        if (!nameInput) return true;
+        var val = nameInput.value;
+        if (!val.trim() && !forceShow && !nameTouched) {
+          hideFieldError(nameInput, nameError);
+          return true;
+        }
+        nameTouched = true;
+        var res = FormValidators.name(val);
+        if (!res.valid) {
+          showFieldError(nameInput, nameError, res.message);
+          return false;
+        }
+        hideFieldError(nameInput, nameError);
+        return true;
+      }
+
+      function validateEmailField(forceShow) {
+        if (!emailInput) return true;
+        var val = emailInput.value;
+        if (!val.trim() && !forceShow && !emailTouched) {
+          hideFieldError(emailInput, emailError);
+          return true;
+        }
+        emailTouched = true;
+        var res = FormValidators.email(val);
+        if (!res.valid) {
+          showFieldError(emailInput, emailError, res.message);
+          return false;
+        }
+        hideFieldError(emailInput, emailError);
+        return true;
+      }
+
+      function validateMsgField(forceShow) {
+        if (!msgInput) return true;
+        var val = msgInput.value;
+        if (!val.trim() && !forceShow && !msgTouched) {
+          hideFieldError(msgInput, msgError);
+          return true;
+        }
+        msgTouched = true;
+        var res = FormValidators.message(val);
+        if (!res.valid) {
+          showFieldError(msgInput, msgError, res.message);
+          return false;
+        }
+        hideFieldError(msgInput, msgError);
+        return true;
+      }
+
+      if (nameInput) {
+        nameInput.addEventListener('input', function () { validateNameField(false); });
+        nameInput.addEventListener('blur', function () { validateNameField(true); });
+      }
+
+      if (emailInput) {
+        emailInput.addEventListener('input', function () { validateEmailField(false); });
+        emailInput.addEventListener('blur', function () { validateEmailField(true); });
+      }
+
+      if (msgInput) {
+        msgInput.addEventListener('input', function () { validateMsgField(false); });
+        msgInput.addEventListener('blur', function () { validateMsgField(true); });
+      }
+
       form.addEventListener('submit', function (e) {
         e.preventDefault();
+
+        var isNameValid = validateNameField(true);
+        var isEmailValid = validateEmailField(true);
+        var isMsgValid = validateMsgField(true);
+
+        if (!isNameValid || !isEmailValid || !isMsgValid) {
+          if (!isNameValid && nameInput) {
+            nameInput.focus();
+          } else if (!isEmailValid && emailInput) {
+            emailInput.focus();
+          } else if (!isMsgValid && msgInput) {
+            msgInput.focus();
+          }
+          return;
+        }
 
         if (submitBtn) {
           submitBtn.disabled = true;
@@ -826,6 +1023,12 @@
                 status.classList.add('is-success');
               }
               form.reset();
+              hideFieldError(nameInput, nameError);
+              hideFieldError(emailInput, emailError);
+              hideFieldError(msgInput, msgError);
+              nameTouched = false;
+              emailTouched = false;
+              msgTouched = false;
               if (submitBtn) {
                 submitBtn.disabled = false;
                 submitBtn.textContent = submitLabel;

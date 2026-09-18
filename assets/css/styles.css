@@ -2881,6 +2881,61 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 .contact-form__status:empty { display: none; }
 .contact-form__status.is-success { color: #15803d; }
 .contact-form__status.is-error { color: #b91c1c; }
+
+/* Real-time Form Validation Styles */
+.field-error {
+  display: none !important;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 12rem !important;
+  font-weight: 500 !important;
+  line-height: 1.35 !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
+  color: #b91c1c !important;
+  margin-top: 5rem !important;
+}
+
+.field-error.is-visible {
+  display: block !important;
+  animation: fieldErrorFadeIn 0.2s ease-out forwards;
+}
+
+@keyframes fieldErrorFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.contact-form__field input.is-invalid,
+.contact-form__field textarea.is-invalid,
+.form-group .form-input.is-invalid,
+.form-group .form-select.is-invalid,
+.form-group .form-textarea.is-invalid,
+.form-group .phone-input-group.is-invalid {
+  border-color: #b91c1c !important;
+  background-color: rgba(185, 28, 28, 0.025) !important;
+  box-shadow: 0 0 0 3.5px rgba(185, 28, 28, 0.12) !important;
+}
+
+[data-theme="dark"] .field-error {
+  color: #f87171 !important;
+}
+
+[data-theme="dark"] .contact-form__field input.is-invalid,
+[data-theme="dark"] .contact-form__field textarea.is-invalid,
+[data-theme="dark"] .form-group .form-input.is-invalid,
+[data-theme="dark"] .form-group .form-select.is-invalid,
+[data-theme="dark"] .form-group .form-textarea.is-invalid,
+[data-theme="dark"] .form-group .phone-input-group.is-invalid {
+  border-color: #ef4444 !important;
+  background-color: rgba(239, 68, 68, 0.06) !important;
+  box-shadow: 0 0 0 3.5px rgba(239, 68, 68, 0.2) !important;
+}
 .faq__list { display: flex; flex-direction: column; gap: 10rem; }
 .faq__item {
   border-radius: 16rem;

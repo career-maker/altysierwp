@@ -151,18 +151,20 @@ $banner_sub  = $gf( 'banner_subtitle', 'Whether you are exploring a business opp
 
       <!-- Right: Form Card -->
       <div class="contact-form-card reveal">
-        <form class="contact-form" id="altysier-contact-form" action="#" method="POST" data-wp-field="form_embed">
+        <form class="contact-form" id="altysier-contact-form" action="#" method="POST" data-wp-field="form_embed" novalidate>
           <?php wp_nonce_field( 'altysier_contact_nonce', 'contact_nonce' ); ?>
           <input type="hidden" name="action" value="altysier_contact_form">
           <div class="contact-form-grid">
             <div class="form-group">
               <label for="user_name" class="form-label"><?php esc_html_e( 'Full Name *', 'altysier' ); ?></label>
-              <input type="text" id="user_name" name="user_name" class="form-input" placeholder="e.g. Tariq Al-Mansoor" minlength="2" maxlength="100" required>
+              <input type="text" id="user_name" name="user_name" class="form-input" placeholder="e.g. Tariq Al-Mansoor" minlength="2" maxlength="100" required aria-describedby="user_name_error">
+              <span class="field-error" id="user_name_error" role="alert" aria-live="polite"></span>
             </div>
 
             <div class="form-group">
               <label for="user_email" class="form-label"><?php esc_html_e( 'Business Email *', 'altysier' ); ?></label>
-              <input type="email" id="user_email" name="user_email" class="form-input" placeholder="name@company.com" required>
+              <input type="email" id="user_email" name="user_email" class="form-input" placeholder="name@company.com" required aria-describedby="user_email_error">
+              <span class="field-error" id="user_email_error" role="alert" aria-live="polite"></span>
             </div>
 
             <div class="form-group">
@@ -184,21 +186,23 @@ $banner_sub  = $gf( 'banner_subtitle', 'Whether you are exploring a business opp
                     <ul class="country-list" id="country-list"></ul>
                   </div>
                 </div>
-                <input type="tel" id="user_phone" name="user_phone" class="form-input phone-number-input" placeholder="50 000 0000" required autocomplete="tel-national">
+                <input type="tel" id="user_phone" name="user_phone" class="form-input phone-number-input" placeholder="50 000 0000" required autocomplete="tel-national" aria-describedby="user_phone_error">
                 <input type="hidden" id="country_dial_code" name="country_dial_code" value="+971">
                 <input type="hidden" id="full_phone_number" name="full_phone_number" value="+971 ">
               </div>
+              <span class="field-error" id="user_phone_error" role="alert" aria-live="polite"></span>
             </div>
 
             <div class="form-group">
               <label for="user_company" class="form-label"><?php esc_html_e( 'Company / Organization *', 'altysier' ); ?></label>
-              <input type="text" id="user_company" name="user_company" class="form-input" placeholder="e.g. Crescent Trading Corp" required>
+              <input type="text" id="user_company" name="user_company" class="form-input" placeholder="e.g. Crescent Trading Corp" required aria-describedby="user_company_error">
+              <span class="field-error" id="user_company_error" role="alert" aria-live="polite"></span>
             </div>
 
             <div class="form-group _full">
               <label for="user_subject" class="form-label"><?php esc_html_e( 'Nature of Inquiry *', 'altysier' ); ?></label>
               <div class="form-select-wrapper">
-                <select id="user_subject" name="user_subject" class="form-select" required>
+                <select id="user_subject" name="user_subject" class="form-select" required aria-describedby="user_subject_error">
                   <option value="" disabled selected><?php esc_html_e( 'Select Inquiry Category', 'altysier' ); ?></option>
                   <option value="International Trade & Commodities"><?php esc_html_e( 'International Trade & Commodities', 'altysier' ); ?></option>
                   <option value="Industrial Investment & Mobility"><?php esc_html_e( 'Industrial Investment & BAJAJ Mobility', 'altysier' ); ?></option>
@@ -212,11 +216,13 @@ $banner_sub  = $gf( 'banner_subtitle', 'Whether you are exploring a business opp
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </span>
               </div>
+              <span class="field-error" id="user_subject_error" role="alert" aria-live="polite"></span>
             </div>
 
             <div class="form-group _full">
               <label for="user_message" class="form-label"><?php esc_html_e( 'Message / Requirement Details *', 'altysier' ); ?></label>
-              <textarea id="user_message" name="user_message" class="form-textarea" placeholder="Please outline your requirement, commodity volumes, destination port, or partnership proposal..." minlength="2" maxlength="3000" required></textarea>
+              <textarea id="user_message" name="user_message" class="form-textarea" placeholder="Please outline your requirement, commodity volumes, destination port, or partnership proposal..." minlength="2" maxlength="3000" required aria-describedby="user_message_error"></textarea>
+              <span class="field-error" id="user_message_error" role="alert" aria-live="polite"></span>
             </div>
           </div>
 
@@ -367,6 +373,7 @@ $banner_sub  = $gf( 'banner_subtitle', 'Whether you are exploring a business opp
       var select = document.getElementById('user_subject');
       if (select && subject) {
         select.value = subject;
+        select.dispatchEvent(new Event('change'));
       }
       var enquirySection = document.getElementById('enquiry');
       if (enquirySection) {
@@ -389,6 +396,8 @@ $banner_sub  = $gf( 'banner_subtitle', 'Whether you are exploring a business opp
     { name: 'United States', code: '+1', iso: 'us', placeholder: '(555) 123-4567', flag: '<rect width="640" height="480" fill="#b22234"/><path d="M0,37h640M0,111h640M0,185h640M0,259h640M0,333h640M0,407h640" stroke="#fff" stroke-width="37"/><rect width="280" height="259" fill="#3c3b6e"/>' },
     { name: 'India', code: '+91', iso: 'in', placeholder: '98765 43210', flag: '<rect width="640" height="160" fill="#ff9933"/><rect y="160" width="640" height="160" fill="#ffffff"/><rect y="320" width="640" height="160" fill="#138808"/><circle cx="320" cy="240" r="38" fill="none" stroke="#000088" stroke-width="6"/>' }
   ];
+
+  var validatePhoneFieldGlobal = null;
 
   (function initCountryPicker() {
     var picker = document.getElementById('country-picker');
@@ -440,6 +449,9 @@ $banner_sub  = $gf( 'banner_subtitle', 'Whether you are exploring a business opp
       if (phoneInput && country.placeholder) phoneInput.placeholder = country.placeholder;
       syncFullPhone();
       renderList(COUNTRIES);
+      if (typeof validatePhoneFieldGlobal === 'function') {
+        validatePhoneFieldGlobal();
+      }
     }
 
     function syncFullPhone() {
@@ -494,7 +506,7 @@ $banner_sub  = $gf( 'banner_subtitle', 'Whether you are exploring a business opp
     syncFullPhone();
   })();
 
-  // Contact Form AJAX Handler
+  // Contact Form Real-time Validation & AJAX Handler
   (function initFormAjax() {
     var form = document.getElementById('altysier-contact-form');
     var feedback = document.getElementById('form-feedback');
@@ -502,8 +514,275 @@ $banner_sub  = $gf( 'banner_subtitle', 'Whether you are exploring a business opp
 
     if (!form) return;
 
+    var nameInput = document.getElementById('user_name');
+    var nameError = document.getElementById('user_name_error');
+    var nameTouched = false;
+
+    var emailInput = document.getElementById('user_email');
+    var emailError = document.getElementById('user_email_error');
+    var emailTouched = false;
+
+    var phoneInput = document.getElementById('user_phone');
+    var phoneError = document.getElementById('user_phone_error');
+    var phoneGroup = document.getElementById('phone-input-group');
+    var dialCodeInput = document.getElementById('country_dial_code');
+    var phoneTouched = false;
+
+    var companyInput = document.getElementById('user_company');
+    var companyError = document.getElementById('user_company_error');
+    var companyTouched = false;
+
+    var subjectInput = document.getElementById('user_subject');
+    var subjectError = document.getElementById('user_subject_error');
+    var subjectTouched = false;
+
+    var msgInput = document.getElementById('user_message');
+    var msgError = document.getElementById('user_message_error');
+    var msgTouched = false;
+
+    var V = window.AltysierFormValidators || {
+      name: function(val) {
+        var trimmed = (val || '').trim();
+        if (!trimmed) return { valid: false, message: 'Full name is required.' };
+        if (trimmed.length < 2) return { valid: false, message: 'Name must be at least 2 characters.' };
+        if (trimmed.length > 100) return { valid: false, message: 'Name must not exceed 100 characters.' };
+        var nameRegex;
+        try { nameRegex = /^[\p{L}][\p{L}\p{M}\s'\-]*$/u; } catch(e) { nameRegex = /^[a-zA-Z\u00C0-\u024F\u0600-\u06FF\s'\-]+$/; }
+        if (!nameRegex.test(trimmed)) return { valid: false, message: 'Please enter letters only (no numbers or special characters).' };
+        return { valid: true, message: '' };
+      },
+      email: function(val) {
+        var trimmed = (val || '').trim();
+        if (!trimmed) return { valid: false, message: 'Email address is required.' };
+        if (trimmed.length > 254) return { valid: false, message: 'Email address is too long.' };
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+        if (!emailRegex.test(trimmed)) return { valid: false, message: 'Please enter a valid email address (e.g. name@company.com).' };
+        return { valid: true, message: '' };
+      },
+      phone: function(nationalNum, dialCode) {
+        var trimmed = (nationalNum || '').trim();
+        if (!trimmed) return { valid: false, message: 'Phone number is required.' };
+        if (!/^[0-9()\-\s]+$/.test(trimmed)) return { valid: false, message: 'Please enter digits only.' };
+        var nationalDigits = trimmed.replace(/\D/g, '');
+        if (/^0+$/.test(nationalDigits)) return { valid: false, message: 'Please enter a valid phone number.' };
+        var full = (dialCode || '') + ' ' + trimmed;
+        var digits = full.replace(/\D/g, '');
+        if (digits.length < 10) return { valid: false, message: 'Phone number must have at least 10 digits (including country code).' };
+        if (digits.length > 15) return { valid: false, message: 'Phone number cannot exceed 15 digits.' };
+        return { valid: true, message: '' };
+      },
+      company: function(val) {
+        var trimmed = (val || '').trim();
+        if (!trimmed) return { valid: false, message: 'Company or organization name is required.' };
+        if (trimmed.length < 2) return { valid: false, message: 'Company name must be at least 2 characters.' };
+        if (trimmed.length > 150) return { valid: false, message: 'Company name must not exceed 150 characters.' };
+        return { valid: true, message: '' };
+      },
+      subject: function(val) {
+        var trimmed = (val || '').trim();
+        if (!trimmed) return { valid: false, message: 'Please select an inquiry category.' };
+        return { valid: true, message: '' };
+      },
+      message: function(val) {
+        var trimmed = (val || '').trim();
+        if (!trimmed) return { valid: false, message: 'Message is required.' };
+        if (trimmed.length < 2) return { valid: false, message: 'Message must be at least 2 characters.' };
+        if (trimmed.length > 3000) return { valid: false, message: 'Message cannot exceed 3000 characters.' };
+        var hasWordChar = false;
+        try { hasWordChar = /[\p{L}\p{N}]/u.test(trimmed); } catch(e) { hasWordChar = /[a-zA-Z0-9]/.test(trimmed); }
+        if (!hasWordChar) return { valid: false, message: 'Message must contain letters or numbers.' };
+        if (/<\s*[a-z!\/]|javascript\s*:|\{\{.*\}\}|--|;\s*--|\bdrop\s+table\b|\bunion\s+select\b/i.test(trimmed)) {
+          return { valid: false, message: 'HTML tags and code markers are not allowed.' };
+        }
+        return { valid: true, message: '' };
+      }
+    };
+
+    function showErr(inputEl, errorEl, msg, containerEl) {
+      if (errorEl) {
+        errorEl.textContent = msg;
+        errorEl.classList.add('is-visible');
+      }
+      if (inputEl) {
+        inputEl.classList.add('is-invalid');
+        inputEl.setAttribute('aria-invalid', 'true');
+      }
+      if (containerEl) {
+        containerEl.classList.add('is-invalid');
+      }
+    }
+
+    function hideErr(inputEl, errorEl, containerEl) {
+      if (errorEl) {
+        errorEl.textContent = '';
+        errorEl.classList.remove('is-visible');
+      }
+      if (inputEl) {
+        inputEl.classList.remove('is-invalid');
+        inputEl.setAttribute('aria-invalid', 'false');
+      }
+      if (containerEl) {
+        containerEl.classList.remove('is-invalid');
+      }
+    }
+
+    function validateNameField(forceShow) {
+      if (!nameInput) return true;
+      var val = nameInput.value;
+      if (!val.trim() && !forceShow && !nameTouched) {
+        hideErr(nameInput, nameError);
+        return true;
+      }
+      nameTouched = true;
+      var res = V.name(val);
+      if (!res.valid) {
+        showErr(nameInput, nameError, res.message);
+        return false;
+      }
+      hideErr(nameInput, nameError);
+      return true;
+    }
+
+    function validateEmailField(forceShow) {
+      if (!emailInput) return true;
+      var val = emailInput.value;
+      if (!val.trim() && !forceShow && !emailTouched) {
+        hideErr(emailInput, emailError);
+        return true;
+      }
+      emailTouched = true;
+      var res = V.email(val);
+      if (!res.valid) {
+        showErr(emailInput, emailError, res.message);
+        return false;
+      }
+      hideErr(emailInput, emailError);
+      return true;
+    }
+
+    function validatePhoneField(forceShow) {
+      if (!phoneInput) return true;
+      var val = phoneInput.value;
+      var dial = dialCodeInput ? dialCodeInput.value : '+971';
+      if (!val.trim() && !forceShow && !phoneTouched) {
+        hideErr(phoneInput, phoneError, phoneGroup);
+        return true;
+      }
+      phoneTouched = true;
+      var res = V.phone(val, dial);
+      if (!res.valid) {
+        showErr(phoneInput, phoneError, res.message, phoneGroup);
+        return false;
+      }
+      hideErr(phoneInput, phoneError, phoneGroup);
+      return true;
+    }
+    validatePhoneFieldGlobal = function() {
+      if (phoneTouched || (phoneInput && phoneInput.value.trim())) {
+        validatePhoneField(phoneTouched);
+      }
+    };
+
+    function validateCompanyField(forceShow) {
+      if (!companyInput) return true;
+      var val = companyInput.value;
+      if (!val.trim() && !forceShow && !companyTouched) {
+        hideErr(companyInput, companyError);
+        return true;
+      }
+      companyTouched = true;
+      var res = V.company(val);
+      if (!res.valid) {
+        showErr(companyInput, companyError, res.message);
+        return false;
+      }
+      hideErr(companyInput, companyError);
+      return true;
+    }
+
+    function validateSubjectField(forceShow) {
+      if (!subjectInput) return true;
+      var val = subjectInput.value;
+      if (!val && !forceShow && !subjectTouched) {
+        hideErr(subjectInput, subjectError);
+        return true;
+      }
+      subjectTouched = true;
+      var res = V.subject(val);
+      if (!res.valid) {
+        showErr(subjectInput, subjectError, res.message);
+        return false;
+      }
+      hideErr(subjectInput, subjectError);
+      return true;
+    }
+
+    function validateMsgField(forceShow) {
+      if (!msgInput) return true;
+      var val = msgInput.value;
+      if (!val.trim() && !forceShow && !msgTouched) {
+        hideErr(msgInput, msgError);
+        return true;
+      }
+      msgTouched = true;
+      var res = V.message(val);
+      if (!res.valid) {
+        showErr(msgInput, msgError, res.message);
+        return false;
+      }
+      hideErr(msgInput, msgError);
+      return true;
+    }
+
+    if (nameInput) {
+      nameInput.addEventListener('input', function() { validateNameField(false); });
+      nameInput.addEventListener('blur', function() { validateNameField(true); });
+    }
+
+    if (emailInput) {
+      emailInput.addEventListener('input', function() { validateEmailField(false); });
+      emailInput.addEventListener('blur', function() { validateEmailField(true); });
+    }
+
+    if (phoneInput) {
+      phoneInput.addEventListener('input', function() { validatePhoneField(false); });
+      phoneInput.addEventListener('blur', function() { validatePhoneField(true); });
+    }
+
+    if (companyInput) {
+      companyInput.addEventListener('input', function() { validateCompanyField(false); });
+      companyInput.addEventListener('blur', function() { validateCompanyField(true); });
+    }
+
+    if (subjectInput) {
+      subjectInput.addEventListener('change', function() { validateSubjectField(true); });
+      subjectInput.addEventListener('blur', function() { validateSubjectField(true); });
+    }
+
+    if (msgInput) {
+      msgInput.addEventListener('input', function() { validateMsgField(false); });
+      msgInput.addEventListener('blur', function() { validateMsgField(true); });
+    }
+
     form.addEventListener('submit', function(e) {
       e.preventDefault();
+
+      var isNameValid = validateNameField(true);
+      var isEmailValid = validateEmailField(true);
+      var isPhoneValid = validatePhoneField(true);
+      var isCompanyValid = validateCompanyField(true);
+      var isSubjectValid = validateSubjectField(true);
+      var isMsgValid = validateMsgField(true);
+
+      if (!isNameValid || !isEmailValid || !isPhoneValid || !isCompanyValid || !isSubjectValid || !isMsgValid) {
+        if (!isNameValid && nameInput) nameInput.focus();
+        else if (!isEmailValid && emailInput) emailInput.focus();
+        else if (!isPhoneValid && phoneInput) phoneInput.focus();
+        else if (!isCompanyValid && companyInput) companyInput.focus();
+        else if (!isSubjectValid && subjectInput) subjectInput.focus();
+        else if (!isMsgValid && msgInput) msgInput.focus();
+        return;
+      }
 
       if (submitBtn) {
         submitBtn.disabled = true;
@@ -534,6 +813,18 @@ $banner_sub  = $gf( 'banner_subtitle', 'Whether you are exploring a business opp
               submitBtn.style.backgroundColor = '#15803d';
             }
             form.reset();
+            hideErr(nameInput, nameError);
+            hideErr(emailInput, emailError);
+            hideErr(phoneInput, phoneError, phoneGroup);
+            hideErr(companyInput, companyError);
+            hideErr(subjectInput, subjectError);
+            hideErr(msgInput, msgError);
+            nameTouched = false;
+            emailTouched = false;
+            phoneTouched = false;
+            companyTouched = false;
+            subjectTouched = false;
+            msgTouched = false;
           } else {
             feedback.style.color = '#b91c1c';
             feedback.textContent = (data && data.data && data.data.message) ? data.data.message : 'Submission could not be completed. Please try again or email info@altysier.com.';
@@ -555,6 +846,18 @@ $banner_sub  = $gf( 'banner_subtitle', 'Whether you are exploring a business opp
           submitBtn.style.backgroundColor = '#15803d';
         }
         form.reset();
+        hideErr(nameInput, nameError);
+        hideErr(emailInput, emailError);
+        hideErr(phoneInput, phoneError, phoneGroup);
+        hideErr(companyInput, companyError);
+        hideErr(subjectInput, subjectError);
+        hideErr(msgInput, msgError);
+        nameTouched = false;
+        emailTouched = false;
+        phoneTouched = false;
+        companyTouched = false;
+        subjectTouched = false;
+        msgTouched = false;
       });
     });
   })();

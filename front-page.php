@@ -708,16 +708,19 @@ $has_companies = $companies_query->have_posts();
           <div class="contact-form__row">
             <label class="contact-form__field">
               <span>Full Name</span>
-              <input type="text" name="name" id="hp_name" placeholder="Your name" minlength="2" maxlength="100" required autocomplete="name">
+              <input type="text" name="name" id="hp_name" placeholder="Your name" minlength="2" maxlength="100" required autocomplete="name" aria-describedby="hp_name_error">
+              <span class="field-error" id="hp_name_error" role="alert" aria-live="polite"></span>
             </label>
             <label class="contact-form__field">
               <span>Email</span>
-              <input type="email" name="email" id="hp_email" placeholder="you@company.com" required autocomplete="email">
+              <input type="email" name="email" id="hp_email" placeholder="you@company.com" required autocomplete="email" aria-describedby="hp_email_error">
+              <span class="field-error" id="hp_email_error" role="alert" aria-live="polite"></span>
             </label>
           </div>
           <label class="contact-form__field">
             <span>Message</span>
-            <textarea name="message" id="hp_message" rows="2" placeholder="Tell us about your enquiry" minlength="2" maxlength="3000" required></textarea>
+            <textarea name="message" id="hp_message" rows="2" placeholder="Tell us about your enquiry" minlength="2" maxlength="3000" required aria-describedby="hp_message_error"></textarea>
+            <span class="field-error" id="hp_message_error" role="alert" aria-live="polite"></span>
           </label>
 
           <button type="submit" class="btn _accent contact-form__submit" id="hp_submit_btn">Send Message</button>
