@@ -56,12 +56,14 @@ function altysier_enqueue_assets() {
 		null
 	);
 
-	// Core theme CSS (migrated verbatim from original styles.min.css)
+	// Core theme CSS
+	$css_rel = file_exists( get_template_directory() . '/assets/css/styles.css' ) ? '/assets/css/styles.css' : '/assets/css/styles.min.css';
+	$css_ver = file_exists( get_template_directory() . $css_rel ) ? filemtime( get_template_directory() . $css_rel ) : $ver;
 	wp_enqueue_style(
 		'altysier-styles',
-		$theme_uri . '/assets/css/styles.min.css',
+		$theme_uri . $css_rel,
 		array( 'altysier-fonts' ),
-		$ver
+		$css_ver
 	);
 
 	// Main JS (migrated verbatim from original main.min.js)

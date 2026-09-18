@@ -136,7 +136,7 @@ get_template_part( 'template-parts/banner', 'inner' );
       <h2 class="group__title reveal"><?php echo esc_html( $story_heading ); ?></h2>
       <span class="group__accent-line reveal" aria-hidden="true"></span>
     </div>
-    <div class="story-steps">
+    <div class="story-steps story-timeline">
       <?php foreach ( $story_steps as $step ) : ?>
         <div class="story-step reveal">
           <?php if ( ! empty( $step['step_badge'] ) ) : ?>
@@ -278,22 +278,27 @@ get_template_part( 'template-parts/banner', 'inner' );
     </div>
 
     <?php if ( $other_companies->have_posts() ) : ?>
-      <div class="about-intro__head" style="margin-top:50rem;">
-        <p class="eyebrow reveal">Explore Other Companies</p>
+      <div class="other-companies__head reveal">
+        <p class="eyebrow" style="justify-content:center;">Explore Other Companies</p>
+        <h3 class="other-companies__title">More Companies in the Altysier Portfolio</h3>
+        <span class="group__accent-line" style="margin-left:auto;margin-right:auto;" aria-hidden="true"></span>
       </div>
-      <div class="other-companies-strip reveal">
+      <div class="other-companies-grid other-companies-strip reveal">
         <?php while ( $other_companies->have_posts() ) : $other_companies->the_post();
           $co_logo = get_the_post_thumbnail_url( get_the_ID(), 'altysier-thumb' ) ?: get_template_directory_uri() . '/assets/img/logo-icon.png';
           $co_tag  = function_exists( 'get_field' ) ? get_field( 'sector_tag' ) : '';
         ?>
-          <a href="<?php the_permalink(); ?>" class="other-co-card">
+          <a href="<?php the_permalink(); ?>" class="other-co-card other-company-card">
+            <div class="other-co-card__logo-wrap">
               <img src="<?php echo esc_url( $co_logo ); ?>" alt="<?php the_title_attribute(); ?>" class="other-co-card__logo" loading="lazy">
+            </div>
             <div class="other-co-card__info">
               <span class="other-co-card__name"><?php the_title(); ?></span>
               <?php if ( $co_tag ) : ?>
                 <span class="other-co-card__sector"><?php echo esc_html( $co_tag ); ?></span>
               <?php endif; ?>
             </div>
+            <span class="other-co-card__arrow" aria-hidden="true">&rarr;</span>
           </a>
         <?php endwhile; wp_reset_postdata(); ?>
       </div>
