@@ -405,7 +405,7 @@ $has_companies = $companies_query->have_posts();
 <!-- ============================================================
      04. GROUP OF COMPANIES — Business Carousel
      ============================================================ -->
-<section class="businesses" id="businesses">
+<section class="businesses" id="companies">
   <span class="section-watermark" aria-hidden="true">OUR BUSINESSES</span>
   <div class="container">
     <div class="businesses__head strip-head">

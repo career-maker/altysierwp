@@ -90,7 +90,7 @@ $companies_query = new WP_Query( array(
         </a>
 
         <div class="header__menu-dropdown">
-          <a href="<?php echo esc_url( home_url( '/#businesses' ) ); ?>" class="header__menu-item text-hover header__dropdown-toggle">
+          <a href="<?php echo esc_url( home_url( '/#companies' ) ); ?>" class="header__menu-item text-hover header__dropdown-toggle">
             <span class="text-hover__inner">
               <span class="text-hover__elem text-hover__elem-1"><?php esc_html_e( 'Group of Companies', 'altysier' ); ?></span>
               <span class="text-hover__elem text-hover__elem-2"><?php esc_html_e( 'Group of Companies', 'altysier' ); ?></span>

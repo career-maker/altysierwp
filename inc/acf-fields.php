@@ -248,7 +248,7 @@ acf_add_local_field_group( array(
 			'label'         => 'Primary Button Link',
 			'name'          => 'hero_btn1_link',
 			'type'          => 'text',
-			'default_value' => '#businesses',
+			'default_value' => '#companies',
 		),
 		array(
 			'key'           => 'field_hero_btn2_label',
