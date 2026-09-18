@@ -642,7 +642,7 @@ $has_companies = $companies_query->have_posts();
       </div>
       <div class="editorial-body" data-wp-section="testimonials">
         <div class="editorial-index" id="editorial-index" aria-hidden="true">01</div>
-        <div class="editorial-main">
+        <div class="editorial-main" id="editorial-panel" role="tabpanel" aria-label="<?php esc_attr_e( 'Testimonial content', 'altysier' ); ?>">
           <blockquote class="editorial-quote" id="editorial-quote">
             &ldquo;<?php echo esc_html( $first_testimonial['quote'] ); ?>&rdquo;
           </blockquote>
@@ -661,7 +661,7 @@ $has_companies = $companies_query->have_posts();
         <div class="editorial-nav-left">
           <div class="editorial-lines" role="tablist" aria-label="Testimonial slides">
             <?php foreach ( $testimonials as $t_idx => $t ) : ?>
-            <button type="button" role="tab" class="editorial-line-btn<?php echo ( 0 === $t_idx ) ? ' active' : ''; ?>" data-index="<?php echo esc_attr( $t_idx ); ?>" aria-label="Testimonial <?php echo esc_attr( $t_idx + 1 ); ?>" aria-selected="<?php echo ( 0 === $t_idx ) ? 'true' : 'false'; ?>"><span class="editorial-line"></span></button>
+            <button type="button" role="tab" aria-controls="editorial-panel" class="editorial-line-btn<?php echo ( 0 === $t_idx ) ? ' active' : ''; ?>" data-index="<?php echo esc_attr( $t_idx ); ?>" aria-label="Testimonial <?php echo esc_attr( $t_idx + 1 ); ?>" aria-selected="<?php echo ( 0 === $t_idx ) ? 'true' : 'false'; ?>"><span class="editorial-line"></span></button>
             <?php endforeach; ?>
           </div>
           <span class="editorial-counter" id="editorial-counter">01 / <?php echo esc_html( sprintf( '%02d', count( $testimonials ) ) ); ?></span>

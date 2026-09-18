@@ -44,7 +44,7 @@ if ( $preloader_enabled ) :
 	$bg_video_mobile  = get_template_directory_uri() . '/assets/img/preloader-bg-mobile.mp4';
 ?>
 <div class="preloader" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Loading Altysier Group', 'altysier' ); ?>">
-  <video class="preloader__video" autoplay muted loop playsinline aria-hidden="true">
+  <video class="preloader__video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
     <source src="<?php echo esc_url( $bg_video_desktop ); ?>" type="video/mp4">
   </video>
   <script>

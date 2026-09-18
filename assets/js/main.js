@@ -85,7 +85,7 @@
 
     document.documentElement.style.overflow = 'hidden';
     // Absolute worst case: never let the page stay stuck longer than this.
-    window.setTimeout(finish, 1800);
+    window.setTimeout(finish, 2600);
 
     if (prefersReducedMotion) { finish(); return; }
 
@@ -97,15 +97,19 @@
         preloader.classList.add('is-counting');
         var target = numberEl ? Number(numberEl.getAttribute('data-num') || 100) : 100;
         var start = performance.now();
-        var duration = 600;
+        // Long enough for the background video to actually decode a frame
+        // and become visible before the preloader is torn down — at the
+        // previous ~900ms total, the video was still buffering when
+        // finish() ran, so it never had a chance to render anything.
+        var duration = 900;
         function tick(now) {
           var p = Math.min(1, (now - start) / duration);
           if (numberEl) numberEl.textContent = String(Math.ceil(p * target));
           if (p < 1) window.requestAnimationFrame(tick);
-          else window.setTimeout(finish, 100);
+          else window.setTimeout(finish, 150);
         }
         window.requestAnimationFrame(tick);
-      }, 200);
+      }, 300);
     };
 
     if (document.readyState === 'complete' || document.readyState === 'interactive') begin();
