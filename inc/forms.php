@@ -14,11 +14,16 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Returns true if rate limit exceeded
  */
 function altysier_check_rate_limit( $form_id = 'contact' ) {
+	// Logged-in administrators are exempt from rate limiting during testing/management
+	if ( current_user_can( 'manage_options' ) ) {
+		return false;
+	}
+
 	$ip         = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : 'unknown';
-	$transient  = 'altysier_rate_' . md5( $form_id . $ip );
+	$transient  = 'altysier_rate_v2_' . md5( $form_id . $ip );
 	$count      = (int) get_transient( $transient );
 
-	if ( $count >= 5 ) {
+	if ( $count >= 25 ) {
 		return true; // Rate limit exceeded
 	}
 
