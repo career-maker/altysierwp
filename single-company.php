@@ -20,7 +20,14 @@ get_header();
 
 $has_acf = function_exists( 'get_field' );
 $gf      = function( $key, $default = '' ) use ( $has_acf ) {
-	return $has_acf ? ( get_field( $key ) ?: $default ) : $default;
+	if ( ! $has_acf ) {
+		return $default;
+	}
+	// A field explicitly cleared in the editor returns '' and must render as
+	// empty, not fall back to the placeholder default. Only a field that has
+	// never been set (false/null) should use the default.
+	$val = get_field( $key );
+	return ( false === $val || null === $val ) ? $default : $val;
 };
 
 // ── Banner fields ─────────────────────────────────────────────────────────────
