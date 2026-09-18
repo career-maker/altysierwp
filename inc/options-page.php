@@ -36,6 +36,13 @@ if ( function_exists( 'acf_add_options_page' ) ) {
 		'menu_slug'   => 'altysier-recaptcha-settings',
 		'parent_slug' => 'altysier-global-settings',
 	) );
+
+	acf_add_options_sub_page( array(
+		'page_title'  => __( '404 Page Content', 'altysier' ),
+		'menu_title'  => __( '404 Page', 'altysier' ),
+		'menu_slug'   => 'altysier-404-settings',
+		'parent_slug' => 'altysier-global-settings',
+	) );
 }
 
 /**
@@ -139,6 +146,15 @@ function altysier_register_settings() {
 		'altysier_cta_default_heading',
 		'altysier_cta_default_text',
 		'altysier_cta_default_link',
+
+		// 404 Page
+		'altysier_error_page_bg_image',
+		'altysier_error_page_title',
+		'altysier_error_page_text',
+		'altysier_error_page_btn1_label',
+		'altysier_error_page_btn1_link',
+		'altysier_error_page_btn2_label',
+		'altysier_error_page_btn2_link',
 	);
 
 	foreach ( $options as $opt ) {
@@ -176,6 +192,7 @@ function altysier_render_settings_page() {
 			<a href="?page=altysier-settings&tab=smtp" class="nav-tab <?php echo $active_tab === 'smtp' ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'Gmail SMTP Delivery', 'altysier' ); ?></a>
 			<a href="?page=altysier-settings&tab=recaptcha" class="nav-tab <?php echo $active_tab === 'recaptcha' ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'Google reCAPTCHA v3', 'altysier' ); ?></a>
 			<a href="?page=altysier-settings&tab=footer" class="nav-tab <?php echo $active_tab === 'footer' ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'Footer & Global CTA', 'altysier' ); ?></a>
+			<a href="?page=altysier-settings&tab=error404" class="nav-tab <?php echo $active_tab === 'error404' ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( '404 Page', 'altysier' ); ?></a>
 		</h2>
 
 		<form action="options.php" method="post" style="background: #fff; padding: 25px; border: 1px solid #ccd0d4; box-shadow: 0 1px 1px rgba(0,0,0,.04); margin-top: 15px; border-radius: 4px;">
@@ -422,6 +439,47 @@ function altysier_render_settings_page() {
 						<td>
 							<input type="text" id="altysier_cta_default_link" name="altysier_cta_default_link" value="<?php echo esc_attr( get_option( 'altysier_cta_default_link', '/contact/' ) ); ?>" class="regular-text">
 						</td>
+					</tr>
+				</table>
+
+			<?php elseif ( 'error404' === $active_tab ) : ?>
+				<div class="notice notice-info inline" style="margin-left: 0;">
+					<p><?php esc_html_e( 'Controls the content shown on the 404 (page not found) error page. The four "Helpful Links" cards below the buttons are managed from the ACF-powered 404 Page settings sub-page when ACF Pro is active.', 'altysier' ); ?></p>
+				</div>
+				<table class="form-table">
+					<tr>
+						<th scope="row"><label for="altysier_error_page_bg_image"><?php esc_html_e( 'Background Image URL', 'altysier' ); ?></label></th>
+						<td>
+							<input type="text" id="altysier_error_page_bg_image" name="altysier_error_page_bg_image" value="<?php echo esc_attr( get_option( 'altysier_error_page_bg_image', '' ) ); ?>" class="large-text" placeholder="Leave blank to use the default background photo.">
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="altysier_error_page_title"><?php esc_html_e( 'Title', 'altysier' ); ?></label></th>
+						<td>
+							<input type="text" id="altysier_error_page_title" name="altysier_error_page_title" value="<?php echo esc_attr( get_option( 'altysier_error_page_title', 'Destination Unavailable' ) ); ?>" class="large-text">
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="altysier_error_page_text"><?php esc_html_e( 'Description', 'altysier' ); ?></label></th>
+						<td>
+							<textarea id="altysier_error_page_text" name="altysier_error_page_text" rows="3" class="large-text"><?php echo esc_textarea( get_option( 'altysier_error_page_text', 'The page you are attempting to access does not exist, has been relocated, or is temporarily unavailable across our network. Please use the navigation links below to redirect your query.' ) ); ?></textarea>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="altysier_error_page_btn1_label"><?php esc_html_e( 'Primary Button Label', 'altysier' ); ?></label></th>
+						<td><input type="text" id="altysier_error_page_btn1_label" name="altysier_error_page_btn1_label" value="<?php echo esc_attr( get_option( 'altysier_error_page_btn1_label', 'Return to Home' ) ); ?>" class="regular-text"></td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="altysier_error_page_btn1_link"><?php esc_html_e( 'Primary Button Link', 'altysier' ); ?></label></th>
+						<td><input type="text" id="altysier_error_page_btn1_link" name="altysier_error_page_btn1_link" value="<?php echo esc_attr( get_option( 'altysier_error_page_btn1_link', '/' ) ); ?>" class="regular-text"></td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="altysier_error_page_btn2_label"><?php esc_html_e( 'Secondary Button Label', 'altysier' ); ?></label></th>
+						<td><input type="text" id="altysier_error_page_btn2_label" name="altysier_error_page_btn2_label" value="<?php echo esc_attr( get_option( 'altysier_error_page_btn2_label', 'Our Companies' ) ); ?>" class="regular-text"></td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="altysier_error_page_btn2_link"><?php esc_html_e( 'Secondary Button Link', 'altysier' ); ?></label></th>
+						<td><input type="text" id="altysier_error_page_btn2_link" name="altysier_error_page_btn2_link" value="<?php echo esc_attr( get_option( 'altysier_error_page_btn2_link', '/#companies' ) ); ?>" class="regular-text"></td>
 					</tr>
 				</table>
 			<?php endif; ?>

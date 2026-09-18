@@ -47,7 +47,7 @@ function altysier_build_email_html( $data ) {
 	$body .= '<div style="background:#900909;padding:25px 30px;">';
 	$body .= '<div style="color:#fff;font-size:22px;font-weight:bold;letter-spacing:2px;">ALTYSIER</div>';
 	$body .= '<div style="color:rgba(255,255,255,0.7);font-size:12px;letter-spacing:1px;margin-top:2px;">GROUP</div>';
-	$body .= '<p style="color:rgba(255,255,255,0.85);margin:12px 0 0;font-size:14px;">New Enquiry Received â€” ' . esc_html( $data['form_source'] ) . '</p>';
+	$body .= '<p style="color:rgba(255,255,255,0.85);margin:12px 0 0;font-size:14px;">New Enquiry Received &mdash; ' . esc_html( $data['form_source'] ) . '</p>';
 	$body .= '</div>';
 
 	// Fields table
@@ -113,7 +113,7 @@ function altysier_handle_contact_form() {
 
 	// 6. Build and send email
 	$recipient  = altysier_get_option( 'enquiry_recipient', 'manu.abhiram@gmail.com' );
-	$subject    = sprintf( 'New Enquiry via Altysier Group Website â€” %s', $name );
+	$subject    = sprintf( 'New Enquiry via Altysier Group Website - %s', $name );
 
 	$email_data = array(
 		'form_source' => $source,

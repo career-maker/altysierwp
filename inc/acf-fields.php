@@ -1096,6 +1096,39 @@ acf_add_local_field_group( array(
 ) );
 
 // ══════════════════════════════════════════════════════════════
+// 14b. GLOBAL SETTINGS — 404 Page Content
+// ══════════════════════════════════════════════════════════════
+acf_add_local_field_group( array(
+	'key'    => 'group_error404_settings',
+	'title'  => '🚧 404 Page Content',
+	'fields' => array(
+		array( 'key' => 'field_error_page_bg_image', 'label' => 'Background Image', 'name' => 'error_page_bg_image', 'type' => 'image', 'return_format' => 'url', 'instructions' => 'Leave blank to use the default background photo.' ),
+		array( 'key' => 'field_error_page_title', 'label' => 'Title', 'name' => 'error_page_title', 'type' => 'text', 'default_value' => 'Destination Unavailable' ),
+		array( 'key' => 'field_error_page_text', 'label' => 'Description', 'name' => 'error_page_text', 'type' => 'textarea', 'rows' => 3, 'default_value' => 'The page you are attempting to access does not exist, has been relocated, or is temporarily unavailable across our network. Please use the navigation links below to redirect your query.' ),
+		array( 'key' => 'field_error_page_btn1_label', 'label' => 'Primary Button Label', 'name' => 'error_page_btn1_label', 'type' => 'text', 'default_value' => 'Return to Home' ),
+		array( 'key' => 'field_error_page_btn1_link', 'label' => 'Primary Button Link', 'name' => 'error_page_btn1_link', 'type' => 'text', 'default_value' => '/' ),
+		array( 'key' => 'field_error_page_btn2_label', 'label' => 'Secondary Button Label', 'name' => 'error_page_btn2_label', 'type' => 'text', 'default_value' => 'Our Companies' ),
+		array( 'key' => 'field_error_page_btn2_link', 'label' => 'Secondary Button Link', 'name' => 'error_page_btn2_link', 'type' => 'text', 'default_value' => '/#companies' ),
+		array(
+			'key'          => 'field_error_page_links',
+			'label'        => 'Helpful Links',
+			'name'         => 'error_page_links',
+			'type'         => 'repeater',
+			'button_label' => 'Add Link Card',
+			'instructions' => 'Leave empty to show the default 4 link cards (About Us, Our Companies, CSR & Impact, Contact Us).',
+			'sub_fields'   => array(
+				array( 'key' => 'field_error_link_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
+				array( 'key' => 'field_error_link_desc', 'label' => 'Description', 'name' => 'desc', 'type' => 'text' ),
+				array( 'key' => 'field_error_link_url', 'label' => 'Link', 'name' => 'link', 'type' => 'text' ),
+			),
+		),
+	),
+	'location' => array(
+		array( array( 'param' => 'options_page', 'operator' => '==', 'value' => 'altysier-404-settings' ) ),
+	),
+) );
+
+// ══════════════════════════════════════════════════════════════
 // 15. FLEXIBLE PAGE BUILDER — for any new page (page-flexible.php)
 // ══════════════════════════════════════════════════════════════
 // One generic template + this flexible-content field lets an admin assemble a

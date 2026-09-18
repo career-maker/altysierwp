@@ -1,6 +1,6 @@
 <?php
 /**
- * inc/helpers.php â€” Shared Helper Functions for Altysier Theme
+ * inc/helpers.php - Shared Helper Functions for Altysier Theme
  *
  * @package Altysier
  */
