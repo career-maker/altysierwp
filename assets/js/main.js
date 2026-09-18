@@ -63,6 +63,15 @@
       done = true;
       document.documentElement.style.overflow = '';
       revealHeader();
+      // The overflow:hidden lock above suppresses the browser's one-time
+      // "scroll to URL fragment" on load, so a cross-page link to e.g.
+      // /#companies lands back at the top once the lock is lifted. Re-run
+      // that scroll manually now that the page can actually move.
+      if (window.location.hash) {
+        var hashTarget = null;
+        try { hashTarget = document.getElementById(window.location.hash.slice(1)); } catch (e) {}
+        if (hashTarget) hashTarget.scrollIntoView({ behavior: 'auto' });
+      }
       try { window.dispatchEvent(new CustomEvent('altysier:page-ready')); } catch (e) {}
       if (preloader) {
         preloader.classList.add('is-done');
@@ -350,12 +359,18 @@
      Footer mobile expandable columns
      --------------------------------------------------------------------- */
   run(function () {
-    document.querySelectorAll('.footer__accordion').forEach(function (col) {
+    var accordionCols = document.querySelectorAll('.footer__accordion');
+    accordionCols.forEach(function (col) {
       var trigger = col.querySelector('.footer__heading-btn');
       if (!trigger) return;
       trigger.addEventListener('click', function () {
         if (window.innerWidth > 640) return;
         var isOpen = col.getAttribute('data-open') === 'true';
+        accordionCols.forEach(function (otherCol) {
+          otherCol.setAttribute('data-open', 'false');
+          var otherTrigger = otherCol.querySelector('.footer__heading-btn');
+          if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
+        });
         col.setAttribute('data-open', isOpen ? 'false' : 'true');
         trigger.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
       });
@@ -378,15 +393,23 @@
       var prevBtn = document.querySelector('[data-strip-prev="' + key + '"]');
       var nextBtn = document.querySelector('[data-strip-next="' + key + '"]');
       var currentEl = document.querySelector('[data-strip-current="' + key + '"]');
+      var currentIndex = 0;
 
-      function step(dir) {
-        var card = cards[0];
-        var gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '0') || 0;
-        var amount = card.getBoundingClientRect().width + gap;
-        track.scrollBy({ left: dir * amount, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+      // Scroll to a specific card by index (never a blind relative offset) —
+      // a fixed-size step can overshoot the remaining scroll room on the
+      // last card or two (they can't align flush left against the
+      // container edge), which used to clamp to maxScroll and made the
+      // counter jump straight to the last card instead of counting up.
+      function goTo(index) {
+        index = Math.max(0, Math.min(total - 1, index));
+        currentIndex = index;
+        var trackRect = track.getBoundingClientRect();
+        var targetRect = cards[index].getBoundingClientRect();
+        var left = track.scrollLeft + ( targetRect.left - trackRect.left );
+        track.scrollTo({ left: left, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
       }
-      if (prevBtn) prevBtn.addEventListener('click', function () { step(-1); });
-      if (nextBtn) nextBtn.addEventListener('click', function () { step(1); });
+      if (prevBtn) prevBtn.addEventListener('click', function () { goTo(currentIndex - 1); });
+      if (nextBtn) nextBtn.addEventListener('click', function () { goTo(currentIndex + 1); });
 
       var ticking = false;
       function updateState() {
@@ -423,6 +446,7 @@
             }
           }
           currentEl.textContent = String(shown + 1).padStart(2, '0');
+          currentIndex = shown;
         }
         if (prevBtn) { prevBtn.disabled = atStart; prevBtn.setAttribute('aria-disabled', String(atStart)); }
         if (nextBtn) { nextBtn.disabled = atEnd; nextBtn.setAttribute('aria-disabled', String(atEnd)); }
@@ -496,7 +520,7 @@
 
         if (indexEl) indexEl.textContent = numStr;
         if (quoteEl) quoteEl.innerHTML = '&ldquo;' + item.quote + '&rdquo;';
-        if (avatarEl) { avatarEl.src = item.image; avatarEl.alt = item.author; }
+        if (avatarEl) { avatarEl.src = item.image || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80&auto=format&fit=crop'; avatarEl.alt = item.author; }
         if (nameEl) nameEl.textContent = item.author;
         if (roleTextEl) roleTextEl.textContent = item.role;
         if (companyEl) companyEl.textContent = item.company;

@@ -268,6 +268,19 @@ function altysier_handle_contact_form() {
 	$sent = wp_mail( $recipient, $subject, $email_body, $headers );
 	remove_action( 'wp_mail_failed', 'altysier_capture_mail_error' );
 
+	// Log the enquiry regardless of email outcome, so a mail failure never
+	// means the submission itself is lost — it's still visible in wp-admin.
+	altysier_save_enquiry( array(
+		'name'        => $name,
+		'email'       => $email,
+		'phone'       => $phone,
+		'company'     => $company,
+		'sector'      => $sector,
+		'message'     => $message,
+		'form_source' => $source,
+		'mail_sent'   => $sent,
+	) );
+
 	if ( $sent ) {
 		wp_send_json_success( array(
 			'message' => __( 'Thank you for reaching out. A member of our team will respond within one business day.', 'altysier' ),

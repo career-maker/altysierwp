@@ -64,7 +64,7 @@ $markets_list      = $has_acf ? get_field( 'markets_list' ) : array();
 // ── Showcase ──────────────────────────────────────────────────────────────────
 $showcase_eyebrow = $gf( 'showcase_eyebrow', 'Operations in Motion' );
 $showcase_heading = $gf( 'showcase_heading', 'Operations Showcase' );
-$showcase_lead    = $gf( 'showcase_lead_image', '' );
+$showcase_lead    = $gf( 'showcase_lead_image', 'https://images.unsplash.com/photo-1553413077-190dd305871c?w=1200&q=75&auto=format&fit=crop' );
 $showcase_sides   = $has_acf ? get_field( 'showcase_side_images' ) : array();
 
 // ── CTA ───────────────────────────────────────────────────────────────────────
@@ -226,7 +226,7 @@ get_template_part( 'template-parts/banner', 'inner' );
      06. VISUAL SHOWCASE
      ============================================================ -->
 <section class="company-showcase" id="showcase">
-  <span class="section-watermark" aria-hidden="true">OPERATIONS</span>
+  <span class="section-watermark" aria-hidden="true"><?php echo esc_html( $gf( 'showcase_watermark', 'OPERATIONS' ) ); ?></span>
   <div class="container">
     <div class="about-intro__head">
       <p class="eyebrow reveal"><?php echo esc_html( $showcase_eyebrow ); ?></p>
@@ -260,7 +260,7 @@ get_template_part( 'template-parts/banner', 'inner' );
      07. ECOSYSTEM — Other Group Companies
      ============================================================ -->
 <section class="company-ecosystem" id="ecosystem">
-  <span class="section-watermark" aria-hidden="true">ECOSYSTEM</span>
+  <span class="section-watermark" aria-hidden="true"><?php echo esc_html( $gf( 'ecosystem_watermark', 'ECOSYSTEM' ) ); ?></span>
   <div class="container">
     <div class="about-intro__head" style="text-align:center;">
       <p class="eyebrow reveal" style="justify-content:center;"><?php echo esc_html( $gf( 'ecosystem_eyebrow', 'Group Integration' ) ); ?></p>
@@ -283,15 +283,11 @@ get_template_part( 'template-parts/banner', 'inner' );
       </div>
       <div class="other-companies-strip reveal">
         <?php while ( $other_companies->have_posts() ) : $other_companies->the_post();
-          $co_logo = get_the_post_thumbnail_url( get_the_ID(), 'altysier-thumb' );
+          $co_logo = get_the_post_thumbnail_url( get_the_ID(), 'altysier-thumb' ) ?: get_template_directory_uri() . '/assets/img/logo-icon.png';
           $co_tag  = function_exists( 'get_field' ) ? get_field( 'sector_tag' ) : '';
         ?>
           <a href="<?php the_permalink(); ?>" class="other-co-card">
-            <?php if ( $co_logo ) : ?>
               <img src="<?php echo esc_url( $co_logo ); ?>" alt="<?php the_title_attribute(); ?>" class="other-co-card__logo" loading="lazy">
-            <?php else : ?>
-              <span class="other-co-card__initials"><?php echo esc_html( mb_substr( get_the_title(), 0, 1 ) ); ?></span>
-            <?php endif; ?>
             <div class="other-co-card__info">
               <span class="other-co-card__name"><?php the_title(); ?></span>
               <?php if ( $co_tag ) : ?>

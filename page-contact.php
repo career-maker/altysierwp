@@ -81,7 +81,7 @@ $banner_sub  = $gf( 'banner_subtitle', 'Whether you are exploring a business opp
       foreach ( $locations as $loc ) : ?>
       <div class="location-card reveal">
         <div class="location-card__bg" aria-hidden="true">
-          <img src="<?php echo esc_url( $loc['bg_image'] ); ?>" alt="<?php echo esc_attr( $loc['city'] ); ?>" loading="lazy">
+          <img src="<?php echo esc_url( $loc['bg_image'] ?: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1200&q=80&auto=format&fit=crop' ); ?>" alt="<?php echo esc_attr( $loc['city'] ); ?>" loading="lazy">
         </div>
         <div class="location-card__scrim" aria-hidden="true"></div>
         <div class="location-card__content">

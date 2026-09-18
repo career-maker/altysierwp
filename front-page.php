@@ -38,6 +38,7 @@ $hero_btn2_lnk = $gf( 'hero_btn2_link', home_url( '/contact/' ) );
 $group_eyebrow    = $gf( 'group_eyebrow', 'About Altysier Group' );
 $group_heading    = $gf( 'group_heading', 'One Group. Multiple Businesses.' );
 $group_statement  = $gf( 'group_statement', 'A diversified portfolio of businesses working across essential industries and international markets to create enduring value.' );
+$group_sectors_eyebrow = $gf( 'group_sectors_eyebrow', 'Our Sectors' );
 $group_sec_intro  = $gf( 'group_sectors_intro', 'Seven sectors, one connected group. Explore our comprehensive capabilities.' );
 $group_act_label  = $gf( 'group_actions_label', 'Learn About Our Group →' );
 $group_act_link   = $gf( 'group_actions_link', '/about/' );
@@ -294,6 +295,7 @@ $has_companies = $companies_query->have_posts();
 
     <div class="sectors__head reveal">
       <div class="sectors__head-info">
+        <?php if ( $group_sectors_eyebrow ) : ?><p class="sectors__eyebrow eyebrow reveal"><?php echo esc_html( $group_sectors_eyebrow ); ?></p><?php endif; ?>
         <h3 class="sectors__title"><?php echo esc_html( $gf( 'group_sectors_heading', 'Where We Operate' ) ); ?></h3>
         <span class="sectors__accent-line" aria-hidden="true"></span>
         <p class="sectors__intro"><?php echo esc_html( $group_sec_intro ); ?></p>
@@ -330,7 +332,7 @@ $has_companies = $companies_query->have_posts();
         foreach ( $sector_rows as $card ) : ?>
         <div class="sector-card">
           <div class="sector-card__photo-wrap">
-            <img class="sector-card__photo" src="<?php echo esc_url( $card['photo'] ); ?>" alt="<?php echo esc_attr( $card['title'] ); ?>" loading="lazy">
+            <img class="sector-card__photo" src="<?php echo esc_url( $card['photo'] ?: 'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=500&q=65&auto=format&fit=crop' ); ?>" alt="<?php echo esc_attr( $card['title'] ); ?>" loading="lazy">
             <div class="sector-card__badge"><div class="sector-card__icon"><?php echo altysier_get_sector_icon( $card['icon_key'] ); ?></div></div>
           </div>
           <div class="sector-card__body">
@@ -390,7 +392,7 @@ $has_companies = $companies_query->have_posts();
       foreach ( $journey_rows as $idx => $step ) : ?>
       <div class="value-step">
         <div class="value-step__node-wrap"><div class="value-step__node"><?php echo $journey_node_icons[ $idx % count( $journey_node_icons ) ]; ?></div></div>
-        <div class="value-step__image-wrap"><img class="value-step__image" src="<?php echo esc_url( $step['image'] ); ?>" alt="<?php echo esc_attr( $step['title'] ); ?>" loading="lazy"></div>
+        <div class="value-step__image-wrap"><img class="value-step__image" src="<?php echo esc_url( $step['image'] ?: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=280&q=65&auto=format&fit=crop' ); ?>" alt="<?php echo esc_attr( $step['title'] ); ?>" loading="lazy"></div>
         <div class="value-step__body"><h3 class="value-step__title"><?php echo esc_html( $step['title'] ); ?></h3><p class="value-step__text"><?php echo esc_html( $step['text'] ); ?></p><span class="value-step__indicator"><?php echo esc_html( $step['phase_label'] ); ?></span></div>
       </div>
       <?php endforeach; ?>
@@ -650,7 +652,7 @@ $has_companies = $companies_query->have_posts();
           </blockquote>
           <div class="editorial-author" id="editorial-author">
             <div class="editorial-avatar-wrap">
-              <img class="editorial-avatar" id="editorial-avatar" src="<?php echo esc_url( $first_testimonial['image'] ); ?>" alt="<?php echo esc_attr( $first_testimonial['author'] ); ?>" loading="lazy">
+              <img class="editorial-avatar" id="editorial-avatar" src="<?php echo esc_url( $first_testimonial['image'] ?: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80&auto=format&fit=crop' ); ?>" alt="<?php echo esc_attr( $first_testimonial['author'] ); ?>" loading="lazy">
             </div>
             <div class="editorial-meta">
               <p class="editorial-name" id="editorial-name"><?php echo esc_html( $first_testimonial['author'] ); ?></p>

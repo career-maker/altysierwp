@@ -137,6 +137,7 @@ $inc_files = array(
 	'acf-fields',
 	'smtp',
 	'recaptcha',
+	'enquiries',
 	'forms',
 	'seo',
 	'security',

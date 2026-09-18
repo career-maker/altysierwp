@@ -315,13 +315,6 @@ acf_add_local_field_group( array(
 			'default_value' => 'A diversified business group building long-term value across international trade, industrial investment, agribusiness and corporate services.',
 		),
 		array(
-			'key'           => 'field_group_narrative',
-			'label'         => 'Narrative Paragraph',
-			'name'          => 'group_narrative',
-			'type'          => 'textarea',
-			'rows'          => 4,
-		),
-		array(
 			'key'           => 'field_group_sectors_eyebrow',
 			'label'         => 'Sectors Eyebrow',
 			'name'          => 'group_sectors_eyebrow',
@@ -542,6 +535,14 @@ acf_add_local_field_group( array(
 	'key'    => 'group_homepage_faq',
 	'title'  => '❓ Homepage — FAQ & Contact Section',
 	'fields' => array(
+		array(
+			'key'           => 'field_faq_section_eyebrow',
+			'label'         => 'Section Eyebrow',
+			'name'          => 'faq_eyebrow',
+			'type'          => 'text',
+			'instructions'  => 'Fallback eyebrow shown above the Contact column if its own eyebrow is left blank.',
+			'default_value' => 'Partnership & Inquiries',
+		),
 		// ── Left Column: Contact Form ─────────────────────────────
 		array(
 			'key'           => 'field_faq_contact_eyebrow',
@@ -628,8 +629,9 @@ acf_add_local_field_group( array(
 		// Banner
 		array( 'key' => 'field_co_banner_bg', 'label' => 'Banner Background Image', 'name' => 'banner_bg_image', 'type' => 'image', 'return_format' => 'url' ),
 		array( 'key' => 'field_co_watermark', 'label' => 'Banner Watermark', 'name' => 'banner_watermark', 'type' => 'text' ),
+		array( 'key' => 'field_co_banner_title', 'label' => 'Banner Heading (H1)', 'name' => 'banner_title', 'type' => 'text', 'instructions' => 'Leave blank to use the company name.' ),
+		array( 'key' => 'field_co_banner_subtitle', 'label' => 'Banner Subtitle / Lead Text', 'name' => 'banner_subtitle', 'type' => 'textarea', 'rows' => 3 ),
 		array( 'key' => 'field_co_sector_tag', 'label' => 'Sector Tag', 'name' => 'sector_tag', 'type' => 'text' ),
-		array( 'key' => 'field_co_positioning', 'label' => 'Positioning Statement', 'name' => 'positioning_statement', 'type' => 'textarea', 'rows' => 2 ),
 
 		// Intro Section
 		array( 'key' => 'field_co_intro_watermark', 'label' => 'Intro Watermark', 'name' => 'intro_watermark', 'type' => 'text', 'default_value' => 'OVERVIEW' ),
@@ -693,6 +695,7 @@ acf_add_local_field_group( array(
 		),
 
 		// Showcase
+		array( 'key' => 'field_co_showcase_watermark', 'label' => 'Showcase Watermark', 'name' => 'showcase_watermark', 'type' => 'text', 'default_value' => 'OPERATIONS' ),
 		array( 'key' => 'field_co_showcase_eyebrow', 'label' => 'Showcase Eyebrow', 'name' => 'showcase_eyebrow', 'type' => 'text', 'default_value' => 'Operations in Motion' ),
 		array( 'key' => 'field_co_showcase_heading', 'label' => 'Showcase Heading', 'name' => 'showcase_heading', 'type' => 'text' ),
 		array( 'key' => 'field_co_showcase_lead', 'label' => 'Lead Image', 'name' => 'showcase_lead_image', 'type' => 'image', 'return_format' => 'url' ),
@@ -707,6 +710,7 @@ acf_add_local_field_group( array(
 		array( 'key' => 'field_co_cta_btn_link', 'label' => 'CTA Button Link', 'name' => 'cta_btn_link', 'type' => 'text', 'default_value' => '/contact/' ),
 
 		// Ecosystem section header
+		array( 'key' => 'field_co_ecosystem_watermark', 'label' => 'Ecosystem Watermark', 'name' => 'ecosystem_watermark', 'type' => 'text', 'default_value' => 'ECOSYSTEM' ),
 		array( 'key' => 'field_co_ecosystem_eyebrow', 'label' => 'Ecosystem Eyebrow', 'name' => 'ecosystem_eyebrow', 'type' => 'text', 'default_value' => 'Group Integration' ),
 		array( 'key' => 'field_co_ecosystem_heading', 'label' => 'Ecosystem Heading', 'name' => 'ecosystem_heading', 'type' => 'text', 'default_value' => 'Part of a Bigger Business Ecosystem' ),
 		array( 'key' => 'field_co_ecosystem_intro', 'label' => 'Ecosystem Intro', 'name' => 'ecosystem_intro', 'type' => 'text', 'default_value' => "Connecting sector-leading capabilities under Altysier Group's global umbrella." ),

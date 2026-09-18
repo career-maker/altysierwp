@@ -18,6 +18,12 @@
 <?php wp_body_open(); ?>
 
 <?php
+// ── Active Nav State ────────────────────────────────────────────────────────────
+$nav_active_about     = is_page( 'about' ) ? ' is-active' : '';
+$nav_active_companies = is_singular( 'company' ) ? ' is-active' : '';
+$nav_active_csr       = is_page( 'csr' ) ? ' is-active' : '';
+$nav_active_contact   = is_page( 'contact' ) ? ' is-active' : '';
+
 // ── Preloader ────────────────────────────────────────────────────────────────
 $preloader_enabled = altysier_get_option( 'enable_preloader', 1 );
 if ( $preloader_enabled ) :
@@ -82,7 +88,7 @@ $companies_query = new WP_Query( array(
     <div class="header__actions">
       <nav class="header__menu" aria-label="<?php esc_attr_e( 'Primary', 'altysier' ); ?>">
 
-        <a href="<?php echo esc_url( home_url( '/about/' ) ); ?>" class="header__menu-item text-hover">
+        <a href="<?php echo esc_url( home_url( '/about/' ) ); ?>" class="header__menu-item text-hover<?php echo esc_attr( $nav_active_about ); ?>">
           <span class="text-hover__inner">
             <span class="text-hover__elem text-hover__elem-1"><?php esc_html_e( 'About', 'altysier' ); ?></span>
             <span class="text-hover__elem text-hover__elem-2"><?php esc_html_e( 'About', 'altysier' ); ?></span>
@@ -90,7 +96,7 @@ $companies_query = new WP_Query( array(
         </a>
 
         <div class="header__menu-dropdown">
-          <a href="<?php echo esc_url( home_url( '/#companies' ) ); ?>" class="header__menu-item text-hover header__dropdown-toggle">
+          <a href="<?php echo esc_url( home_url( '/#companies' ) ); ?>" class="header__menu-item text-hover header__dropdown-toggle<?php echo esc_attr( $nav_active_companies ); ?>">
             <span class="text-hover__inner">
               <span class="text-hover__elem text-hover__elem-1"><?php esc_html_e( 'Group of Companies', 'altysier' ); ?></span>
               <span class="text-hover__elem text-hover__elem-2"><?php esc_html_e( 'Group of Companies', 'altysier' ); ?></span>
@@ -139,14 +145,14 @@ $companies_query = new WP_Query( array(
           </div>
         </div>
 
-        <a href="<?php echo esc_url( home_url( '/csr/' ) ); ?>" class="header__menu-item text-hover">
+        <a href="<?php echo esc_url( home_url( '/csr/' ) ); ?>" class="header__menu-item text-hover<?php echo esc_attr( $nav_active_csr ); ?>">
           <span class="text-hover__inner">
             <span class="text-hover__elem text-hover__elem-1"><?php esc_html_e( 'CSR', 'altysier' ); ?></span>
             <span class="text-hover__elem text-hover__elem-2"><?php esc_html_e( 'CSR', 'altysier' ); ?></span>
           </span>
         </a>
 
-        <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="header__menu-item text-hover">
+        <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="header__menu-item text-hover<?php echo esc_attr( $nav_active_contact ); ?>">
           <span class="text-hover__inner">
             <span class="text-hover__elem text-hover__elem-1"><?php esc_html_e( 'Contact', 'altysier' ); ?></span>
             <span class="text-hover__elem text-hover__elem-2"><?php esc_html_e( 'Contact', 'altysier' ); ?></span>

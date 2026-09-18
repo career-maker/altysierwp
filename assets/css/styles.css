@@ -587,7 +587,18 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   text-transform: none;
   box-shadow: 0 4rem 20rem rgba(0, 0, 0, 0.06);
 }
-.header__menu-item { color: var(--ink-text); }
+.header__menu-item { color: var(--ink-text); position: relative; }
+.header__menu-item.is-active { font-weight: 700; }
+.header__menu-item.is-active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6rem;
+  height: 2rem;
+  background-color: var(--accent);
+  border-radius: 999rem;
+}
 
 /* Header Dropdown Menu */
 .header__menu-dropdown {
@@ -1681,7 +1692,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 }
 .strip-nav-btn._on-dark { border-color: rgba(255, 255, 255, 0.25); color: #fff; }
 .strip-nav-btn svg { width: 18rem; height: 18rem; }
-.strip-nav-btn:hover { background-color: var(--ink); border-color: var(--ink); color: #fff; }
+.strip-nav-btn:hover { background-color: var(--ink); border-color: var(--ink); }
 .strip-nav-btn._on-dark:hover { background-color: #fff; border-color: #fff; color: var(--ink-text); }
 .strip-nav-btn:disabled { opacity: 0.35; cursor: default; pointer-events: none; }
 .strip-track {
@@ -2102,6 +2113,8 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   margin-right: 4rem;
 }
 .strip-nav-btn {
+  -webkit-appearance: none;
+  appearance: none;
   width: 44rem;
   height: 44rem;
   border-radius: 50%;
@@ -2115,7 +2128,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   box-shadow: 0 4rem 14rem rgba(0, 0, 0, 0.04);
   transition: border-color var(--t-fast), background-color var(--t-fast), transform var(--t-fast);
 }
-.strip-nav-btn svg { width: 18rem; height: 18rem; }
+.strip-nav-btn svg { width: 18rem; height: 18rem; flex-shrink: 0; stroke: currentColor; }
 .strip-nav-btn:hover {
   border-color: var(--ink);
   background-color: var(--surface-alt);
@@ -3070,6 +3083,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   }
   .footer__col a, .footer__col span { font-size: 14rem; }
   .footer__bottom { flex-direction: column; align-items: flex-start; gap: 14rem; }
+  .footer__up-btn { align-self: flex-end; }
   .footer__wordmark { font-size: 40rem; margin-top: 36rem; padding-top: 18rem; }
 }
 
@@ -3951,6 +3965,45 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   margin: 0 auto 36rem;
 }
 
+/* Company Detail — Final CTA ("Work With Us") */
+.company-cta {
+  position: relative;
+  overflow: hidden;
+  padding: 110rem 0 120rem;
+  background-color: var(--near-black);
+  color: #ffffff;
+  text-align: center;
+}
+.company-cta__bg { position: absolute; inset: 0; z-index: 0; }
+.company-cta__bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.25; }
+.company-cta__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(20, 20, 20, 0.85) 0%, rgba(var(--ink-rgb), 0.45) 100%);
+}
+.company-cta__container { position: relative; z-index: 2; max-width: 860rem; margin: 0 auto; }
+.company-cta__title {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 48rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  margin-bottom: 20rem;
+}
+.company-cta__text {
+  font-family: Inter, sans-serif;
+  font-size: 17rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 680rem;
+  margin: 0 auto 36rem;
+}
+@media only screen and (max-width: 1024px) {
+  .company-cta { padding: 80rem 0 90rem; }
+  .company-cta__title { font-size: 36rem; }
+}
+
 /* Responsive Overrides for About & Inner Pages */
 @media only screen and (max-width: 1024px) {
   .inner-hero, .about-hero { min-height: 440rem; padding: 140rem 0 50rem; }
@@ -4280,6 +4333,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 /* 07. Visual Showcase */
 .company-showcase {
   position: relative;
+  overflow: hidden;
   padding: 100rem 0 130rem;
   background-color: var(--paper);
 }
@@ -4823,6 +4877,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 /* Section 02: Dual Locations Split */
 .contact-locations-section {
   position: relative;
+  overflow: hidden;
   padding: 100rem 0 110rem;
   background-color: var(--paper);
 }
@@ -4955,6 +5010,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 /* Section 03: Contact / Enquiry Form */
 .contact-form-section {
   position: relative;
+  overflow: hidden;
   padding: 110rem 0 120rem;
   background-color: var(--surface-alt);
 }
@@ -5059,6 +5115,10 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   outline: none;
   transition: border-color var(--t-fast), background-color var(--t-fast), box-shadow var(--t-fast);
 }
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: rgba(var(--ink-rgb), 0.4);
+}
 .form-input:hover,
 .form-select:hover,
 .form-textarea:hover {
@@ -5119,7 +5179,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   padding: 10rem 14rem;
 }
 .form-select option:disabled {
-  color: rgba(26, 26, 26, 0.45);
+  color: rgba(var(--ink-rgb), 0.4);
 }
 
 /* Phone Number Input Group with Country Code Dropdown */
@@ -5344,6 +5404,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 /* Section 04: Business Enquiries (B2B Routes) */
 .b2b-routes-section {
   position: relative;
+  overflow: hidden;
   padding: 100rem 0 110rem;
   background-color: var(--paper);
 }
@@ -5424,6 +5485,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 /* Section 05: Find Us (Dual Map Section) */
 .contact-maps-section {
   position: relative;
+  overflow: hidden;
   padding: 100rem 0 120rem;
   background-color: var(--surface-alt);
 }
