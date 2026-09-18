@@ -714,4 +714,77 @@
     }, 1200);
     window.setTimeout(triggerHero, 4600);
   });
+
+  /* ---------------------------------------------------------------------
+     Generic AJAX contact form handler — wires up any form marked
+     data-form-ajax="true" (currently the homepage FAQ/contact form) to
+     submit via wp_ajax instead of a native page submission, so it never
+     falls through to a plain GET request on the current URL.
+     --------------------------------------------------------------------- */
+  run(function () {
+    document.querySelectorAll('form[data-form-ajax="true"]').forEach(function (form) {
+      var status = form.querySelector('.contact-form__status');
+      var submitBtn = form.querySelector('button[type="submit"]');
+      var submitLabel = submitBtn ? submitBtn.textContent : '';
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Sending...';
+        }
+        if (status) {
+          status.textContent = '';
+          status.classList.remove('is-error', 'is-success');
+        }
+
+        var formData = new FormData(form);
+        if (window.altysierConfig && window.altysierConfig.contactNonce) {
+          formData.set('_nonce', window.altysierConfig.contactNonce);
+        }
+
+        var ajaxUrl = (window.altysierConfig && window.altysierConfig.ajaxUrl) ? window.altysierConfig.ajaxUrl : '/wp-admin/admin-ajax.php';
+
+        fetch(ajaxUrl, {
+          method: 'POST',
+          body: formData
+        })
+          .then(function (res) { return res.json(); })
+          .then(function (data) {
+            var message = (data && data.data && data.data.message) ? data.data.message : '';
+            if (data && data.success) {
+              if (status) {
+                status.textContent = message || 'Thank you for your message. We will be in touch soon.';
+                status.classList.add('is-success');
+              }
+              form.reset();
+              if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = submitLabel;
+              }
+            } else {
+              if (status) {
+                status.textContent = message || 'Submission could not be completed. Please try again.';
+                status.classList.add('is-error');
+              }
+              if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = submitLabel;
+              }
+            }
+          })
+          .catch(function () {
+            if (status) {
+              status.textContent = 'Your message could not be sent at this moment. Please contact us directly at info@altysier.com or call +971 4 268 0666.';
+              status.classList.add('is-error');
+            }
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = submitLabel;
+            }
+          });
+      });
+    });
+  });
 })();

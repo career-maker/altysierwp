@@ -542,19 +542,13 @@ acf_add_local_field_group( array(
 	'key'    => 'group_homepage_faq',
 	'title'  => '❓ Homepage — FAQ & Contact Section',
 	'fields' => array(
+		// ── Left Column: Contact Form ─────────────────────────────
 		array(
-			'key'           => 'field_faq_eyebrow',
-			'label'         => 'Section Eyebrow',
-			'name'          => 'faq_eyebrow',
+			'key'           => 'field_faq_contact_eyebrow',
+			'label'         => 'Contact Column Eyebrow',
+			'name'          => 'faq_contact_eyebrow',
 			'type'          => 'text',
-			'default_value' => 'Questions & Answers',
-		),
-		array(
-			'key'           => 'field_faq_heading',
-			'label'         => 'FAQ Column Heading',
-			'name'          => 'faq_heading',
-			'type'          => 'text',
-			'default_value' => 'Frequently Asked Questions',
+			'default_value' => 'Partnership & Inquiries',
 		),
 		array(
 			'key'           => 'field_faq_contact_heading',
@@ -570,6 +564,30 @@ acf_add_local_field_group( array(
 			'type'          => 'textarea',
 			'rows'          => 3,
 			'default_value' => 'We work with businesses and organisations looking to expand into new markets, secure reliable supply chains, or explore strategic partnerships across our operating sectors.',
+		),
+
+		// ── Right Column: FAQ Accordion ───────────────────────────
+		array(
+			'key'           => 'field_faq_r_eyebrow',
+			'label'         => 'FAQ Column Eyebrow',
+			'name'          => 'faq_r_eyebrow',
+			'type'          => 'text',
+			'default_value' => 'Insights & FAQs',
+		),
+		array(
+			'key'           => 'field_faq_heading',
+			'label'         => 'FAQ Column Heading',
+			'name'          => 'faq_heading',
+			'type'          => 'text',
+			'default_value' => 'Frequently Asked Questions',
+		),
+		array(
+			'key'           => 'field_faq_r_intro',
+			'label'         => 'FAQ Column Intro Text',
+			'name'          => 'faq_r_intro',
+			'type'          => 'textarea',
+			'rows'          => 3,
+			'default_value' => 'Answers to common questions about our corporate structure, operations, and global partnership model.',
 		),
 		array(
 			'key'    => 'field_faq_items',

@@ -2858,6 +2858,10 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 }
 .contact-form__submit { align-self: flex-start; height: 50rem; padding: 0 34rem; font-size: 17rem; margin-top: 6rem; }
 .contact-form__submit:active { transform: scale(0.98); }
+.contact-form__status { font-family: Inter, sans-serif; font-size: 13.5rem; font-weight: 500; }
+.contact-form__status:empty { display: none; }
+.contact-form__status.is-success { color: #15803d; }
+.contact-form__status.is-error { color: #b91c1c; }
 .faq__list { display: flex; flex-direction: column; gap: 10rem; }
 .faq__item {
   border-radius: 16rem;

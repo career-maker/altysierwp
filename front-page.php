@@ -126,13 +126,20 @@ $first_testimonial = $testimonials[0];
 // Hand the (possibly ACF-edited) testimonials to main.js's carousel switcher.
 wp_localize_script( 'altysier-main', 'altysierTestimonials', array_values( $testimonials ) );
 
-// FAQ section
-$faq_eyebrow  = $gf( 'faq_eyebrow', 'Partnership &amp; Inquiries' );
-$faq_title    = $gf( 'faq_heading', "Let's Build What Comes Next" );
-$faq_text     = $gf( 'faq_contact_text', 'Whether you are looking to enter new markets, establish a strategic partnership or explore opportunities across our business portfolio, send us a message.' );
-$faq_r_eyebrow= $gf( 'faq_r_eyebrow', 'Insights &amp; FAQs' );
-$faq_r_title  = $gf( 'faq_r_heading', 'Frequently Asked Questions' );
-$faq_r_intro  = $gf( 'faq_r_intro', 'Answers to common questions about our corporate structure, operations, and global partnership model.' );
+// FAQ & Contact section
+$contact_eyebrow = $gf( 'faq_contact_eyebrow' );
+if ( empty( $contact_eyebrow ) || 'Questions & Answers' === $contact_eyebrow ) {
+	$contact_eyebrow = $gf( 'faq_eyebrow' );
+	if ( empty( $contact_eyebrow ) || 'Questions & Answers' === $contact_eyebrow ) {
+		$contact_eyebrow = 'Partnership & Inquiries';
+	}
+}
+$faq_eyebrow   = $contact_eyebrow;
+$faq_title     = $gf( 'faq_contact_heading', "Let's Build What Comes Next" );
+$faq_text      = $gf( 'faq_contact_text', 'We work with businesses and organisations looking to expand into new markets, secure reliable supply chains, or explore strategic partnerships across our operating sectors.' );
+$faq_r_eyebrow = $gf( 'faq_r_eyebrow', 'Insights & FAQs' );
+$faq_r_title   = $gf( 'faq_heading', $gf( 'faq_r_heading', 'Frequently Asked Questions' ) );
+$faq_r_intro   = $gf( 'faq_r_intro', 'Answers to common questions about our corporate structure, operations, and global partnership model.' );
 
 // Default FAQ items if none set via ACF
 $default_faq_items = array(
