@@ -73,6 +73,18 @@ if ( $preloader_enabled ) :
       <span class="preloader__container-line"></span>
     </div>
   </div>
+  <script>
+    setTimeout(function() {
+      var p = document.querySelector('.preloader');
+      if (p && !p.classList.contains('is-done')) {
+        p.classList.add('is-done');
+        var hdr = document.querySelector('.header');
+        if (hdr) hdr.classList.add('is-visible');
+        document.documentElement.style.overflow = '';
+        setTimeout(function() { if (p && p.parentNode) p.parentNode.removeChild(p); }, 650);
+      }
+    }, 2200);
+  </script>
 </div>
 <?php endif; ?>
 

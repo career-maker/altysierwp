@@ -451,6 +451,10 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 /* ---------------------------------------------------------------------- */
 /* Preloader                                                               */
 /* ---------------------------------------------------------------------- */
+@keyframes preloaderAutoDismiss {
+  0%, 82% { opacity: 1; pointer-events: auto; }
+  100% { opacity: 0; pointer-events: none; visibility: hidden; }
+}
 .preloader {
   display: flex;
   align-items: flex-end;
@@ -464,6 +468,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   visibility: visible;
   transition: opacity var(--t-med) var(--ease-out), visibility 0s var(--t-med);
   overflow: hidden;
+  animation: preloaderAutoDismiss 2.8s ease forwards;
 }
 /* Full-bleed background video */
 .preloader__video {

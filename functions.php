@@ -66,12 +66,14 @@ function altysier_enqueue_assets() {
 		$css_ver
 	);
 
-	// Main JS (migrated verbatim from original main.min.js)
+	// Main JS
+	$js_file = file_exists( get_template_directory() . '/assets/js/main.js' ) ? '/assets/js/main.js' : '/assets/js/main.min.js';
+	$js_ver  = file_exists( get_template_directory() . $js_file ) ? filemtime( get_template_directory() . $js_file ) : $ver;
 	wp_enqueue_script(
 		'altysier-main',
-		$theme_uri . '/assets/js/main.min.js',
+		$theme_uri . $js_file,
 		array(),
-		$ver,
+		$js_ver,
 		true // Load in footer
 	);
 
