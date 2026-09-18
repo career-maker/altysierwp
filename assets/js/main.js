@@ -411,21 +411,26 @@
       if (prevBtn) prevBtn.addEventListener('click', function () { goTo(currentIndex - 1); });
       if (nextBtn) nextBtn.addEventListener('click', function () { goTo(currentIndex + 1); });
 
-      var ticking = false;
-      function updateState() {
-        ticking = false;
-        var maxScroll = track.scrollWidth - track.clientWidth;
-        var isScrollable = maxScroll > 4;
+      var counterWrap = currentEl ? currentEl.closest('.strip-counter, .journey__counter') : null;
 
+      // Whether this strip needs nav/counter UI at all — a layout property
+      // (total content width vs. container width), not a scroll-position
+      // one. Checked only on init/resize, never on 'scroll': recomputing it
+      // on every scroll frame let a single transient mid-drag layout
+      // reading (subpixel rounding, momentum-scroll overscroll, etc.) flip
+      // it false for a frame and hide the counter/arrows while sliding.
+      function updateVisibility() {
+        var isScrollable = ( track.scrollWidth - track.clientWidth ) > 4;
         if (prevBtn) prevBtn.style.display = isScrollable ? '' : 'none';
         if (nextBtn) nextBtn.style.display = isScrollable ? '' : 'none';
-        if (currentEl) {
-          var counterWrap = currentEl.closest('.strip-counter, .journey__counter');
-          if (counterWrap) counterWrap.style.display = isScrollable ? '' : 'none';
-        }
+        if (counterWrap) counterWrap.style.display = isScrollable ? '' : 'none';
+        return isScrollable;
+      }
 
-        if (!isScrollable) return;
-
+      // Which card is currently active — a scroll-position property,
+      // recomputed on every scroll frame.
+      function updateCounter() {
+        var maxScroll = track.scrollWidth - track.clientWidth;
         var atStart = track.scrollLeft <= 1;
         var atEnd = track.scrollLeft >= maxScroll - 1;
         if (currentEl) {
@@ -451,11 +456,18 @@
         if (prevBtn) { prevBtn.disabled = atStart; prevBtn.setAttribute('aria-disabled', String(atStart)); }
         if (nextBtn) { nextBtn.disabled = atEnd; nextBtn.setAttribute('aria-disabled', String(atEnd)); }
       }
+
+      var ticking = false;
       track.addEventListener('scroll', function () {
-        if (!ticking) { window.requestAnimationFrame(updateState); ticking = true; }
+        if (!ticking) {
+          window.requestAnimationFrame(function () { ticking = false; updateCounter(); });
+          ticking = true;
+        }
       }, { passive: true });
-      window.addEventListener('resize', updateState);
-      updateState();
+      window.addEventListener('resize', function () {
+        if (updateVisibility()) updateCounter();
+      });
+      if (updateVisibility()) updateCounter();
     });
   });
 
