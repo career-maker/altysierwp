@@ -486,29 +486,55 @@ function altysier_render_settings_page() {
 
 			<?php submit_button( __( 'Save All Changes', 'altysier' ) ); ?>
 		</form>
+	</div>
+	<?php
+}
 
-		<?php if ( 'smtp' === $active_tab ) : ?>
-			<div style="background: #fff; padding: 25px; border: 1px solid #ccd0d4; box-shadow: 0 1px 1px rgba(0,0,0,.04); margin-top: 20px; border-radius: 4px;">
-				<h2><?php esc_html_e( 'Test SMTP Email Delivery', 'altysier' ); ?></h2>
-				<p><?php esc_html_e( 'Send a live test email to verify that your Gmail SMTP configuration and App Password are operating correctly.', 'altysier' ); ?></p>
-				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
-					<?php wp_nonce_field( 'altysier_test_email_nonce', 'altysier_test_nonce' ); ?>
-					<input type="hidden" name="action" value="altysier_send_test_email">
-					<p>
-						<input type="email" name="test_recipient" value="<?php echo esc_attr( get_option( 'altysier_enquiry_recipient', 'manu.abhiram@gmail.com' ) ); ?>" class="regular-text" required placeholder="recipient@example.com">
-						<button type="submit" class="button button-secondary"><?php esc_html_e( 'Send Test Email Now', 'altysier' ); ?></button>
-					</p>
-				</form>
-				<?php if ( isset( $_GET['test_email_sent'] ) ) : ?>
-					<?php if ( '1' === $_GET['test_email_sent'] ) : ?>
-						<div class="notice notice-success inline" style="margin-top: 15px;"><p><?php esc_html_e( 'Test email sent successfully! Please check your inbox at ' . esc_html( get_option( 'altysier_enquiry_recipient', 'manu.abhiram@gmail.com' ) ), 'altysier' ); ?></p></div>
-					<?php else : ?>
-						<div class="notice notice-error inline" style="margin-top: 15px;"><p><?php esc_html_e( 'Test email failed to send. Error details: ' . ( isset( $_GET['error'] ) ? esc_html( urldecode( $_GET['error'] ) ) : 'Unknown error' ), 'altysier' ); ?></p></div>
-					<?php endif; ?>
-				<?php endif; ?>
-			</div>
+/**
+ * Test-email panel: send a live email + show the raw SMTP error inline.
+ *
+ * This used to live only inside altysier_render_settings_page()'s "smtp" tab,
+ * but that whole native page only registers when ACF Pro's own options pages
+ * are NOT available (see the `function_exists( 'acf_add_options_page' )`
+ * guard above) — so on every environment that actually has ACF active
+ * (i.e. all of them, local included), that page — and this button — never
+ * rendered at all. Hooked here instead so it shows up next to whichever
+ * Email & SMTP screen is actually in use (native tab or ACF sub-page).
+ */
+function altysier_render_test_email_panel() {
+	$screen = get_current_screen();
+	if ( ! $screen ) {
+		return;
+	}
+	$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+	$tab  = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
+
+	$is_native_smtp_tab = ( 'altysier-settings' === $page && 'smtp' === $tab );
+	$is_acf_smtp_page    = ( 'altysier-smtp-settings' === $page );
+	if ( ! $is_native_smtp_tab && ! $is_acf_smtp_page ) {
+		return;
+	}
+	?>
+	<div style="background: #fff; padding: 25px; border: 1px solid #ccd0d4; box-shadow: 0 1px 1px rgba(0,0,0,.04); margin: 20px 20px 0 2px; border-radius: 4px;">
+		<h2><?php esc_html_e( 'Test SMTP Email Delivery', 'altysier' ); ?></h2>
+		<p><?php esc_html_e( 'Send a live test email to verify that your Gmail SMTP configuration and App Password are operating correctly.', 'altysier' ); ?></p>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+			<?php wp_nonce_field( 'altysier_test_email_nonce', 'altysier_test_nonce' ); ?>
+			<input type="hidden" name="action" value="altysier_send_test_email">
+			<p>
+				<input type="email" name="test_recipient" value="<?php echo esc_attr( altysier_get_option( 'enquiry_recipient', 'manu.abhiram@gmail.com' ) ); ?>" class="regular-text" required placeholder="recipient@example.com">
+				<button type="submit" class="button button-secondary"><?php esc_html_e( 'Send Test Email Now', 'altysier' ); ?></button>
+			</p>
+		</form>
+		<?php if ( isset( $_GET['test_email_sent'] ) ) : ?>
+			<?php if ( '1' === $_GET['test_email_sent'] ) : ?>
+				<div class="notice notice-success inline" style="margin-top: 15px;"><p><?php echo esc_html( sprintf( __( 'Test email sent successfully! Please check your inbox at %s', 'altysier' ), altysier_get_option( 'enquiry_recipient', 'manu.abhiram@gmail.com' ) ) ); ?></p></div>
+			<?php else : ?>
+				<div class="notice notice-error inline" style="margin-top: 15px;"><p><?php echo esc_html( sprintf( __( 'Test email failed to send. Error details: %s', 'altysier' ), isset( $_GET['error'] ) ? urldecode( $_GET['error'] ) : 'Unknown error' ) ); ?></p></div>
+			<?php endif; ?>
 		<?php endif; ?>
 	</div>
 	<?php
 }
+add_action( 'admin_notices', 'altysier_render_test_email_panel' );
 
