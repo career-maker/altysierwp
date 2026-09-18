@@ -11,6 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // ── Security Headers ───────────────────────────────────────────────────────────
 function altysier_security_headers() {
+	if ( headers_sent() ) {
+		return;
+	}
 	header_remove( 'X-Powered-By' );
 	if ( ! is_admin() ) {
 		header( 'X-Content-Type-Options: nosniff' );
@@ -18,12 +21,14 @@ function altysier_security_headers() {
 		header( 'X-XSS-Protection: 1; mode=block' );
 		header( 'Referrer-Policy: strict-origin-when-cross-origin' );
 		header( 'Permissions-Policy: camera=(), microphone=(), geolocation=()' );
+		header( "Content-Security-Policy: default-src 'self' https: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; font-src 'self' data: https:; img-src 'self' data: blob: https:; media-src 'self' https: blob:; connect-src 'self' https:; frame-src 'self' https:; object-src 'none'; base-uri 'self';" );
 		if ( is_ssl() ) {
 			header( 'Strict-Transport-Security: max-age=31536000; includeSubDomains' );
 		}
 	}
 }
 add_action( 'send_headers', 'altysier_security_headers' );
+add_action( 'template_redirect', 'altysier_security_headers' );
 
 // ── Remove WP Version from Meta ───────────────────────────────────────────────
 remove_action( 'wp_head', 'wp_generator' );

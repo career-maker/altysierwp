@@ -1685,8 +1685,8 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 .strip-intro { margin-top: 10rem; max-width: 580rem; font-family: Inter, sans-serif; font-size: 14rem; color: rgba(var(--ink-rgb), 0.6); }
 .strip-intro._on-dark { color: rgba(255, 255, 255, 0.6); }
 .strip-nav { display: flex; gap: 10rem; align-items: center; flex-shrink: 0; }
-.strip-counter { font-family: Inter, sans-serif; font-size: 14rem; color: rgba(var(--ink-rgb), 0.55); margin-right: 6rem; }
-.strip-counter._on-dark { color: rgba(255, 255, 255, 0.55); }
+.strip-counter { display: none !important; }
+.strip-counter._on-dark { display: none !important; }
 .strip-nav-btn {
   width: 44rem;
   height: 44rem;
@@ -2115,12 +2115,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   flex-shrink: 0;
 }
 .strip-counter {
-  font-family: Inter, sans-serif;
-  font-size: 14rem;
-  font-weight: 600;
-  color: var(--ink-text);
-  letter-spacing: 0.05em;
-  margin-right: 4rem;
+  display: none !important;
 }
 .strip-nav-btn {
   -webkit-appearance: none;

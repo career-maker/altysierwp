@@ -317,7 +317,6 @@ $has_companies = $companies_query->have_posts();
         <p class="sectors__intro"><?php echo esc_html( $group_sec_intro ); ?></p>
       </div>
       <div class="sectors__nav" aria-label="Sectors carousel navigation">
-        <span class="strip-counter"><span data-strip-current="sectors">01</span> / <?php echo sprintf( '%02d', count( $sector_rows ) ); ?></span>
         <button type="button" class="strip-nav-btn" data-strip-prev="sectors" aria-label="Previous sector">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
@@ -418,7 +417,6 @@ $has_companies = $companies_query->have_posts();
         <p class="businesses__intro reveal"><?php echo esc_html( $biz_intro ); ?></p>
       </div>
       <div class="strip-nav reveal">
-        <span class="strip-counter"><span data-strip-current="businesses">01</span>/<?php echo $has_companies ? sprintf( '%02d', $companies_query->found_posts ) : '06'; ?></span>
         <button type="button" class="strip-nav-btn" data-strip-prev="businesses" aria-label="Previous company">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
         </button>

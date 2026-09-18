@@ -396,9 +396,9 @@
       var counterWrap = currentEl ? currentEl.closest('.strip-counter, .journey__counter') : null;
       var currentIndex = 0;
 
-      // Ensure counter numbers (01/07 etc) are always visible
+      // Hide strip counter numbers as requested
       if (counterWrap) {
-        counterWrap.style.display = '';
+        counterWrap.style.display = 'none';
       }
 
       function goTo(index) {
@@ -416,8 +416,7 @@
         var isScrollable = ( track.scrollWidth - track.clientWidth ) > 4;
         if (prevBtn) prevBtn.style.display = isScrollable ? '' : 'none';
         if (nextBtn) nextBtn.style.display = isScrollable ? '' : 'none';
-        // Never hide the counter numbers (01/07 etc) - they are a permanent part of the heading UI
-        if (counterWrap) counterWrap.style.display = '';
+        if (counterWrap) counterWrap.style.display = 'none';
         return isScrollable;
       }
 
