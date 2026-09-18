@@ -292,12 +292,34 @@ $banner_sub  = $gf( 'banner_subtitle', 'Whether you are exploring a business opp
       <button type="button" class="maps-tab-btn" data-target="map-khartoum"><?php esc_html_e( 'Khartoum Operations (Sudan)', 'altysier' ); ?></button>
     </div>
 
+    <?php
+    $dubai_map_default    = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.283100650508!2d55.330882176049075!3d25.26097102911132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f5cd03e7e2c91%3A0x8dd34080e7d5a570!2sBusiness%20Avenue%20Building%20-%20Port%20Saeed%20-%20Dubai!5e0!3m2!1sen!2sae!4v1716300000000!5m2!1sen!2sae';
+    $khartoum_map_default = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15357.256314815917!2d32.548842!3d15.583307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x168e8e2b86121773%3A0x6d9f7e8b6287c8cb!2sAl%20Riyadh%2C%20Khartoum%2C%20Sudan!5e0!3m2!1sen!2s!4v1716300000000!5m2!1sen!2s';
+
+    /**
+     * The ACF field accepts either a raw embed URL or a full pasted
+     * <iframe> tag. Render whichever was given; only add our own wrapping
+     * <iframe> when the value is a plain URL.
+     */
+    $render_map_embed = function( $value, $default_url, $default_title ) {
+      $value = trim( (string) $value );
+      if ( '' === $value ) {
+        $value = $default_url;
+      }
+      if ( false !== stripos( $value, '<iframe' ) ) {
+        echo wp_kses( $value, array( 'iframe' => array( 'src' => true, 'class' => true, 'width' => true, 'height' => true, 'style' => true, 'loading' => true, 'referrerpolicy' => true, 'title' => true, 'allowfullscreen' => true, 'frameborder' => true ) ) );
+      } else {
+        echo '<iframe class="maps-frame" src="' . esc_url( $value ) . '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="' . esc_attr( $default_title ) . '"></iframe>';
+      }
+    };
+    ?>
+
     <div class="maps-panel active reveal" id="map-dubai" data-wp-field="dubai_map_embed">
-      <iframe class="maps-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.283100650508!2d55.330882176049075!3d25.26097102911132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f5cd03e7e2c91%3A0x8dd34080e7d5a570!2sBusiness%20Avenue%20Building%20-%20Port%20Saeed%20-%20Dubai!5e0!3m2!1sen!2sae!4v1716300000000!5m2!1sen!2sae" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Dubai Headquarters Location"></iframe>
+      <?php $render_map_embed( $gf( 'dubai_map_embed', $dubai_map_default ), $dubai_map_default, 'Dubai Headquarters Location' ); ?>
     </div>
 
     <div class="maps-panel" id="map-khartoum" data-wp-field="khartoum_map_embed">
-      <iframe class="maps-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15357.256314815917!2d32.548842!3d15.583307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x168e8e2b86121773%3A0x6d9f7e8b6287c8cb!2sAl%20Riyadh%2C%20Khartoum%2C%20Sudan!5e0!3m2!1sen!2s!4v1716300000000!5m2!1sen!2s" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Khartoum Regional Office Location"></iframe>
+      <?php $render_map_embed( $gf( 'khartoum_map_embed', $khartoum_map_default ), $khartoum_map_default, 'Khartoum Regional Office Location' ); ?>
     </div>
   </div>
 </section>

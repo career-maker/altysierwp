@@ -23,10 +23,15 @@ $gf      = function( $key, $default = '' ) use ( $has_acf ) {
 	if ( ! $has_acf ) {
 		return $default;
 	}
+	// Explicit post ID: this runs before the main while(have_posts()):the_post()
+	// loop below, and get_field()'s implicit post-ID resolution needs "the
+	// Loop" to have started to be reliable — without it, every field here
+	// silently resolved against the wrong (or no) post and fell back to its
+	// default, even when a real value was saved.
+	$val = get_field( $key, get_queried_object_id() );
 	// A field explicitly cleared in the editor returns '' and must render as
 	// empty, not fall back to the placeholder default. Only a field that has
 	// never been set (false/null) should use the default.
-	$val = get_field( $key );
 	return ( false === $val || null === $val ) ? $default : $val;
 };
 
@@ -285,7 +290,7 @@ get_template_part( 'template-parts/banner', 'inner' );
       </div>
       <div class="other-companies-grid other-companies-strip reveal">
         <?php while ( $other_companies->have_posts() ) : $other_companies->the_post();
-          $co_logo = get_the_post_thumbnail_url( get_the_ID(), 'altysier-thumb' ) ?: get_template_directory_uri() . '/assets/img/logo-icon.png';
+          $co_logo = get_the_post_thumbnail_url( get_the_ID(), 'full' ) ?: get_template_directory_uri() . '/assets/img/logo-icon.png';
           $co_tag  = function_exists( 'get_field' ) ? get_field( 'sector_tag' ) : '';
         ?>
           <a href="<?php the_permalink(); ?>" class="other-co-card other-company-card">

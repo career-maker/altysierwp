@@ -48,7 +48,7 @@ function altysier_register_post_types() {
 		'hierarchical'       => false,
 		'menu_position'      => 20,
 		'menu_icon'          => 'dashicons-building',
-		'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt', 'custom-fields', 'page-attributes' ),
+		'supports'           => array( 'title', 'thumbnail', 'excerpt', 'custom-fields', 'page-attributes' ),
 		'show_in_rest'       => true,
 	);
 

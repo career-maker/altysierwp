@@ -192,7 +192,7 @@ function altysier_breadcrumbs() {
 	echo '<span class="breadcrumb__sep">/</span>';
 
 	if ( is_singular( 'company' ) ) {
-		echo '<a href="' . esc_url( home_url( '/companies/' ) ) . '">' . esc_html__( 'Group of Companies', 'altysier' ) . '</a>';
+		echo '<a href="' . esc_url( home_url( '/#companies' ) ) . '">' . esc_html__( 'Group of Companies', 'altysier' ) . '</a>';
 		echo '<span class="breadcrumb__sep">/</span>';
 		echo '<span aria-current="page">' . esc_html( get_the_title() ) . '</span>';
 	} elseif ( is_page() ) {

@@ -634,17 +634,17 @@ acf_add_local_field_group( array(
 		array( 'key' => 'field_co_sector_tag', 'label' => 'Sector Tag', 'name' => 'sector_tag', 'type' => 'text' ),
 
 		// Intro Section
-		array( 'key' => 'field_co_intro_watermark', 'label' => 'Intro Watermark', 'name' => 'intro_watermark', 'type' => 'text', 'default_value' => 'OVERVIEW' ),
-		array( 'key' => 'field_co_intro_eyebrow', 'label' => 'Intro Eyebrow', 'name' => 'intro_eyebrow', 'type' => 'text', 'default_value' => 'Company Overview' ),
+		array( 'key' => 'field_co_intro_watermark', 'label' => 'Intro Watermark', 'name' => 'intro_watermark', 'type' => 'text' ),
+		array( 'key' => 'field_co_intro_eyebrow', 'label' => 'Intro Eyebrow', 'name' => 'intro_eyebrow', 'type' => 'text' ),
 		array( 'key' => 'field_co_intro_heading', 'label' => 'Intro Heading', 'name' => 'intro_heading', 'type' => 'text' ),
 		array( 'key' => 'field_co_intro_statement', 'label' => 'Intro Lead Statement', 'name' => 'intro_statement', 'type' => 'textarea', 'rows' => 3 ),
 		array( 'key' => 'field_co_intro_narrative', 'label' => 'Intro Narrative', 'name' => 'intro_narrative', 'type' => 'wysiwyg' ),
 		array( 'key' => 'field_co_intro_photo', 'label' => 'Operational Photo', 'name' => 'intro_photo', 'type' => 'image', 'return_format' => 'url' ),
 
 		// Story / Journey
-		array( 'key' => 'field_co_story_eyebrow', 'label' => 'Story Eyebrow', 'name' => 'story_eyebrow', 'type' => 'text', 'default_value' => 'Our Journey' ),
-		array( 'key' => 'field_co_story_heading', 'label' => 'Story Heading', 'name' => 'story_heading', 'type' => 'text', 'default_value' => 'Built With Purpose' ),
-		array( 'key' => 'field_co_story_watermark', 'label' => 'Story Watermark', 'name' => 'story_watermark', 'type' => 'text', 'default_value' => 'PURPOSE' ),
+		array( 'key' => 'field_co_story_eyebrow', 'label' => 'Story Eyebrow', 'name' => 'story_eyebrow', 'type' => 'text' ),
+		array( 'key' => 'field_co_story_heading', 'label' => 'Story Heading', 'name' => 'story_heading', 'type' => 'text' ),
+		array( 'key' => 'field_co_story_watermark', 'label' => 'Story Watermark', 'name' => 'story_watermark', 'type' => 'text' ),
 		array(
 			'key'    => 'field_co_story_steps',
 			'label'  => 'Timeline Steps',
@@ -659,7 +659,7 @@ acf_add_local_field_group( array(
 		),
 
 		// Business/Service Areas
-		array( 'key' => 'field_co_areas_eyebrow', 'label' => 'Areas Eyebrow', 'name' => 'areas_eyebrow', 'type' => 'text', 'default_value' => 'Core Business' ),
+		array( 'key' => 'field_co_areas_eyebrow', 'label' => 'Areas Eyebrow', 'name' => 'areas_eyebrow', 'type' => 'text' ),
 		array( 'key' => 'field_co_areas_heading', 'label' => 'Areas Heading', 'name' => 'areas_heading', 'type' => 'text' ),
 		array( 'key' => 'field_co_areas_watermark', 'label' => 'Areas Watermark', 'name' => 'areas_watermark', 'type' => 'text' ),
 		array(
@@ -678,9 +678,9 @@ acf_add_local_field_group( array(
 		),
 
 		// Markets
-		array( 'key' => 'field_co_markets_eyebrow', 'label' => 'Markets Eyebrow', 'name' => 'markets_eyebrow', 'type' => 'text', 'default_value' => 'Geographic Footprint' ),
-		array( 'key' => 'field_co_markets_heading', 'label' => 'Markets Heading', 'name' => 'markets_heading', 'type' => 'text', 'default_value' => 'Markets & Operational Reach' ),
-		array( 'key' => 'field_co_markets_watermark', 'label' => 'Markets Watermark', 'name' => 'markets_watermark', 'type' => 'text', 'default_value' => 'REACH' ),
+		array( 'key' => 'field_co_markets_eyebrow', 'label' => 'Markets Eyebrow', 'name' => 'markets_eyebrow', 'type' => 'text' ),
+		array( 'key' => 'field_co_markets_heading', 'label' => 'Markets Heading', 'name' => 'markets_heading', 'type' => 'text' ),
+		array( 'key' => 'field_co_markets_watermark', 'label' => 'Markets Watermark', 'name' => 'markets_watermark', 'type' => 'text' ),
 		array(
 			'key'    => 'field_co_markets_list',
 			'label'  => 'Market Cards',
@@ -696,24 +696,24 @@ acf_add_local_field_group( array(
 
 		// Showcase
 		array( 'key' => 'field_co_showcase_watermark', 'label' => 'Showcase Watermark', 'name' => 'showcase_watermark', 'type' => 'text', 'default_value' => 'OPERATIONS' ),
-		array( 'key' => 'field_co_showcase_eyebrow', 'label' => 'Showcase Eyebrow', 'name' => 'showcase_eyebrow', 'type' => 'text', 'default_value' => 'Operations in Motion' ),
+		array( 'key' => 'field_co_showcase_eyebrow', 'label' => 'Showcase Eyebrow', 'name' => 'showcase_eyebrow', 'type' => 'text' ),
 		array( 'key' => 'field_co_showcase_heading', 'label' => 'Showcase Heading', 'name' => 'showcase_heading', 'type' => 'text' ),
 		array( 'key' => 'field_co_showcase_lead', 'label' => 'Lead Image', 'name' => 'showcase_lead_image', 'type' => 'image', 'return_format' => 'url' ),
 		array( 'key' => 'field_co_showcase_side', 'label' => 'Side Images (Gallery)', 'name' => 'showcase_side_images', 'type' => 'gallery', 'return_format' => 'url' ),
 
 		// CTA
 		array( 'key' => 'field_co_cta_bg', 'label' => 'CTA Background Image', 'name' => 'cta_bg_image', 'type' => 'image', 'return_format' => 'url' ),
-		array( 'key' => 'field_co_cta_eyebrow', 'label' => 'CTA Eyebrow', 'name' => 'cta_eyebrow', 'type' => 'text', 'default_value' => 'Work With Us' ),
-		array( 'key' => 'field_co_cta_heading', 'label' => 'CTA Heading', 'name' => 'cta_heading', 'type' => 'text', 'default_value' => "Let's Build Stronger Partnerships Together." ),
+		array( 'key' => 'field_co_cta_eyebrow', 'label' => 'CTA Eyebrow', 'name' => 'cta_eyebrow', 'type' => 'text' ),
+		array( 'key' => 'field_co_cta_heading', 'label' => 'CTA Heading', 'name' => 'cta_heading', 'type' => 'text' ),
 		array( 'key' => 'field_co_cta_text', 'label' => 'CTA Text', 'name' => 'cta_text', 'type' => 'textarea', 'rows' => 2 ),
-		array( 'key' => 'field_co_cta_btn_label', 'label' => 'CTA Button Label', 'name' => 'cta_btn_label', 'type' => 'text', 'default_value' => 'Contact Us' ),
-		array( 'key' => 'field_co_cta_btn_link', 'label' => 'CTA Button Link', 'name' => 'cta_btn_link', 'type' => 'text', 'default_value' => '/contact/' ),
+		array( 'key' => 'field_co_cta_btn_label', 'label' => 'CTA Button Label', 'name' => 'cta_btn_label', 'type' => 'text' ),
+		array( 'key' => 'field_co_cta_btn_link', 'label' => 'CTA Button Link', 'name' => 'cta_btn_link', 'type' => 'text' ),
 
 		// Ecosystem section header
 		array( 'key' => 'field_co_ecosystem_watermark', 'label' => 'Ecosystem Watermark', 'name' => 'ecosystem_watermark', 'type' => 'text', 'default_value' => 'ECOSYSTEM' ),
-		array( 'key' => 'field_co_ecosystem_eyebrow', 'label' => 'Ecosystem Eyebrow', 'name' => 'ecosystem_eyebrow', 'type' => 'text', 'default_value' => 'Group Integration' ),
-		array( 'key' => 'field_co_ecosystem_heading', 'label' => 'Ecosystem Heading', 'name' => 'ecosystem_heading', 'type' => 'text', 'default_value' => 'Part of a Bigger Business Ecosystem' ),
-		array( 'key' => 'field_co_ecosystem_intro', 'label' => 'Ecosystem Intro', 'name' => 'ecosystem_intro', 'type' => 'text', 'default_value' => "Connecting sector-leading capabilities under Altysier Group's global umbrella." ),
+		array( 'key' => 'field_co_ecosystem_eyebrow', 'label' => 'Ecosystem Eyebrow', 'name' => 'ecosystem_eyebrow', 'type' => 'text' ),
+		array( 'key' => 'field_co_ecosystem_heading', 'label' => 'Ecosystem Heading', 'name' => 'ecosystem_heading', 'type' => 'text' ),
+		array( 'key' => 'field_co_ecosystem_intro', 'label' => 'Ecosystem Intro', 'name' => 'ecosystem_intro', 'type' => 'text' ),
 	),
 	'location' => array(
 		array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'company' ) ),

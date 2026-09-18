@@ -52,6 +52,22 @@ $default_sector_cards = array(
 	array( 'photo' => get_template_directory_uri() . '/assets/img/companies/healthcare-medical-sector.jpg', 'icon_key' => 'medical', 'title' => 'Healthcare & Medical Supplies', 'text' => 'Supporting regional healthcare supply chains with reliable sourcing and distribution of medical supplies.', 'tag' => 'Medical Distribution' ),
 	array( 'photo' => get_template_directory_uri() . '/assets/img/companies/bajaj-vehicle-sector.jpg', 'icon_key' => 'bajaj', 'title' => 'Mobility & Vehicle Distribution', 'text' => 'Connecting markets with reliable vehicle distribution and mobility solutions across the region.', 'tag' => 'Mobility Solutions' ),
 );
+$sector_rows = $default_sector_cards;
+if ( $has_acf && have_rows( 'sector_cards' ) ) {
+	$rows = array();
+	while ( have_rows( 'sector_cards' ) ) {
+		the_row();
+		$rows[] = array(
+			'photo'    => get_sub_field( 'photo' ),
+			'icon_key' => get_sub_field( 'icon_key' ),
+			'title'    => get_sub_field( 'title' ),
+			'text'     => get_sub_field( 'text' ),
+			'tag'      => get_sub_field( 'tag' ),
+		);
+	}
+	if ( ! empty( $rows ) ) { $sector_rows = $rows; }
+}
+
 // Journey ("How We Create Value") section
 $journey_eyebrow = $gf( 'journey_eyebrow', 'From Opportunity to Impact' );
 $journey_heading = $gf( 'journey_heading', 'How We Create Value' );
@@ -301,7 +317,7 @@ $has_companies = $companies_query->have_posts();
         <p class="sectors__intro"><?php echo esc_html( $group_sec_intro ); ?></p>
       </div>
       <div class="sectors__nav" aria-label="Sectors carousel navigation">
-        <span class="strip-counter"><span data-strip-current="sectors">01</span> / 07</span>
+        <span class="strip-counter"><span data-strip-current="sectors">01</span> / <?php echo sprintf( '%02d', count( $sector_rows ) ); ?></span>
         <button type="button" class="strip-nav-btn" data-strip-prev="sectors" aria-label="Previous sector">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
@@ -313,23 +329,7 @@ $has_companies = $companies_query->have_posts();
 
     <div class="sectors__track-wrap reveal">
       <div class="sectors__track" data-strip="sectors" data-wp-section="sector_cards">
-        <?php
-        $sector_rows = $default_sector_cards;
-        if ( $has_acf && have_rows( 'sector_cards' ) ) {
-          $rows = array();
-          while ( have_rows( 'sector_cards' ) ) {
-            the_row();
-            $rows[] = array(
-              'photo'    => get_sub_field( 'photo' ),
-              'icon_key' => get_sub_field( 'icon_key' ),
-              'title'    => get_sub_field( 'title' ),
-              'text'     => get_sub_field( 'text' ),
-              'tag'      => get_sub_field( 'tag' ),
-            );
-          }
-          if ( ! empty( $rows ) ) { $sector_rows = $rows; }
-        }
-        foreach ( $sector_rows as $card ) : ?>
+        <?php foreach ( $sector_rows as $card ) : ?>
         <div class="sector-card">
           <div class="sector-card__photo-wrap">
             <img class="sector-card__photo" src="<?php echo esc_url( $card['photo'] ?: 'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=500&q=65&auto=format&fit=crop' ); ?>" alt="<?php echo esc_attr( $card['title'] ); ?>" loading="lazy">

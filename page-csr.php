@@ -219,7 +219,7 @@ $banner_sub  = $gf( 'banner_subtitle', 'Altysier Group conducts business with an
       foreach ( $env_initiatives as $init ) : ?>
       <div class="csr-env-card reveal" data-wp-item="initiative">
         <div class="csr-env-card__photo-wrap" data-wp-field="photo">
-          <img class="csr-env-card__photo" src="<?php echo esc_url( $init['photo'] ); ?>" alt="<?php echo esc_attr( $init['title'] ); ?>" loading="lazy">
+          <img class="csr-env-card__photo" src="<?php echo esc_url( $init['photo'] ?: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=500&q=65&auto=format&fit=crop' ); ?>" alt="<?php echo esc_attr( $init['title'] ); ?>" loading="lazy">
         </div>
         <div class="csr-env-card__body">
           <span class="csr-env-card__num" data-wp-field="number"><?php echo esc_html( $init['number'] ); ?></span>
