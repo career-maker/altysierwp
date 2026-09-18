@@ -12,6 +12,16 @@
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#900909">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<?php if ( is_front_page() ) :
+	$hero_bg_preload = function_exists( 'get_field' ) ? get_field( 'hero_bg_image' ) : '';
+	if ( empty( $hero_bg_preload ) ) {
+		$hero_bg_preload = 'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1400&q=80&auto=format&fit=crop';
+	}
+?>
+<link rel="preload" as="image" href="<?php echo esc_url( $hero_bg_preload ); ?>" fetchpriority="high">
+<?php endif; ?>
 <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
@@ -26,6 +36,9 @@ $nav_active_contact   = is_page( 'contact' ) ? ' is-active' : '';
 
 // ── Preloader ────────────────────────────────────────────────────────────────
 $preloader_enabled = altysier_get_option( 'enable_preloader', 1 );
+if ( wp_is_mobile() ) {
+	$preloader_enabled = false;
+}
 if ( $preloader_enabled ) :
 	$bg_video_desktop = get_template_directory_uri() . '/assets/img/preloader-bg.mp4';
 	$bg_video_mobile  = get_template_directory_uri() . '/assets/img/preloader-bg-mobile.mp4';

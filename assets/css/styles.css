@@ -516,6 +516,9 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   .preloader__text.js-split .char { transition: none; opacity: 1; transform: none; }
   .preloader__container-line { transition: none; }
 }
+@media only screen and (max-width: 768px) {
+  .preloader { display: none !important; }
+}
 
 /* ---------------------------------------------------------------------- */
 /* Ticker marquee                                                          */

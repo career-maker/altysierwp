@@ -81,11 +81,11 @@
       }
     }
 
-    if (!preloader) { finish(); return; }
+    if (!preloader || window.innerWidth <= 768) { finish(); return; }
 
     document.documentElement.style.overflow = 'hidden';
     // Absolute worst case: never let the page stay stuck longer than this.
-    window.setTimeout(finish, 3000);
+    window.setTimeout(finish, 1800);
 
     if (prefersReducedMotion) { finish(); return; }
 
@@ -97,19 +97,19 @@
         preloader.classList.add('is-counting');
         var target = numberEl ? Number(numberEl.getAttribute('data-num') || 100) : 100;
         var start = performance.now();
-        var duration = 900;
+        var duration = 600;
         function tick(now) {
           var p = Math.min(1, (now - start) / duration);
           if (numberEl) numberEl.textContent = String(Math.ceil(p * target));
           if (p < 1) window.requestAnimationFrame(tick);
-          else window.setTimeout(finish, 150);
+          else window.setTimeout(finish, 100);
         }
         window.requestAnimationFrame(tick);
-      }, 400);
+      }, 200);
     };
 
-    if (document.readyState === 'complete') begin();
-    else window.addEventListener('load', begin);
+    if (document.readyState === 'complete' || document.readyState === 'interactive') begin();
+    else document.addEventListener('DOMContentLoaded', begin);
   });
 
   /* ---------------------------------------------------------------------
