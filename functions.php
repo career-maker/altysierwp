@@ -92,6 +92,20 @@ function altysier_dark_mode_head_script() {
 }
 add_action( 'wp_head', 'altysier_dark_mode_head_script', 1 );
 
+// ── Favicon (falls back to theme default when no custom one is set) ────────────
+function altysier_output_favicon() {
+	// Respect a favicon set via Settings → General → Site Icon if present.
+	if ( function_exists( 'has_site_icon' ) && has_site_icon() ) {
+		return;
+	}
+	$favicon = altysier_get_option( 'favicon', get_template_directory_uri() . '/assets/img/favicon.png' );
+	if ( empty( $favicon ) ) {
+		return;
+	}
+	echo '<link rel="icon" href="' . esc_url( $favicon ) . '">' . "\n";
+}
+add_action( 'wp_head', 'altysier_output_favicon', 1 );
+
 // ── Disable Block Editor Bloat on Frontend ─────────────────────────────────────
 function altysier_remove_block_styles() {
 	// Conditionally remove global styles injected by WordPress blocks

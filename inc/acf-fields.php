@@ -1028,6 +1028,7 @@ acf_add_local_field_group( array(
 		array( 'key' => 'field_gs_tab_header', 'label' => 'Header', 'type' => 'tab', 'placement' => 'top' ),
 		array( 'key' => 'field_gs_enable_preloader', 'label' => 'Enable Loading Preloader', 'name' => 'enable_preloader', 'type' => 'true_false', 'default_value' => 1, 'ui' => 1 ),
 		array( 'key' => 'field_gs_header_logo', 'label' => 'Header Logo', 'name' => 'header_logo', 'type' => 'image', 'return_format' => 'url', 'instructions' => 'Leave blank to use the theme default logo.' ),
+		array( 'key' => 'field_gs_favicon', 'label' => 'Favicon', 'name' => 'favicon', 'type' => 'image', 'return_format' => 'url', 'instructions' => 'Shown in the browser tab. Square image recommended (e.g. 256×256px PNG). Leave blank to use the theme default. Overridden by Settings → General → Site Icon if that is set.' ),
 
 		array( 'key' => 'field_gs_tab_footer', 'label' => 'Footer', 'type' => 'tab', 'placement' => 'top' ),
 		array( 'key' => 'field_gs_footer_logo', 'label' => 'Footer Logo', 'name' => 'footer_logo', 'type' => 'image', 'return_format' => 'url', 'instructions' => 'Leave blank to use the theme default logo.' ),
