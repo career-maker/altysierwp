@@ -249,17 +249,25 @@ function altysier_handle_contact_form() {
 	$recipient  = altysier_get_option( 'enquiry_recipient', 'admin@altysier.com' );
 	$subject    = sprintf( 'New Enquiry via Altysier Group Website - %s', $name );
 
+	$fields = array(
+		'Full Name' => $name,
+		'Email'     => $email,
+	);
+	if ( ! empty( $phone ) ) {
+		$fields['Phone'] = $phone;
+	}
+	if ( ! empty( $company ) ) {
+		$fields['Company'] = $company;
+	}
+	if ( ! empty( $sector ) ) {
+		$fields['Sector'] = $sector;
+	}
+	$fields['Message']      = $message;
+	$fields['Enquiry From'] = $source;
+
 	$email_data = array(
 		'form_source' => $source,
-		'fields'      => array(
-			'Full Name'    => $name,
-			'Email'        => $email,
-			'Phone'        => $phone ? $phone : 'Not provided',
-			'Company'      => $company ? $company : 'Not provided',
-			'Sector'       => $sector ? $sector : 'Not provided',
-			'Message'      => $message,
-			'Enquiry From' => $source,
-		),
+		'fields'      => $fields,
 	);
 
 	$email_body = altysier_build_email_html( $email_data );
