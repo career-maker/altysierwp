@@ -1529,6 +1529,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   display: flex;
   gap: 18rem;
   overflow-x: auto;
+  overflow-y: hidden;
   scroll-snap-type: x proximity;
   scroll-padding-left: 4rem;
   padding: 6rem 4rem 14rem;
@@ -1707,6 +1708,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   display: flex;
   gap: 14rem;
   overflow-x: auto;
+  overflow-y: hidden;
   scroll-snap-type: x proximity;
   scroll-padding-left: 40rem;
   padding: 4rem 4rem 10rem;
