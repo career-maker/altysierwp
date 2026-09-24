@@ -133,7 +133,7 @@ function altysier_handle_send_test_email() {
 	$sent = wp_mail( $recipient, $subject, $message, $headers );
 	remove_action( 'wp_mail_failed', 'altysier_capture_mail_error' );
 
-	$redirect_url = admin_url( 'admin.php?page=altysier-settings&tab=smtp' );
+	$redirect_url = admin_url( 'admin.php?page=altysier-smtp-settings' );
 	if ( $sent ) {
 		$redirect_url = add_query_arg( 'test_email_sent', '1', $redirect_url );
 	} else {
