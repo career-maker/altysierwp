@@ -245,8 +245,8 @@ function altysier_handle_contact_form() {
 		$sector = $raw_sector;
 	}
 
-	// 6. Build and send email
-	$recipient  = altysier_get_option( 'enquiry_recipient', 'manu.abhiram@gmail.com' );
+	// 6. Build and send email to Admin
+	$recipient  = altysier_get_option( 'enquiry_recipient', 'admin@altysier.com' );
 	$subject    = sprintf( 'New Enquiry via Altysier Group Website - %s', $name );
 
 	$email_data = array(
@@ -265,16 +265,34 @@ function altysier_handle_contact_form() {
 	$email_body = altysier_build_email_html( $email_data );
 
 	$from_name  = altysier_get_option( 'mail_from_name', 'Altysier Group' );
-	$from_email = function_exists( 'altysier_wp_mail_from' ) ? altysier_wp_mail_from( get_option( 'admin_email' ) ) : get_option( 'admin_email' );
+	$admin_from = 'admin@altysier.com';
 
 	$headers = array(
 		'Content-Type: text/html; charset=UTF-8',
-		'From: ' . sanitize_text_field( $from_name ) . ' <' . sanitize_email( $from_email ) . '>',
+		'From: ' . sanitize_text_field( $from_name ) . ' <' . sanitize_email( $admin_from ) . '>',
 		'Reply-To: ' . sanitize_text_field( $name ) . ' <' . sanitize_email( $email ) . '>',
 	);
 
 	add_action( 'wp_mail_failed', 'altysier_capture_mail_error' );
 	$sent = wp_mail( $recipient, $subject, $email_body, $headers );
+	
+	// Send email to Customer
+	$customer_subject = 'Thank you for your enquiry - Altysier Group';
+	$customer_body = '<html><body style="font-family:Arial,sans-serif;background:#f4f4f7;padding:20px;">';
+	$customer_body .= '<div style="max-width:620px;margin:0 auto;background:#fff;border-radius:8px;padding:30px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">';
+	$customer_body .= '<h2 style="color:#900909;">Thank You, ' . esc_html( $name ) . '</h2>';
+	$customer_body .= '<p style="color:#444;line-height:1.6;">We have successfully received your enquiry. A member of our team will review your message and respond within one business day.</p>';
+	$customer_body .= '<p style="color:#444;line-height:1.6;">Best regards,<br><strong>Altysier Group Support</strong></p>';
+	$customer_body .= '</div></body></html>';
+	
+	$customer_from = 'Support@altysier.com';
+	$customer_headers = array(
+		'Content-Type: text/html; charset=UTF-8',
+		'From: ' . sanitize_text_field( $from_name ) . ' <' . sanitize_email( $customer_from ) . '>',
+		'Reply-To: ' . sanitize_text_field( $admin_from ) . ' <' . sanitize_email( $admin_from ) . '>',
+	);
+	
+	wp_mail( $email, $customer_subject, $customer_body, $customer_headers );
 	remove_action( 'wp_mail_failed', 'altysier_capture_mail_error' );
 
 	global $altysier_last_mail_error;

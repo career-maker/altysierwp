@@ -21,13 +21,13 @@ function altysier_configure_smtp( $phpmailer ) {
 		return;
 	}
 
-	$host       = altysier_get_option( 'smtp_host', 'smtp.gmail.com' );
+	$host       = altysier_get_option( 'smtp_host', 'smtp-relay.brevo.com' );
 	$port       = (int) altysier_get_option( 'smtp_port', 587 );
 	$encryption = altysier_get_option( 'smtp_encryption', 'tls' );
-	$username   = altysier_get_option( 'smtp_username', 'manu.abhiram@gmail.com' );
-	$password   = altysier_get_option( 'smtp_password', '' );
+	$username   = altysier_get_option( 'smtp_username', 'admin@altysier.com' );
+	$password   = altysier_get_option( 'smtp_password', 'Abrevo@25&' );
 	$from_email = altysier_get_option( 'mail_from_email', $username ? $username : get_option( 'admin_email' ) );
-	$from_name  = altysier_get_option( 'mail_from_name', 'Altysier Group Website' );
+	$from_name  = altysier_get_option( 'mail_from_name', 'Altysier Group' );
 
 	if ( empty( $password ) ) {
 		return; // Fallback to local mail / Mailpit until Gmail app password is saved
@@ -41,9 +41,7 @@ function altysier_configure_smtp( $phpmailer ) {
 	$phpmailer->Password   = $password;
 	$phpmailer->SMTPSecure = ( 'none' === $encryption ) ? '' : $encryption;
 
-	// From configuration
-	$phpmailer->From     = $from_email;
-	$phpmailer->FromName = $from_name;
+	// Removed forced From and FromName here so wp_mail headers and filters are respected.
 
 	// SSL options for local development if needed
 	$phpmailer->SMTPOptions = array(
@@ -60,7 +58,12 @@ add_action( 'phpmailer_init', 'altysier_configure_smtp' );
  * Custom sender email address
  */
 function altysier_wp_mail_from( $email ) {
-	$from = altysier_get_option( 'mail_from_email', '' );
+	// If a custom from email is already set (not the default wordpress@), respect it.
+	if ( strpos( $email, 'wordpress@' ) === false && strpos( $email, 'www-data@' ) === false ) {
+		return $email;
+	}
+
+	$from = altysier_get_option( 'mail_from_email', 'admin@altysier.com' );
 	if ( ! empty( $from ) && is_email( $from ) ) {
 		return $from;
 	}
@@ -85,8 +88,8 @@ add_filter( 'wp_mail_from', 'altysier_wp_mail_from' );
  * Custom sender display name
  */
 function altysier_wp_mail_from_name( $name ) {
-	$custom_name = altysier_get_option( 'mail_from_name', 'Altysier Group Website' );
-	return ! empty( $custom_name ) ? $custom_name : $name;
+	$custom_name = altysier_get_option( 'mail_from_name', 'Altysier Group' );
+	return ( ! empty( $custom_name ) && $name === 'WordPress' ) ? $custom_name : $name;
 }
 add_filter( 'wp_mail_from_name', 'altysier_wp_mail_from_name' );
 
@@ -102,7 +105,7 @@ function altysier_handle_send_test_email() {
 
 	$recipient = isset( $_POST['test_recipient'] ) ? sanitize_email( $_POST['test_recipient'] ) : '';
 	if ( ! is_email( $recipient ) ) {
-		$recipient = altysier_get_option( 'enquiry_recipient', 'manu.abhiram@gmail.com' );
+		$recipient = altysier_get_option( 'enquiry_recipient', 'admin@altysier.com' );
 	}
 
 	$subject = sprintf( __( '[Test Email] Altysier Group Website SMTP Check (%s)', 'altysier' ), wp_date( 'Y-m-d H:i:s' ) );
@@ -112,11 +115,11 @@ function altysier_handle_send_test_email() {
 	$message .= "<div style='background: #900909; padding: 20px; color: #fff; text-align: center;'><h2 style='margin: 0;'>Altysier Group</h2><p style='margin: 5px 0 0;'>SMTP Verification Successful</p></div>";
 	$message .= "<div style='padding: 25px;'>";
 	$message .= "<p>Hello Administrator,</p>";
-	$message .= "<p>This is a confirmation that your Gmail SMTP configuration on <strong>" . esc_html( get_bloginfo( 'name' ) ) . "</strong> is functioning properly.</p>";
+	$message .= "<p>This is a confirmation that your Brevo SMTP configuration on <strong>" . esc_html( get_bloginfo( 'name' ) ) . "</strong> is functioning properly.</p>";
 	$message .= "<table style='width: 100%; border-collapse: collapse; margin: 20px 0;'>";
-	$message .= "<tr><td style='padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;'>SMTP Host:</td><td style='padding: 8px; border-bottom: 1px solid #eee;'>" . esc_html( altysier_get_option( 'smtp_host', 'smtp.gmail.com' ) ) . "</td></tr>";
+	$message .= "<tr><td style='padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;'>SMTP Host:</td><td style='padding: 8px; border-bottom: 1px solid #eee;'>" . esc_html( altysier_get_option( 'smtp_host', 'smtp-relay.brevo.com' ) ) . "</td></tr>";
 	$message .= "<tr><td style='padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;'>SMTP Port:</td><td style='padding: 8px; border-bottom: 1px solid #eee;'>" . esc_html( altysier_get_option( 'smtp_port', '587' ) ) . "</td></tr>";
-	$message .= "<tr><td style='padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;'>Sender:</td><td style='padding: 8px; border-bottom: 1px solid #eee;'>" . esc_html( altysier_get_option( 'smtp_username', 'manu.abhiram@gmail.com' ) ) . "</td></tr>";
+	$message .= "<tr><td style='padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;'>Sender:</td><td style='padding: 8px; border-bottom: 1px solid #eee;'>" . esc_html( altysier_get_option( 'smtp_username', 'admin@altysier.com' ) ) . "</td></tr>";
 	$message .= "<tr><td style='padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;'>Server Time:</td><td style='padding: 8px; border-bottom: 1px solid #eee;'>" . esc_html( current_time( 'mysql' ) ) . "</td></tr>";
 	$message .= "</table>";
 	$message .= "<p style='color: #666; font-size: 13px;'>You are ready to receive contact and enquiry submissions reliably in this inbox.</p>";
