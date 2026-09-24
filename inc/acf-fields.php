@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * ACF Field Group Definitions — Programmatic Registration
  * Registered via acf_add_local_field_group() so ACF reads them as code.
@@ -1089,17 +1089,17 @@ acf_add_local_field_group( array(
 // ══════════════════════════════════════════════════════════════
 acf_add_local_field_group( array(
 	'key'    => 'group_smtp_settings',
-	'title'  => 'Gmail SMTP Settings',
+	'title'  => 'SMTP Settings',
 	'fields' => array(
 		array( 'key' => 'field_smtp_enabled', 'label' => 'Enable Custom SMTP', 'name' => 'smtp_enabled', 'type' => 'true_false', 'default_value' => 1, 'ui' => 1, 'instructions' => 'When off, WordPress falls back to the server\'s default mail sending (usually unreliable — keep this on).' ),
-		array( 'key' => 'field_smtp_host', 'label' => 'SMTP Host', 'name' => 'smtp_host', 'type' => 'text', 'default_value' => 'smtp.gmail.com' ),
+		array( 'key' => 'field_smtp_host', 'label' => 'SMTP Host', 'name' => 'smtp_host', 'type' => 'text', 'default_value' => 'smtp-relay.brevo.com' ),
 		array( 'key' => 'field_smtp_port', 'label' => 'SMTP Port', 'name' => 'smtp_port', 'type' => 'number', 'default_value' => 587 ),
 		array( 'key' => 'field_smtp_encryption', 'label' => 'Encryption', 'name' => 'smtp_encryption', 'type' => 'select', 'choices' => array( 'tls' => 'TLS', 'ssl' => 'SSL', 'none' => 'None' ), 'default_value' => 'tls' ),
-		array( 'key' => 'field_smtp_username', 'label' => 'Gmail Address', 'name' => 'smtp_username', 'type' => 'text', 'instructions' => 'The full Gmail address used to send mail.' ),
-		array( 'key' => 'field_smtp_password', 'label' => 'Gmail App Password', 'name' => 'smtp_password', 'type' => 'password', 'instructions' => 'A 16-character Google App Password — NOT your normal Gmail password. Generate one at myaccount.google.com/apppasswords (requires 2-Step Verification enabled).' ),
-		array( 'key' => 'field_mail_from_name', 'label' => 'Sender Name', 'name' => 'mail_from_name', 'type' => 'text', 'default_value' => 'Altysier Group Website' ),
-		array( 'key' => 'field_mail_from_email', 'label' => 'Sender / Reply-To Email', 'name' => 'mail_from_email', 'type' => 'text', 'instructions' => 'Leave blank to use the Gmail Address above.' ),
-		array( 'key' => 'field_enquiry_recipient', 'label' => 'Enquiry Recipient Email', 'name' => 'enquiry_recipient', 'type' => 'text', 'instructions' => 'Where contact-form submissions are delivered.', 'default_value' => 'manu.abhiram@gmail.com' ),
+		array( 'key' => 'field_smtp_username', 'label' => 'SMTP Username', 'name' => 'smtp_username', 'type' => 'text', 'instructions' => 'The full SMTP Username used to send mail.' ),
+		array( 'key' => 'field_smtp_password', 'label' => 'SMTP Password', 'name' => 'smtp_password', 'type' => 'password', 'instructions' => 'A 16-character Google App Password — NOT your normal Gmail password. Generate one at myaccount.google.com/apppasswords (requires 2-Step Verification enabled).' ),
+		array( 'key' => 'field_mail_from_name', 'label' => 'Sender Name', 'name' => 'mail_from_name', 'type' => 'text', 'default_value' => 'Altysier Group' ),
+		array( 'key' => 'field_mail_from_email', 'label' => 'Sender / Reply-To Email', 'name' => 'mail_from_email', 'type' => 'text', 'instructions' => 'Leave blank to use the SMTP Username above.' ),
+		array( 'key' => 'field_enquiry_recipient', 'label' => 'Enquiry Recipient Email', 'name' => 'enquiry_recipient', 'type' => 'text', 'instructions' => 'Where contact-form submissions are delivered.', 'default_value' => 'admin@altysier.com' ),
 	),
 	'location' => array(
 		array( array( 'param' => 'options_page', 'operator' => '==', 'value' => 'altysier-smtp-settings' ) ),
