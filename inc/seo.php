@@ -204,3 +204,13 @@ function altysier_activate_sitemap() {
 	} );
 }
 add_action( 'init', 'altysier_activate_sitemap' );
+
+/**
+ * Customize the virtual robots.txt file to hide API and image folders
+ */
+function altysier_custom_robots_txt( $output, $public ) {
+	$output .= "Disallow: /wp-json/\n"; // Hide REST API
+	$output .= "Disallow: /wp-content/uploads/\n"; // Hide image/media uploads
+	return $output;
+}
+add_filter( 'robots_txt', 'altysier_custom_robots_txt', 10, 2 );
