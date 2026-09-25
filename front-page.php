@@ -430,14 +430,14 @@ $has_companies = $companies_query->have_posts();
         while ( $companies_query->have_posts() ) : $companies_query->the_post();
           $card_idx++;
           $is_accent     = ( $card_idx % 2 === 0 ) ? ' _accent' : '';
-          $logo_url_co   = get_the_post_thumbnail_url( get_the_ID(), 'altysier-card' ) ?: get_template_directory_uri() . '/assets/img/logo-icon.png';
+          $logo_url_co   = get_the_post_thumbnail_url( get_the_ID(), 'full' ) ?: get_template_directory_uri() . '/assets/img/logo-icon.png';
           $tag           = function_exists( 'get_field' ) ? ( get_field( 'sector_tag' ) ?: '' ) : '';
           $excerpt       = get_the_excerpt();
           $bg_color      = function_exists( 'get_field' ) ? ( get_field( 'logo_bg_color' ) ?: '#ffffff' ) : '#ffffff';
       ?>
         <article class="business-card<?php echo esc_attr( $is_accent ); ?>">
           <div class="business-card__photo-wrap" style="background-color:<?php echo esc_attr( $bg_color ); ?>;">
-            <img class="business-card__photo" style="object-fit:contain;padding:20rem;" src="<?php echo esc_url( $logo_url_co ); ?>" alt="<?php the_title_attribute(); ?> logo" loading="lazy" decoding="async">
+            <img class="business-card__photo" style="object-fit:contain;padding:1.5rem;box-sizing:border-box;" src="<?php echo esc_url( $logo_url_co ); ?>" alt="<?php the_title_attribute(); ?> logo" loading="lazy" decoding="async">
           </div>
           <div class="business-card__body">
             <div class="business-card__top">
@@ -452,8 +452,8 @@ $has_companies = $companies_query->have_posts();
       <?php endwhile; wp_reset_postdata();
       else : // Static fallback HTML from the original index.html ?>
         <article class="business-card">
-          <div class="business-card__photo-wrap" style="background-color:#06004E;">
-            <img class="business-card__photo" style="object-fit:contain;padding:20rem;" src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/companies/altysier-general-trading-logo.png' ); ?>" alt="Altysier International General Trading LLC logo" loading="lazy" decoding="async">
+          <div class="business-card__photo-wrap" style="background-color:#ffffff;">
+            <img class="business-card__photo" style="object-fit:contain;padding:1.5rem;box-sizing:border-box;" src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/companies/altysier-general-trading-logo.png' ); ?>" alt="Altysier International General Trading LLC logo" loading="lazy" decoding="async">
           </div>
           <div class="business-card__body">
             <div class="business-card__top"><span class="business-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17h18l-2.2 3.3a2 2 0 01-1.7.9H6.9a2 2 0 01-1.7-.9L3 17Z"/><path d="M6 17v-6h5v6M13 17V7h4v10"/></svg></span></div>
@@ -465,7 +465,7 @@ $has_companies = $companies_query->have_posts();
         </article>
         <article class="business-card _accent">
           <div class="business-card__photo-wrap" style="background-color:#ffffff;">
-            <img class="business-card__photo" style="object-fit:contain;padding:20rem;" src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/companies/al-taysir-gulf-logo.jpg' ); ?>" alt="Al Taysir Al Mutamayyiza Gulf Co logo" loading="lazy" decoding="async">
+            <img class="business-card__photo" style="object-fit:contain;padding:1.5rem;box-sizing:border-box;" src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/companies/al-taysir-gulf-logo.jpg' ); ?>" alt="Al Taysir Al Mutamayyiza Gulf Co logo" loading="lazy" decoding="async">
           </div>
           <div class="business-card__body">
             <div class="business-card__top"><span class="business-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="8" width="10.5" height="8" rx="1"/><path d="M13 11h3.8l3.2 3v3h-7"/><circle cx="6.5" cy="18.2" r="1.5"/><circle cx="16.5" cy="18.2" r="1.5"/></svg></span></div>
@@ -477,7 +477,7 @@ $has_companies = $companies_query->have_posts();
         </article>
         <article class="business-card">
           <div class="business-card__photo-wrap" style="background-color:#ffffff;">
-            <img class="business-card__photo" style="object-fit:contain;padding:20rem;" src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/companies/haloub-feed-mill-logo.jpg' ); ?>" alt="Haloub Feed Mill Factory logo" loading="lazy" decoding="async">
+            <img class="business-card__photo" style="object-fit:contain;padding:1.5rem;box-sizing:border-box;" src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/companies/haloub-feed-mill-logo.jpg' ); ?>" alt="Haloub Feed Mill Factory logo" loading="lazy" decoding="async">
           </div>
           <div class="business-card__body">
             <div class="business-card__top"><span class="business-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11M12 3c-3 1-5 4-5 8a5 5 0 0010 0c0-4-2-7-5-8Z"/><path d="M7 21h10"/></svg></span></div>
@@ -489,7 +489,7 @@ $has_companies = $companies_query->have_posts();
         </article>
         <article class="business-card _accent">
           <div class="business-card__photo-wrap" style="background-color:#ffffff;">
-            <img class="business-card__photo" style="object-fit:contain;padding:20rem;" src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/companies/al-mutmeiza-pioneer-logo.jpg' ); ?>" alt="Al Mutmeiza for Industries Investment Co LTD logo" loading="lazy" decoding="async">
+            <img class="business-card__photo" style="object-fit:contain;padding:1.5rem;box-sizing:border-box;" src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/companies/al-mutmeiza-pioneer-logo.jpg' ); ?>" alt="Al Mutmeiza for Industries Investment Co LTD logo" loading="lazy" decoding="async">
           </div>
           <div class="business-card__body">
             <div class="business-card__top"><span class="business-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.2"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.2"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.2"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.2"/></svg></span></div>
@@ -501,7 +501,7 @@ $has_companies = $companies_query->have_posts();
         </article>
         <article class="business-card">
           <div class="business-card__photo-wrap" style="background-color:#ffffff;">
-            <img class="business-card__photo" style="object-fit:contain;padding:20rem;" src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/companies/altysier-advanced-business-logo.jpg' ); ?>" alt="Altysier International for Advanced Business Co LTD logo" loading="lazy" decoding="async">
+            <img class="business-card__photo" style="object-fit:contain;padding:1.5rem;box-sizing:border-box;" src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/companies/altysier-advanced-business-logo.jpg' ); ?>" alt="Altysier International for Advanced Business Co LTD logo" loading="lazy" decoding="async">
           </div>
           <div class="business-card__body">
             <div class="business-card__top"><span class="business-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V11l5 3v-3l5 3v-3l5 3v7H3Z"/><path d="M7 21v-3M12 21v-3M17 21v-3"/></svg></span></div>
@@ -513,7 +513,7 @@ $has_companies = $companies_query->have_posts();
         </article>
         <article class="business-card _accent">
           <div class="business-card__photo-wrap" style="background-color:#ffffff;">
-            <img class="business-card__photo" style="object-fit:contain;padding:20rem;" src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/companies/tasabih-services-logo.jpg' ); ?>" alt="TASABIH for Service and Transportation Co Ltd logo" loading="lazy" decoding="async">
+            <img class="business-card__photo" style="object-fit:contain;padding:1.5rem;box-sizing:border-box;" src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/companies/tasabih-services-logo.jpg' ); ?>" alt="TASABIH for Service and Transportation Co Ltd logo" loading="lazy" decoding="async">
           </div>
           <div class="business-card__body">
             <div class="business-card__top"><span class="business-card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="16" width="16" height="4" rx="1"/><path d="M4 16l3-8h10l3 8"/><circle cx="8" cy="18" r="1.5"/><circle cx="16" cy="18" r="1.5"/></svg></span></div>

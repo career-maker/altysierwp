@@ -273,7 +273,11 @@ function altysier_handle_contact_form() {
 	$email_body = altysier_build_email_html( $email_data );
 
 	$from_name  = altysier_get_option( 'mail_from_name', 'Altysier Group' );
-	$admin_from = 'admin@altysier.com';
+	
+	$admin_from = altysier_get_option( 'mail_from_email', '' );
+	if ( empty( $admin_from ) ) {
+		$admin_from = altysier_get_option( 'smtp_username', 'b99df3001@smtp-brevo.com' );
+	}
 
 	$headers = array(
 		'Content-Type: text/html; charset=UTF-8',
@@ -301,7 +305,7 @@ function altysier_handle_contact_form() {
 	$customer_body .= '<p style="color:#444;line-height:1.6;text-align:center;margin-top:30px;">Best regards,<br><strong style="color:#222;">Altysier Group Support</strong><br><a href="' . $site_url . '" style="color:#900909;text-decoration:none;font-weight:bold;margin-top:5px;display:inline-block;">' . $site_url . '</a></p>';
 	$customer_body .= '</div></body></html>';
 	
-	$customer_from = 'admin@altysier.com';
+	$customer_from = $admin_from;
 	$customer_headers = array(
 		'Content-Type: text/html; charset=UTF-8',
 		'From: ' . sanitize_text_field( $from_name ) . ' <' . sanitize_email( $customer_from ) . '>',

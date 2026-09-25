@@ -330,14 +330,14 @@ function altysier_render_settings_page() {
 					<tr>
 						<th scope="row"><label for="altysier_enquiry_recipient"><?php esc_html_e( 'Enquiry Recipient Email', 'altysier' ); ?></label></th>
 						<td>
-							<input type="email" id="altysier_enquiry_recipient" name="altysier_enquiry_recipient" value="<?php echo esc_attr( get_option( 'altysier_enquiry_recipient', 'manu.abhiram@gmail.com' ) ); ?>" class="regular-text" required>
+							<input type="email" id="altysier_enquiry_recipient" name="altysier_enquiry_recipient" value="<?php echo esc_attr( get_option( 'altysier_enquiry_recipient', 'admin@altysier.com' ) ); ?>" class="regular-text" required>
 							<p class="description"><?php esc_html_e( 'All website contact submissions will be sent to this email address.', 'altysier' ); ?></p>
 						</td>
 					</tr>
 					<tr>
 						<th scope="row"><label for="altysier_smtp_username"><?php esc_html_e( 'Gmail / SMTP Address', 'altysier' ); ?></label></th>
 						<td>
-							<input type="email" id="altysier_smtp_username" name="altysier_smtp_username" value="<?php echo esc_attr( get_option( 'altysier_smtp_username', 'manu.abhiram@gmail.com' ) ); ?>" class="regular-text">
+							<input type="email" id="altysier_smtp_username" name="altysier_smtp_username" value="<?php echo esc_attr( get_option( 'altysier_smtp_username', 'admin@altysier.com' ) ); ?>" class="regular-text">
 						</td>
 					</tr>
 					<tr>
@@ -522,13 +522,13 @@ function altysier_render_test_email_panel() {
 			<?php wp_nonce_field( 'altysier_test_email_nonce', 'altysier_test_nonce' ); ?>
 			<input type="hidden" name="action" value="altysier_send_test_email">
 			<p>
-				<input type="email" name="test_recipient" value="<?php echo esc_attr( altysier_get_option( 'enquiry_recipient', 'manu.abhiram@gmail.com' ) ); ?>" class="regular-text" required placeholder="recipient@example.com">
+				<input type="email" name="test_recipient" value="<?php echo esc_attr( altysier_get_option( 'enquiry_recipient', 'admin@altysier.com' ) ); ?>" class="regular-text" required placeholder="recipient@example.com">
 				<button type="submit" class="button button-secondary"><?php esc_html_e( 'Send Test Email Now', 'altysier' ); ?></button>
 			</p>
 		</form>
 		<?php if ( isset( $_GET['test_email_sent'] ) ) : ?>
 			<?php if ( '1' === $_GET['test_email_sent'] ) : ?>
-				<div class="notice notice-success inline" style="margin-top: 15px;"><p><?php echo esc_html( sprintf( __( 'Test email sent successfully! Please check your inbox at %s', 'altysier' ), altysier_get_option( 'enquiry_recipient', 'manu.abhiram@gmail.com' ) ) ); ?></p></div>
+				<div class="notice notice-success inline" style="margin-top: 15px;"><p><?php echo esc_html( sprintf( __( 'Test email sent successfully! Please check your inbox at %s', 'altysier' ), altysier_get_option( 'enquiry_recipient', 'admin@altysier.com' ) ) ); ?></p></div>
 			<?php else : ?>
 				<div class="notice notice-error inline" style="margin-top: 15px;"><p><?php echo esc_html( sprintf( __( 'Test email failed to send. Error details: %s', 'altysier' ), isset( $_GET['error'] ) ? urldecode( $_GET['error'] ) : 'Unknown error' ) ); ?></p></div>
 			<?php endif; ?>
