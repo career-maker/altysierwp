@@ -286,11 +286,19 @@ function altysier_handle_contact_form() {
 	
 	// Send email to Customer
 	$customer_subject = 'Thank you for your enquiry - Altysier Group';
+	
+	$logo_url = altysier_get_option( 'header_logo', get_template_directory_uri() . '/assets/img/logo-icon.png' );
+	$site_url = esc_url( get_site_url() );
+
 	$customer_body = '<html><body style="font-family:Arial,sans-serif;background:#f4f4f7;padding:20px;">';
 	$customer_body .= '<div style="max-width:620px;margin:0 auto;background:#fff;border-radius:8px;padding:30px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">';
-	$customer_body .= '<h2 style="color:#900909;">Thank You, ' . esc_html( $name ) . '</h2>';
-	$customer_body .= '<p style="color:#444;line-height:1.6;">We have successfully received your enquiry. A member of our team will review your message and respond within one business day.</p>';
-	$customer_body .= '<p style="color:#444;line-height:1.6;">Best regards,<br><strong>Altysier Group Support</strong></p>';
+	
+	// Add Logo
+	$customer_body .= '<div style="text-align:center;margin-bottom:25px;"><a href="' . $site_url . '"><img src="' . esc_url( $logo_url ) . '" alt="Altysier Group" style="max-width:120px;height:auto;display:inline-block;"></a></div>';
+	
+	$customer_body .= '<h2 style="color:#900909;text-align:center;margin-top:0;">Thank You, ' . esc_html( $name ) . '</h2>';
+	$customer_body .= '<p style="color:#444;line-height:1.6;text-align:center;">We have successfully received your enquiry. A member of our team will review your message and respond within one business day.</p>';
+	$customer_body .= '<p style="color:#444;line-height:1.6;text-align:center;margin-top:30px;">Best regards,<br><strong style="color:#222;">Altysier Group Support</strong><br><a href="' . $site_url . '" style="color:#900909;text-decoration:none;font-weight:bold;margin-top:5px;display:inline-block;">' . $site_url . '</a></p>';
 	$customer_body .= '</div></body></html>';
 	
 	$customer_from = 'admin@altysier.com';
