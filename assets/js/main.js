@@ -1010,50 +1010,66 @@
 
         var ajaxUrl = (window.altysierConfig && window.altysierConfig.ajaxUrl) ? window.altysierConfig.ajaxUrl : '/wp-admin/admin-ajax.php';
 
-        fetch(ajaxUrl, {
-          method: 'POST',
-          body: formData
-        })
-          .then(function (res) { return res.json(); })
-          .then(function (data) {
-            var message = (data && data.data && data.data.message) ? data.data.message : '';
-            if (data && data.success) {
-              if (status) {
-                status.textContent = message || 'Thank you for your message. We will be in touch soon.';
-                status.classList.add('is-success');
+        function sendForm() {
+          fetch(ajaxUrl, {
+            method: 'POST',
+            body: formData
+          })
+            .then(function (res) { return res.json(); })
+            .then(function (data) {
+              var message = (data && data.data && data.data.message) ? data.data.message : '';
+              if (data && data.success) {
+                if (status) {
+                  status.textContent = message || 'Thank you for your message. We will be in touch soon.';
+                  status.classList.add('is-success');
+                }
+                form.reset();
+                hideFieldError(nameInput, nameError);
+                hideFieldError(emailInput, emailError);
+                hideFieldError(msgInput, msgError);
+                nameTouched = false;
+                emailTouched = false;
+                msgTouched = false;
+                if (submitBtn) {
+                  submitBtn.disabled = false;
+                  submitBtn.textContent = submitLabel;
+                }
+              } else {
+                if (status) {
+                  status.textContent = message || 'Submission could not be completed. Please try again.';
+                  status.classList.add('is-error');
+                }
+                if (submitBtn) {
+                  submitBtn.disabled = false;
+                  submitBtn.textContent = submitLabel;
+                }
               }
-              form.reset();
-              hideFieldError(nameInput, nameError);
-              hideFieldError(emailInput, emailError);
-              hideFieldError(msgInput, msgError);
-              nameTouched = false;
-              emailTouched = false;
-              msgTouched = false;
-              if (submitBtn) {
-                submitBtn.disabled = false;
-                submitBtn.textContent = submitLabel;
-              }
-            } else {
+            })
+            .catch(function () {
               if (status) {
-                status.textContent = message || 'Submission could not be completed. Please try again.';
+                status.textContent = 'Your message could not be sent at this moment. Please contact us directly at info@altysier.com or call +971 4 268 0666.';
                 status.classList.add('is-error');
               }
               if (submitBtn) {
                 submitBtn.disabled = false;
                 submitBtn.textContent = submitLabel;
               }
-            }
-          })
-          .catch(function () {
-            if (status) {
-              status.textContent = 'Your message could not be sent at this moment. Please contact us directly at info@altysier.com or call +971 4 268 0666.';
-              status.classList.add('is-error');
-            }
-            if (submitBtn) {
-              submitBtn.disabled = false;
-              submitBtn.textContent = submitLabel;
-            }
+            });
+        }
+
+        if (window.altysierConfig && window.altysierConfig.recaptchaEnabled && typeof grecaptcha !== 'undefined') {
+          grecaptcha.ready(function() {
+            grecaptcha.execute(window.altysierConfig.recaptchaKey, { action: 'contact_form' }).then(function(token) {
+              formData.set('recaptcha_token', token);
+              sendForm();
+            }).catch(function(err) {
+              console.error('reCAPTCHA Error:', err);
+              sendForm(); // Fallback to send anyway so backend can handle/reject
+            });
           });
+        } else {
+          sendForm();
+        }
       });
     });
   });
