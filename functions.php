@@ -109,6 +109,8 @@ function altysier_output_favicon() {
 	echo '<link rel="icon" href="' . esc_url( $favicon ) . '">' . "\n";
 }
 add_action( 'wp_head', 'altysier_output_favicon', 1 );
+add_action( 'admin_head', 'altysier_output_favicon', 1 );
+add_action( 'login_head', 'altysier_output_favicon', 1 );
 
 // ── Remove Unused "Posts" (Blog) Feature from Admin ─────────────────────────────
 // The site has no News/Blog page — hide Posts from the admin menu and admin bar
