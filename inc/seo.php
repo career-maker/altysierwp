@@ -202,8 +202,29 @@ function altysier_activate_sitemap() {
 		$post_types['company'] = get_post_type_object( 'company' );
 		return $post_types;
 	} );
+	
+	// Remove users sitemap since author archives are disabled
+	add_filter( 'wp_sitemaps_add_provider', function( $provider, $name ) {
+		if ( 'users' === $name ) {
+			return false;
+		}
+		return $provider;
+	}, 10, 2 );
 }
 add_action( 'init', 'altysier_activate_sitemap' );
+
+/**
+ * Disable author archives to prevent username enumeration and 404 errors
+ */
+function altysier_disable_author_archives() {
+	if ( is_author() ) {
+		global $wp_query;
+		$wp_query->set_404();
+		status_header( 404 );
+		nocache_headers();
+	}
+}
+add_action( 'template_redirect', 'altysier_disable_author_archives' );
 
 /**
  * Customize the virtual robots.txt file to hide API and image folders
