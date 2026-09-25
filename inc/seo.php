@@ -222,6 +222,12 @@ function altysier_disable_author_archives() {
 		$wp_query->set_404();
 		status_header( 404 );
 		nocache_headers();
+		
+		// Properly load the theme's 404.php template and stop execution
+		if ( $template = get_query_template( '404' ) ) {
+			include( $template );
+		}
+		exit;
 	}
 }
 add_action( 'template_redirect', 'altysier_disable_author_archives' );
