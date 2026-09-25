@@ -309,7 +309,7 @@ function altysier_handle_contact_form() {
 	$customer_headers = array(
 		'Content-Type: text/html; charset=UTF-8',
 		'From: ' . sanitize_text_field( $from_name ) . ' <' . sanitize_email( $customer_from ) . '>',
-		'Reply-To: ' . sanitize_text_field( $admin_from ) . ' <' . sanitize_email( $admin_from ) . '>',
+		'Reply-To: ' . sanitize_text_field( $from_name ) . ' <' . sanitize_email( $admin_from ) . '>',
 	);
 	
 	wp_mail( $email, $customer_subject, $customer_body, $customer_headers );
