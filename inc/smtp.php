@@ -129,9 +129,17 @@ function altysier_handle_send_test_email() {
 		'Content-Type: text/html; charset=UTF-8',
 	);
 
+	add_action( 'phpmailer_init', function( $phpmailer ) {
+		$phpmailer->SMTPDebug = 3;
+		$phpmailer->Debugoutput = 'html';
+	} );
+
 	add_action( 'wp_mail_failed', 'altysier_capture_mail_error' );
 	$sent = wp_mail( $recipient, $subject, $message, $headers );
 	remove_action( 'wp_mail_failed', 'altysier_capture_mail_error' );
+
+	echo '<div style="background:#fff;padding:20px;border:2px solid red;margin:20px;"><h3>SMTP Debug Log (Scroll up to see the Brevo response):</h3><a href="javascript:history.back()">Go back</a></div>';
+	die();
 
 	$redirect_url = admin_url( 'admin.php?page=altysier-smtp-settings' );
 	if ( $sent ) {
