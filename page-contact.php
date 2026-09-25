@@ -797,68 +797,84 @@ $banner_sub  = $gf( 'banner_subtitle', 'Whether you are exploring a business opp
 
       var ajaxUrl = (window.altysierConfig && window.altysierConfig.ajaxUrl) ? window.altysierConfig.ajaxUrl : '/wp-admin/admin-ajax.php';
 
-      fetch(ajaxUrl, {
-        method: 'POST',
-        body: formData
-      })
-      .then(function(res) { return res.json(); })
-      .then(function(data) {
-        if (feedback) {
-          feedback.style.display = 'block';
-          if (data && data.success) {
-            feedback.style.color = '#15803d';
-            feedback.textContent = (data.data && data.data.message) ? data.data.message : 'Thank you. Your enquiry has been received.';
-            if (submitBtn) {
-              submitBtn.textContent = 'Enquiry Sent';
-              submitBtn.style.backgroundColor = '#15803d';
-            }
-            form.reset();
-            hideErr(nameInput, nameError);
-            hideErr(emailInput, emailError);
-            hideErr(phoneInput, phoneError, phoneGroup);
-            hideErr(companyInput, companyError);
-            hideErr(subjectInput, subjectError);
-            hideErr(msgInput, msgError);
-            nameTouched = false;
-            emailTouched = false;
-            phoneTouched = false;
-            companyTouched = false;
-            subjectTouched = false;
-            msgTouched = false;
-          } else {
-            feedback.style.color = '#b91c1c';
-            feedback.textContent = (data && data.data && data.data.message) ? data.data.message : 'Submission could not be completed. Please try again or email info@altysier.com.';
-            if (submitBtn) {
-              submitBtn.disabled = false;
-              submitBtn.textContent = 'Send Enquiry';
+      function sendForm() {
+        fetch(ajaxUrl, {
+          method: 'POST',
+          body: formData
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          if (feedback) {
+            feedback.style.display = 'block';
+            if (data && data.success) {
+              feedback.style.color = '#15803d';
+              feedback.textContent = (data.data && data.data.message) ? data.data.message : 'Thank you. Your enquiry has been received.';
+              if (submitBtn) {
+                submitBtn.textContent = 'Enquiry Sent';
+                submitBtn.style.backgroundColor = '#15803d';
+              }
+              form.reset();
+              hideErr(nameInput, nameError);
+              hideErr(emailInput, emailError);
+              hideErr(phoneInput, phoneError, phoneGroup);
+              hideErr(companyInput, companyError);
+              hideErr(subjectInput, subjectError);
+              hideErr(msgInput, msgError);
+              nameTouched = false;
+              emailTouched = false;
+              phoneTouched = false;
+              companyTouched = false;
+              subjectTouched = false;
+              msgTouched = false;
+            } else {
+              feedback.style.color = '#b91c1c';
+              feedback.textContent = (data && data.data && data.data.message) ? data.data.message : 'Submission could not be completed. Please try again or email info@altysier.com.';
+              if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Enquiry';
+              }
             }
           }
-        }
-      })
-      .catch(function(err) {
-        if (feedback) {
-          feedback.style.display = 'block';
-          feedback.style.color = '#15803d';
-          feedback.textContent = 'Thank you. Your inquiry has been received. Our trade desk will contact you within 24 business hours.';
-        }
-        if (submitBtn) {
-          submitBtn.textContent = 'Enquiry Sent';
-          submitBtn.style.backgroundColor = '#15803d';
-        }
-        form.reset();
-        hideErr(nameInput, nameError);
-        hideErr(emailInput, emailError);
-        hideErr(phoneInput, phoneError, phoneGroup);
-        hideErr(companyInput, companyError);
-        hideErr(subjectInput, subjectError);
-        hideErr(msgInput, msgError);
-        nameTouched = false;
-        emailTouched = false;
-        phoneTouched = false;
-        companyTouched = false;
-        subjectTouched = false;
-        msgTouched = false;
-      });
+        })
+        .catch(function(err) {
+          if (feedback) {
+            feedback.style.display = 'block';
+            feedback.style.color = '#15803d';
+            feedback.textContent = 'Thank you. Your inquiry has been received. Our trade desk will contact you within 24 business hours.';
+          }
+          if (submitBtn) {
+            submitBtn.textContent = 'Enquiry Sent';
+            submitBtn.style.backgroundColor = '#15803d';
+          }
+          form.reset();
+          hideErr(nameInput, nameError);
+          hideErr(emailInput, emailError);
+          hideErr(phoneInput, phoneError, phoneGroup);
+          hideErr(companyInput, companyError);
+          hideErr(subjectInput, subjectError);
+          hideErr(msgInput, msgError);
+          nameTouched = false;
+          emailTouched = false;
+          phoneTouched = false;
+          companyTouched = false;
+          subjectTouched = false;
+          msgTouched = false;
+        });
+      }
+
+      if (window.altysierConfig && window.altysierConfig.recaptchaEnabled && typeof grecaptcha !== 'undefined') {
+        grecaptcha.ready(function() {
+          grecaptcha.execute(window.altysierConfig.recaptchaKey, { action: 'contact_form' }).then(function(token) {
+            formData.set('recaptcha_token', token);
+            sendForm();
+          }).catch(function(err) {
+            console.error('reCAPTCHA Error:', err);
+            sendForm(); // Fallback to send anyway so backend can handle/reject
+          });
+        });
+      } else {
+        sendForm();
+      }
     });
   })();
 </script>
