@@ -293,7 +293,7 @@ function altysier_handle_contact_form() {
 	$customer_body .= '<p style="color:#444;line-height:1.6;">Best regards,<br><strong>Altysier Group Support</strong></p>';
 	$customer_body .= '</div></body></html>';
 	
-	$customer_from = 'Support@altysier.com';
+	$customer_from = 'admin@altysier.com';
 	$customer_headers = array(
 		'Content-Type: text/html; charset=UTF-8',
 		'From: ' . sanitize_text_field( $from_name ) . ' <' . sanitize_email( $customer_from ) . '>',
