@@ -1,0 +1,4 @@
+[25-Sep-2026 13:09:23 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/altyldtt/public_html/wp-content/themes/altysier/index.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/altyldtt/public_html/wp-content/themes/altysier/index.php on line 8

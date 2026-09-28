@@ -85,7 +85,7 @@
 
     document.documentElement.style.overflow = 'hidden';
     // Absolute worst case: never let the page stay stuck longer than this.
-    window.setTimeout(finish, 2600);
+    window.setTimeout(finish, 3600);
 
     if (prefersReducedMotion) { finish(); return; }
 
@@ -101,7 +101,7 @@
         // and become visible before the preloader is torn down — at the
         // previous ~900ms total, the video was still buffering when
         // finish() ran, so it never had a chance to render anything.
-        var duration = 900;
+        var duration = 2000;
         function tick(now) {
           var p = Math.min(1, (now - start) / duration);
           if (numberEl) numberEl.textContent = String(Math.ceil(p * target));
