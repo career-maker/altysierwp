@@ -22,6 +22,7 @@
 ?>
 <link rel="preload" as="image" href="<?php echo esc_url( $hero_bg_preload ); ?>" fetchpriority="high">
 <?php endif; ?>
+<style>.grecaptcha-badge { visibility: hidden !important; }</style>
 <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
