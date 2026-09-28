@@ -5,3 +5,6 @@
 .contact-form__field input.is-invalid,.contact-form__field textarea.is-invalid,.form-group .form-input.is-invalid,.form-group .form-select.is-invalid,.form-group .form-textarea.is-invalid,.form-group .phone-input-group.is-invalid{border-color:#b91c1c!important;background-color:rgba(185,28,28,.025)!important;box-shadow:0 0 0 3.5px rgba(185,28,28,.12)!important}
 [data-theme="dark"] .field-error{color:#f87171!important}
 [data-theme="dark"] .contact-form__field input.is-invalid,[data-theme="dark"] .contact-form__field textarea.is-invalid,[data-theme="dark"] .form-group .form-input.is-invalid,[data-theme="dark"] .form-group .form-select.is-invalid,[data-theme="dark"] .form-group .form-textarea.is-invalid,[data-theme="dark"] .form-group .phone-input-group.is-invalid{border-color:#ef4444!important;background-color:rgba(239,68,68,.06)!important;box-shadow:0 0 0 3.5px rgba(239,68,68,.2)!important}
+. g r e c a p t c h a - b a d g e  
+   v i s i b i l i t y :   h i d d e n   ! i m p o r t a n t ;    
+ 
